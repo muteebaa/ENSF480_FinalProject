@@ -174,11 +174,13 @@ public class MovieAppMain{
 
         System.out.println("------------------------------");
         System.out.println();
-        for(String x: movies){
-            System.out.println(x);
+        
+         System.out.println(myJDBC.clients("projectData"));
+
+         for(int i=0; i<movies.size(); i++){
+            System.out.println(movies.get(i));
         }
-     /*    System.out.println(myJDBC.clients("daily_client_needs"));
-        System.out.println(myJDBC.clients("available_food"));
+     /*   System.out.println(myJDBC.clients("available_food"));
 
         String[][] clients = {
             {clientDetails[0][0],clientDetails[0][1],clientDetails[0][2],clientDetails[0][3],clientDetails[0][4],clientDetails[0][5],clientDetails[0][6]},
