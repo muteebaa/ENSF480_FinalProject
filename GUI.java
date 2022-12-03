@@ -32,6 +32,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 	private int OthersC;
 	private int CaloriesC;
 	private int hamperNumber = 1;
+    private String movieSearch;
 	
 	// variables required ofr the GUI
     private JLabel instructions;
@@ -40,7 +41,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
     private JLabel instructions3;
     private JLabel option1;
     private JLabel option2;
-    private JLabel mLabel;
+    private JLabel searchLabel;
     private JLabel fLabel;
     private JLabel coLabel;
     private JLabel cuLabel;
@@ -51,7 +52,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
     private JLabel cLabel;
     private javax.swing.JPanel jPanel1;
     private JTextField fInput;
-    private JTextField mInput;
+    private JTextField searchInput;
     private JTextField coInput;
     private JTextField cuInput;
     private JTextField twgInput;
@@ -64,9 +65,9 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
      * GUI() Constructor
      */ 
     public GUI(){
-        super("Group 11 Project");
+        super("Group 4 Project");
         setupGUI();
-        setSize(1200,800);
+        setSize(400,200);
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);        
     }
@@ -81,80 +82,27 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         jPanel1.setBackground(new java.awt.Color(30, 31, 38));
         jPanel1.setForeground(new java.awt.Color(153, 255, 102));
         
-        instructions = new JLabel("Group 11 Project - ENSF409");
+        instructions = new JLabel("Group 4 Project - ENSF480");
         instructions.setFont(new java.awt.Font("Segoe UI", 0, 17)); 
         instructions.setForeground(new java.awt.Color(0,0,0));
 
-        instructions1 = new JLabel("For Option 1: Please put a valid number of clients and click submit. Dont use negative numbers or decimal numbers." );
+        instructions1 = new JLabel("Movie Booking" );
         instructions1.setFont(new java.awt.Font("Segoe UI", 0, 17));
         instructions1.setForeground(new java.awt.Color(0,0,0));
 
-        instructions2 = new JLabel("For Option 2: Please put valid number of contents for each food group and click sumbmit. Dont use negative numbers or decimal numbers." );
-        instructions2.setFont(new java.awt.Font("Segoe UI", 0, 17)); 
-        instructions2.setForeground(new java.awt.Color(0,0,0));
-
-        instructions3 = new JLabel("Welcome! This application will provide you with a Hamper according to your needs. You are required to fill out only one option." );
-        instructions3.setFont(new java.awt.Font("Segoe UI", 0, 17)); 
-        instructions3.setForeground(new java.awt.Color(0,0,0));
-
-        option1 = new JLabel("OPTION 1");
+        option1 = new JLabel("Search a movie:");
         option1.setFont(new java.awt.Font("Segoe UI", 0, 17)); 
         option1.setForeground(new java.awt.Color(0,0,0));
 
-        mLabel = new JLabel("Males:");
-        mLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
-        mLabel.setForeground(new java.awt.Color(0,0,0));
-        fLabel = new JLabel("Females:");
-        fLabel.setFont(new java.awt.Font("Segoe UI", 0, 14));
-        fLabel.setForeground(new java.awt.Color(0,0,0));
-        coLabel = new JLabel("Children Over 8:");
-        coLabel.setFont(new java.awt.Font("Segoe UI", 0, 14));
-        coLabel.setForeground(new java.awt.Color(0,0,0));
-        cuLabel = new JLabel("Children Under 8:");
-        cuLabel.setFont(new java.awt.Font("Segoe UI", 0, 14));
-        cuLabel.setForeground(new java.awt.Color(0,0,0));
-
-        option2 = new JLabel("OPTION 2 \n");
-        option2.setFont(new java.awt.Font("Segoe UI", 0, 17));
-        option2.setForeground(new java.awt.Color(0,0,0));
-
-        twgLabel = new JLabel("Wheat:");
-        twgLabel.setFont(new java.awt.Font("Segoe UI", 0, 14));
-        twgLabel.setForeground(new java.awt.Color(0,0,0));
-        fvLabel = new JLabel("Fruit Veggies");
-        fvLabel.setFont(new java.awt.Font("Segoe UI", 0, 14));
-        fvLabel.setForeground(new java.awt.Color(0,0,0));
-        proLabel = new JLabel("Protein");
-        proLabel.setFont(new java.awt.Font("Segoe UI", 0, 14));
-        proLabel.setForeground(new java.awt.Color(0,0,0));
-        oLabel = new JLabel("Others");
-        oLabel.setFont(new java.awt.Font("Segoe UI", 0, 14));
-        oLabel.setForeground(new java.awt.Color(0,0,0));
-        cLabel = new JLabel("Calories:");
-        cLabel.setFont(new java.awt.Font("Segoe UI", 0, 14));
-        cLabel.setForeground(new java.awt.Color(0,0,0));
+        searchLabel = new JLabel("Males:");
+        searchLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
+        searchLabel.setForeground(new java.awt.Color(0,0,0));
+       
         
-        mInput = new JTextField("0", 15);
-        fInput = new JTextField("0", 15);
-        coInput = new JTextField("0", 15);
-        cuInput = new JTextField("0", 15); 
-        
-        twgInput = new JTextField("0", 15);
-        fvInput = new JTextField("0", 15); 
-        proInput = new JTextField("0", 15); 
-        oInput = new JTextField("0", 15); 
-        cInput =new JTextField("0", 15); 
+        searchInput = new JTextField("0", 15);
+       
+        searchInput.addMouseListener(this);
 
-        mInput.addMouseListener(this);
-        fInput.addMouseListener(this);
-        coInput.addMouseListener(this);
-        cuInput.addMouseListener(this);
-
-        twgInput.addMouseListener(this);
-        fvInput.addMouseListener(this);
-        proInput.addMouseListener(this);
-        oInput.addMouseListener(this);
-        cInput.addMouseListener(this);
 
         
         JButton submitInfo = new JButton("Submit");
@@ -180,29 +128,11 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         exitPanel.setLayout(new FlowLayout());
         
         headerPanel.add(instructions);
-        clientPanel.add(instructions3);
-        clientPanel.add(instructions1);
-        clientPanel.add(instructions2);
+        headerPanel.add(instructions1);
         clientPanel.add(option1);
-        clientPanel.add(mLabel);
-        clientPanel.add(mInput);
-        clientPanel.add(fLabel);
-        clientPanel.add(fInput);
-        clientPanel.add(coLabel);
-        clientPanel.add(coInput);
-        clientPanel.add(cuLabel);
-        clientPanel.add(cuInput);
-        clientPanel.add(option2);
-        clientPanel.add(twgLabel);
-        clientPanel.add(twgInput);
-        clientPanel.add(fvLabel);
-        clientPanel.add(fvInput);
-        clientPanel.add(proLabel);
-        clientPanel.add(proInput);
-        clientPanel.add(oLabel);
-        clientPanel.add(oInput);
-        clientPanel.add(cLabel);
-        clientPanel.add(cInput);
+        clientPanel.add(searchLabel);
+        clientPanel.add(searchInput);
+
 
         submitPanel.add(submitInfo);
         exitPanel.add(exit);
@@ -231,7 +161,9 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
      * 		- invalid data (e.g. negative numbers) is inputted.
      */ 
     public void actionPerformed(ActionEvent event){
+        movieSearch = searchInput.getText();
         
+        MovieAppMain.search(movieSearch);
     }
 
     /*
@@ -271,34 +203,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
    
     public void mouseClicked(MouseEvent event){
         
-        if(event.getSource().equals(mInput))
-            
-            mInput.setText("");
-
-        if(event.getSource().equals(fInput))
-            fInput.setText("");
-
-        if(event.getSource().equals(coInput))
-            coInput.setText("");
-
-        if(event.getSource().equals(cuInput))
-            cuInput.setText("");
-        
-        if(event.getSource().equals(twgInput))
-            twgInput.setText("");    
-        
-        if(event.getSource().equals(fvInput))
-            fvInput.setText("");
-
-        if(event.getSource().equals(proInput))
-            proInput.setText("");
-
-        if(event.getSource().equals(oInput))
-            oInput.setText("");
-
-        if(event.getSource().equals(cInput))
-            cInput.setText("");
-    
+        if(event.getSource().equals(searchInput))
+            searchInput.setText("");
     }
     
     public void mouseEntered(MouseEvent event){

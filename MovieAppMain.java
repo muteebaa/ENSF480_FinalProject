@@ -110,20 +110,26 @@ public class MovieAppMain{
                 int i = 0;
                 boolean flag = false;
                 while(results.next()){
-                  
-                    Movie mov = new Movie(results.getString("Movie"), results.getString("timeM"),results.getString("Seats") );
+                    
+                    Movie mov = new Movie(results.getString("Movie"), results.getString("timeM"),results.getString("Seats"), results.getString("Theatre") );
                     movies.add(mov);
 
                     if (i != 0){
-                        for (int x = 0; i<theatres.size(); x++) {
+                             
+                        for (int x = 0; x<theatres.size(); x++) {
                             if (theatres.get(x).getName().contains(results.getString("Theatre"))) {
                                 theatres.get(x).addMovie(mov);
                                 flag = true;
                                 break;
                             }
                         }
+                        if (flag == false){
+                            Theatre th = new Theatre(results.getString("Theatre"));
+                            th.addMovie(mov);
+                            theatres.add(th);
+                        }
                     }
-                    else if (i == 0 || flag == false){
+                    else {
                         Theatre th = new Theatre(results.getString("Theatre"));
                         th.addMovie(mov);
                         theatres.add(th);
@@ -176,9 +182,16 @@ public class MovieAppMain{
      */
     ////////////////////////////////////////////////////////////////////
     
-   
+    public static void search(String movieName){
+        System.out.println("Search results for "+ movieName);
+        for(int i=0; i<theatres.size(); i++){
+           
+            System.out.println(theatres.get(i).getName());
+            theatres.get(i).searchMovies(movieName);
+        }
+    }
     public static void main(String[] args) throws FileNotFoundException {
-    //    GUI gui = new GUI();
+       GUI gui = new GUI();
       //  Food foodObj;
         
         //Use the following account information: Username = student, Password = ensf
@@ -190,17 +203,20 @@ public class MovieAppMain{
         
         System.out.println(myJDBC.storeData("projectData"));
 
-        System.out.println("--------------movies----------------");
+       /* System.out.println("--------------movies----------------");
         for(int i=0; i<movies.size(); i++){
             System.out.println(movies.get(i).getName());
         }
 
         System.out.println("--------------theatres----------------");
         for(int i=0; i<theatres.size(); i++){
+            System.out.println("-----------------------------");
             System.out.println(theatres.get(i).getName());
             System.out.println("------movies-------");
             theatres.get(i).getMovies();
-        }
+        } */
+        System.out.println("--------test search for wakanda----");
+        search("Wakanda Forvever");
         
        // System.out.println(myJDBC.clients("available_food"));
 
@@ -234,8 +250,8 @@ public class MovieAppMain{
 		} catch (FileNotFoundException e) {e.printStackTrace();}
             catch (IOException e) {e.printStackTrace();}
 
- 
-		GUI.run();*/
+        */
+		GUI.run();
 
     }
 }

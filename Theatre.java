@@ -20,6 +20,14 @@ public class Theatre {
     public void getMovies(){
         for(int i=0; i<movies.size(); i++){
             System.out.println(movies.get(i).getName());
+        } 
+    }
+
+    public void searchMovies(String search){
+        for(int i=0; i<movies.size(); i++){
+            if(movies.get(i).getName().contains(search)){
+                movies.get(i).display();
+            }
         }
     }
 
