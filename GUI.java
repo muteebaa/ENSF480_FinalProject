@@ -90,16 +90,12 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         instructions1.setFont(new java.awt.Font("Segoe UI", 0, 17));
         instructions1.setForeground(new java.awt.Color(0,0,0));
 
-        option1 = new JLabel("Search a movie:");
-        option1.setFont(new java.awt.Font("Segoe UI", 0, 17)); 
-        option1.setForeground(new java.awt.Color(0,0,0));
-
-        searchLabel = new JLabel("Males:");
+        searchLabel = new JLabel("Search a movie:");
         searchLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
         searchLabel.setForeground(new java.awt.Color(0,0,0));
        
         
-        searchInput = new JTextField("0", 15);
+        searchInput = new JTextField("Erase and type movie...", 15);
        
         searchInput.addMouseListener(this);
 
@@ -129,7 +125,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         
         headerPanel.add(instructions);
         headerPanel.add(instructions1);
-        clientPanel.add(option1);
+    
         clientPanel.add(searchLabel);
         clientPanel.add(searchInput);
 
@@ -172,11 +168,9 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
      * Ensures data entered by the user is valid (e.g. not negative values)
      */
     public int validateInput(){
-        if(totalMale < 0 || totalFemale < 0 || totalChildrenU8 < 0 || totalChildrenO8 < 0 ){
+        if(true){
             return 0;
-        }
-        else if(grainC < 0 || fvc < 0 || proC < 0 || OthersC < 0 || CaloriesC < 0 ){
-            return 0;
+    
         }
         else{
             return 1;
@@ -189,11 +183,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
      * Ensures user only inputted data for a single option.
      */
     public int validateOption(){
-        if(totalMale ==0 && totalFemale == 0 && totalChildrenU8 == 0 && totalChildrenO8 == 0 ){
+        if(true ){
             return 2;
-        }
-        else if(grainC == 0&& fvc == 0 && proC == 0 && OthersC == 0 && CaloriesC == 0 ){
-            return 1;
         }
         else{
             return 0;

@@ -110,7 +110,7 @@ public class MovieAppMain{
                 boolean flag = false;
                 while(results.next()){
                     // a movie object is created and added to the linked list
-                    Movie mov = new Movie(results.getString("Movie"), results.getString("timeM"),results.getString("Seats"), results.getString("Theatre") );
+                    Movie mov = new Movie(results.getString("Movie"), results.getString("dateM"),results.getString("Movie"),results.getString("Seats"), results.getString("Theatre") );
                     movies.add(mov);
                     
                     // if its not the first item in the database then it will traverse through the linked list of the theatres
@@ -203,7 +203,7 @@ public class MovieAppMain{
             theatres.get(i).getMovies();
         } 
         System.out.println("--------test search for wakanda----");
-        search("Wakanda Forvever");
+        search("Wakanda Forever");
         */
         GUI.run();
         // this is all old stuff from the last project in case we want to use it

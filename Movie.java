@@ -5,8 +5,9 @@ public class Movie {
     private Ticket[] tickets;
     private Seats seats;
     private String theatre;
-
-    Movie(String nam, String tim, String n, String th){
+    private String date;
+    
+    Movie(String nam, String tim, String d, String n, String th){
         name = nam;
         time = tim;
         tickets = new Ticket[Integer.parseInt(n)];
@@ -15,6 +16,7 @@ public class Movie {
         }
         seats = new Seats(Integer.parseInt(n));
         theatre = th;
+        date = d;
     }
 
     public String getName(){
@@ -23,6 +25,7 @@ public class Movie {
     
     public void display(){
         System.out.println("showing at "+theatre);
+        System.out.println("date: " + date);
         System.out.println("time: " + time);
         System.out.println();
     }
