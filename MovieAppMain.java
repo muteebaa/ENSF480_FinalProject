@@ -109,19 +109,19 @@ public class MovieAppMain{
                 results = statement.executeQuery("SELECT Theatre, Movie, dateM, dayM, timeM, Seats from projectData");
                 int i = 0;
                 while(results.next()){
-                    i++;
+                  
                     Movie mov = new Movie(results.getString("Movie"), results.getString("timeM"),results.getString("Seats") );
                     movies.add(mov);
 
-                    if (i == 2){
+                    if (i != 0){
                         for (Theatre t : theatres) {
                             if (t.getName().contains(results.getString("Theatre"))) {
                                 t.addMovie(mov);
                             }
                             else{
-                                // Theatre th = new Theatre(results.getString("Theatre"));
-                                // th.addMovie(mov);
-                                // theatres.add(th);
+                                Theatre th = new Theatre(results.getString("Theatre"));
+                                th.addMovie(mov);
+                                theatres.add(th);
                             }
                         }
                     }
@@ -130,6 +130,7 @@ public class MovieAppMain{
                         th.addMovie(mov);
                         theatres.add(th);
                     }
+                    i = 1;
                 }
                 statement.close();
             }
