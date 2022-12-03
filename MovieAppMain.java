@@ -97,7 +97,7 @@ public class MovieAppMain{
     }           
 */
 
-    /* this method stores all out data from the database into the linked lists */
+    /* this method stores all our data from the database into the linked lists */
     public String storeData(String tableName){     
 
         StringBuilder comp = new  StringBuilder();         
@@ -113,13 +113,13 @@ public class MovieAppMain{
                     Movie mov = new Movie(results.getString("Movie"), results.getString("dateM"),results.getString("Movie"),results.getString("Seats"), results.getString("Theatre") );
                     movies.add(mov);
                     
-                    // if its not the first item in the database then it will traverse through the linked list of the theatres
+                    // if its not the first item in the database then we will traverse through the linked list of theatres
                     if (i != 0){
                              
                         for (int x = 0; x<theatres.size(); x++) {
                             // if a theatre is already found to be in the linked list, then the movie object will be appended to it
-                            // i did it this way because it makes sense to have multiple movie objects as each will have different timings but,
-                            // it doesnt make sense to have multiple theatre objects --- 1 theatre has many movies
+                            // i did it this way because it makes sense to have multiple movie objects since each will have different timings but,
+                            // it doesnt make sense to have multiple theatre objects --- 1 theatre has 0..* movies
                             if (theatres.get(x).getName().contains(results.getString("Theatre"))) {
                                 theatres.get(x).addMovie(mov);
                                 flag = true;
@@ -180,7 +180,7 @@ public class MovieAppMain{
     public static void main(String[] args) throws FileNotFoundException {
         GUI gui = new GUI();
         
-        //Use the following account information: Username = student, Password = ensf
+        //Use the following account information: Username = user1, Password = ensf
         MovieAppMain myJDBC = new MovieAppMain("jdbc:mysql://localhost/data_cinema","user1","ensf");
         myJDBC.initializeConnection();
 
