@@ -112,16 +112,22 @@ public class MovieAppMain{
                     Movie mov = new Movie(results.getString("Movie"), results.getString("timeM"),results.getString("Seats") );
                     movies.add(mov);
 
-                    for (Theatre t : theatres) {
-                        if (t.getName().contains(results.getString("Theatre"))) {
-                            t.addMovie(mov);
+                    if (theatres.size()!=0){
+                        for (Theatre t : theatres) {
+                            if (t.getName().contains(results.getString("Theatre"))) {
+                                t.addMovie(mov);
+                            }
+                            else{
+                                Theatre th = new Theatre(results.getString("Theatre"));
+                                th.addMovie(mov);
+                                theatres.add(th);
+                            }
                         }
-
-                        else{
-                            Theatre th = new Theatre(results.getString("Theatre"));
-                            th.addMovie(mov);
-                            theatres.add(th);
-                        }
+                    }
+                    else{
+                        Theatre th = new Theatre(results.getString("Theatre"));
+                        th.addMovie(mov);
+                        theatres.add(th);
                     }
                 }
                 statement.close();
