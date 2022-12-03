@@ -35,7 +35,7 @@ public class MovieAppMain{
     
     // movie details
 
-    private static LinkedList<String> movies = new LinkedList<String>();
+    private static LinkedList<Movie> movies = new LinkedList<Movie>();
 
     private static Connection dbConnect;
     private ResultSet results;
@@ -98,7 +98,7 @@ public class MovieAppMain{
             
     }           
     */
-    public String clients(String tableName){     
+    public String movies(String tableName){     
 
         StringBuilder comp = new  StringBuilder();         
 
@@ -108,7 +108,8 @@ public class MovieAppMain{
                 results = statement.executeQuery("SELECT Theatre, Movie, dateM, dayM, timeM, Seats from projectData");
                // int i = 0;
                 while(results.next()){
-                    movies.add(results.getString("Movie"));
+                    Movie mov = new Movie(results.getString("Movie"), results.getString("timeM"),results.getString("Seats") );
+                    movies.add(mov);
                  /*clientDetails[i][j] = results.getString("ClientID");j++;
                     clientDetails[i][j] = results.getString("Client");j++;
                     clientDetails[i][j] = results.getString("WholeGrains");j++;
@@ -175,10 +176,10 @@ public class MovieAppMain{
         System.out.println("------------------------------");
         System.out.println();
         
-         System.out.println(myJDBC.clients("projectData"));
+         System.out.println(myJDBC.movies("projectData"));
 
          for(int i=0; i<movies.size(); i++){
-            System.out.println(movies.get(i));
+            System.out.println(movies.get(i).getName());
         }
      /*   System.out.println(myJDBC.clients("available_food"));
 
