@@ -108,24 +108,27 @@ public class MovieAppMain{
                 Statement statement = dbConnect.createStatement();  
                 results = statement.executeQuery("SELECT Theatre, Movie, dateM, dayM, timeM, Seats from projectData");
                 int i = 0;
+                boolean flag = false;
                 while(results.next()){
                   
                     Movie mov = new Movie(results.getString("Movie"), results.getString("timeM"),results.getString("Seats") );
                     movies.add(mov);
 
                     if (i != 0){
-                        for (Theatre t : theatres) {
-                            if (t.getName().contains(results.getString("Theatre"))) {
-                                t.addMovie(mov);
+                        for (int x = 0; i<theatres.size(); x++) {
+                            if (theatres.get(x).getName().contains(results.getString("Theatre"))) {
+                                theatres.get(x).addMovie(mov);
+                                flag = true;
+                                break;
                             }
-                            else{
+                          /* else{
                                 Theatre th = new Theatre(results.getString("Theatre"));
                                 th.addMovie(mov);
                                 theatres.add(th);
-                            }
+                            }*/
                         }
                     }
-                    else{
+                    else if (i == 0 || flag == false){
                         Theatre th = new Theatre(results.getString("Theatre"));
                         th.addMovie(mov);
                         theatres.add(th);
