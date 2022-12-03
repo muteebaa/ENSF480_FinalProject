@@ -22,45 +22,19 @@ import java.awt.FlowLayout;
 
 public class GUI extends JFrame implements ActionListener, MouseListener{
 	// variables required for implementation
-	private int totalFemale;
-	private int totalMale;
-	private int totalChildrenU8;
-	private int totalChildrenO8;
-	private int grainC;
-	private int fvc;
-	private int proC;
-	private int OthersC;
-	private int CaloriesC;
-	private int hamperNumber = 1;
     private String movieSearch;
 	
-	// variables required ofr the GUI
+	// variables required for the GUI
     private JLabel instructions;
     private JLabel instructions1;
-    private JLabel instructions2;
-    private JLabel instructions3;
-    private JLabel option1;
-    private JLabel option2;
     private JLabel searchLabel;
-    private JLabel fLabel;
-    private JLabel coLabel;
-    private JLabel cuLabel;
-    private JLabel twgLabel;
-    private JLabel fvLabel;
-    private JLabel proLabel;
-    private JLabel oLabel;
-    private JLabel cLabel;
+ 
     private javax.swing.JPanel jPanel1;
-    private JTextField fInput;
+
     private JTextField searchInput;
-    private JTextField coInput;
-    private JTextField cuInput;
-    private JTextField twgInput;
-    private JTextField fvInput;
-    private JTextField proInput;
-    private JTextField oInput;
-    private JTextField cInput;
-    
+
+    private JLabel testLabel;
+    private JTextField testInput;
     /*
      * GUI() Constructor
      */ 
@@ -96,9 +70,16 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
        
         
         searchInput = new JTextField("Erase and type movie...", 15);
-       
         searchInput.addMouseListener(this);
 
+
+        /// BUYING A TICKET
+        testLabel = new JLabel("(test) number of tickets:");
+        testLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
+        testLabel.setForeground(new java.awt.Color(0,0,0));
+
+        testInput = new JTextField("number of ...", 15);
+        testInput.addMouseListener(this);
 
         
         JButton submitInfo = new JButton("Submit");
@@ -128,6 +109,9 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
     
         clientPanel.add(searchLabel);
         clientPanel.add(searchInput);
+
+        clientPanel.add(testLabel);
+        clientPanel.add(testInput);
 
 
         submitPanel.add(submitInfo);
