@@ -36,6 +36,7 @@ public class MovieAppMain{
     // movie details
 
     private static LinkedList<Movie> movies = new LinkedList<Movie>();
+    private static LinkedList<Theatre> theatres = new LinkedList<Theatre>();
 
     private static Connection dbConnect;
     private ResultSet results;
@@ -98,7 +99,7 @@ public class MovieAppMain{
             
     }           
     */
-    public String movies(String tableName){     
+    public String storeData(String tableName){     
 
         StringBuilder comp = new  StringBuilder();         
 
@@ -106,18 +107,22 @@ public class MovieAppMain{
             try{
                 Statement statement = dbConnect.createStatement();  
                 results = statement.executeQuery("SELECT Theatre, Movie, dateM, dayM, timeM, Seats from projectData");
-               // int i = 0;
+                
                 while(results.next()){
                     Movie mov = new Movie(results.getString("Movie"), results.getString("timeM"),results.getString("Seats") );
                     movies.add(mov);
-                 /*clientDetails[i][j] = results.getString("ClientID");j++;
-                    clientDetails[i][j] = results.getString("Client");j++;
-                    clientDetails[i][j] = results.getString("WholeGrains");j++;
-                    clientDetails[i][j] = results.getString("FruitVeggies");j++;
-                    clientDetails[i][j] = results.getString("Protein");j++;
-                    clientDetails[i][j] = results.getString("Other");j++;
-                    clientDetails[i][j] = results.getString("Calories");j++;
-                    i += 1;*/
+
+                    for (Theatre t : theatres) {
+                        if (t.getName().contains(results.getString("Theatre"))) {
+                            t.addMovie(mov);
+                        }
+
+                        else{
+                            Theatre th = new Theatre(results.getString("Theatre"));
+                            th.addMovie(mov);
+                            theatres.add(th);
+                        }
+                    }
                 }
                 statement.close();
             }
@@ -176,14 +181,22 @@ public class MovieAppMain{
         System.out.println("------------------------------");
         System.out.println();
         
-         System.out.println(myJDBC.movies("projectData"));
+        System.out.println(myJDBC.storeData("projectData"));
 
-         for(int i=0; i<movies.size(); i++){
+        System.out.println("--------------movies----------------");
+        for(int i=0; i<movies.size(); i++){
             System.out.println(movies.get(i).getName());
         }
-     /*   System.out.println(myJDBC.clients("available_food"));
 
-        String[][] clients = {
+        System.out.println("--------------theatres----------------");
+        for(int i=0; i<theatres.size(); i++){
+            System.out.println(theatres.get(i).getName());
+            theatres.get(i).getMovies();
+        }
+        
+       // System.out.println(myJDBC.clients("available_food"));
+
+    /*     String[][] clients = {
             {clientDetails[0][0],clientDetails[0][1],clientDetails[0][2],clientDetails[0][3],clientDetails[0][4],clientDetails[0][5],clientDetails[0][6]},
             {clientDetails[1][0],clientDetails[1][1],clientDetails[1][2],clientDetails[1][3],clientDetails[1][4],clientDetails[1][5],clientDetails[1][6]},
             {clientDetails[2][0],clientDetails[2][1],clientDetails[2][2],clientDetails[2][3],clientDetails[2][4],clientDetails[2][5],clientDetails[2][6]},
