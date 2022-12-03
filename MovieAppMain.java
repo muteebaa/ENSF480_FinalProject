@@ -19,6 +19,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.io.*;
 
 public class MovieAppMain{
    // private static GUI gui;
@@ -26,16 +27,22 @@ public class MovieAppMain{
     public final String USERNAME;
     public final String PASSWORD;
     private static String[][] clientDetails = new String[5][7]; 
+
+
     private static LinkedList<String[]> allFoodDetails = new LinkedList<String[]>();
  //   private static LinkedList<Food> allFoodObj = new LinkedList<Food>();
     private static String[] foodDetails;
     
+    // movie details
+
+    private static LinkedList<String> movies = new LinkedList<String>();
+
     private static Connection dbConnect;
     private ResultSet results;
     
      ////////////////////////////////////////////////////////////////////
     /*
-     * End of Methods required to access and manipulate the SQL Databse. 
+     * Start of Methods required to access and manipulate the SQL Databse. 
      */
     ////////////////////////////////////////////////////////////////////
     public MovieAppMain(String url, String user, String pw){
@@ -55,8 +62,6 @@ public class MovieAppMain{
         catch(SQLException e){
             e.printStackTrace();
         }             
-               
-
     }
 
     String getUsername(){
@@ -92,27 +97,26 @@ public class MovieAppMain{
             }
             
     }           
-
+    */
     public String clients(String tableName){     
 
         StringBuilder comp = new  StringBuilder();         
 
-        if(tableName.equals("daily_client_needs")){
+        if(tableName.equals("projectData")){
             try{
                 Statement statement = dbConnect.createStatement();  
-                results = statement.executeQuery("SELECT ClientID, Client, WholeGrains, FruitVeggies, Protein, Other, Calories from daily_client_needs");
-                int i = 0;
+                results = statement.executeQuery("SELECT Theatre, Movie, dateM, dayM, timeM, Seats from projectData");
+               // int i = 0;
                 while(results.next()){
-                    int j = 0;
-                    
-                    clientDetails[i][j] = results.getString("ClientID");j++;
+                    movies.add(results.getString("Movie"));
+                 /*clientDetails[i][j] = results.getString("ClientID");j++;
                     clientDetails[i][j] = results.getString("Client");j++;
                     clientDetails[i][j] = results.getString("WholeGrains");j++;
                     clientDetails[i][j] = results.getString("FruitVeggies");j++;
                     clientDetails[i][j] = results.getString("Protein");j++;
                     clientDetails[i][j] = results.getString("Other");j++;
                     clientDetails[i][j] = results.getString("Calories");j++;
-                    i += 1;
+                    i += 1;*/
                 }
                 statement.close();
             }
@@ -131,13 +135,7 @@ public class MovieAppMain{
                 while(results.next()){
                     foodDetails = new String[7];
                      
-                    foodDetails[0] = results.getString("ItemID");
-                    foodDetails[1] = results.getString("Name");
-                    foodDetails[2] = results.getString("GrainContent");
-                    foodDetails[3] = results.getString("FVContent");
-                    foodDetails[4] = results.getString("ProContent");
-                    foodDetails[5] = results.getString("Other");
-                    foodDetails[6] = results.getString("Calories");
+                    //foodDetails[0] = results.getString("ItemID");
                     
 
                     allFoodDetails.add(foodDetails);
@@ -158,7 +156,7 @@ public class MovieAppMain{
             String str = "Wrong input";
             return str;
         }
-    }*/
+    }
     ////////////////////////////////////////////////////////////////////
     /*
      * End of Methods required to access and manipulate the SQL Databse. 
@@ -176,6 +174,9 @@ public class MovieAppMain{
 
         System.out.println("------------------------------");
         System.out.println();
+        for(String x: movies){
+            System.out.println(x);
+        }
      /*    System.out.println(myJDBC.clients("daily_client_needs"));
         System.out.println(myJDBC.clients("available_food"));
 
