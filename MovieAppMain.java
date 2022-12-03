@@ -121,11 +121,6 @@ public class MovieAppMain{
                                 flag = true;
                                 break;
                             }
-                          /* else{
-                                Theatre th = new Theatre(results.getString("Theatre"));
-                                th.addMovie(mov);
-                                theatres.add(th);
-                            }*/
                         }
                     }
                     else if (i == 0 || flag == false){
@@ -133,6 +128,7 @@ public class MovieAppMain{
                         th.addMovie(mov);
                         theatres.add(th);
                     }
+                    flag = false;
                     i = 1;
                 }
                 statement.close();
@@ -202,6 +198,7 @@ public class MovieAppMain{
         System.out.println("--------------theatres----------------");
         for(int i=0; i<theatres.size(); i++){
             System.out.println(theatres.get(i).getName());
+            System.out.println("------movies-------");
             theatres.get(i).getMovies();
         }
         
