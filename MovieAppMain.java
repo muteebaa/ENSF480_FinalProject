@@ -21,13 +21,13 @@ import java.io.IOException;
 import java.io.PrintStream;
 
 public class MovieAppMain{
-    private static GUI gui;
+   // private static GUI gui;
     public final String DBURL;
     public final String USERNAME;
     public final String PASSWORD;
     private static String[][] clientDetails = new String[5][7]; 
     private static LinkedList<String[]> allFoodDetails = new LinkedList<String[]>();
-    private static LinkedList<Food> allFoodObj = new LinkedList<Food>();
+ //   private static LinkedList<Food> allFoodObj = new LinkedList<Food>();
     private static String[] foodDetails;
     
     private static Connection dbConnect;
@@ -38,7 +38,7 @@ public class MovieAppMain{
      * End of Methods required to access and manipulate the SQL Databse. 
      */
     ////////////////////////////////////////////////////////////////////
-    public Project(String url, String user, String pw){
+    public MovieAppMain(String url, String user, String pw){
         // Database URL
         this.DBURL = url;
 
@@ -70,7 +70,7 @@ public class MovieAppMain{
     String getPassword(){
         return this.PASSWORD;
     }
-    
+    /* 
     public static void deleteFood(String id){
         try{
             
@@ -158,7 +158,7 @@ public class MovieAppMain{
             String str = "Wrong input";
             return str;
         }
-    }
+    }*/
     ////////////////////////////////////////////////////////////////////
     /*
      * End of Methods required to access and manipulate the SQL Databse. 
@@ -167,16 +167,16 @@ public class MovieAppMain{
     
    
     public static void main(String[] args) throws FileNotFoundException {
-        GUI gui = new GUI();
-        Food foodObj;
+    //    GUI gui = new GUI();
+      //  Food foodObj;
         
         //Use the following account information: Username = student, Password = ensf
-        Project myJDBC = new Project("jdbc:mysql://localhost/food_inventory","student","ensf");
+        MovieAppMain myJDBC = new MovieAppMain("jdbc:mysql://localhost/data_cinema","user1","ensf");
         myJDBC.initializeConnection();
 
         System.out.println("------------------------------");
         System.out.println();
-        System.out.println(myJDBC.clients("daily_client_needs"));
+     /*    System.out.println(myJDBC.clients("daily_client_needs"));
         System.out.println(myJDBC.clients("available_food"));
 
         String[][] clients = {
@@ -210,7 +210,7 @@ public class MovieAppMain{
             catch (IOException e) {e.printStackTrace();}
 
  
-		GUI.run();
+		GUI.run();*/
 
     }
 }

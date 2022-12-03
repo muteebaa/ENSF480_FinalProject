@@ -76,7 +76,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
      * 
      * Sets up the GUI for users to interact with.
      */ 
-    public void setupGUI(){
+     public void setupGUI(){
         jPanel1 = new javax.swing.JPanel();
         jPanel1.setBackground(new java.awt.Color(30, 31, 38));
         jPanel1.setForeground(new java.awt.Color(153, 255, 102));
@@ -231,70 +231,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
      * 		- invalid data (e.g. negative numbers) is inputted.
      */ 
     public void actionPerformed(ActionEvent event){
-        totalMale = Integer.parseInt(mInput.getText());
-        totalFemale =  Integer.parseInt(fInput.getText());
-        totalChildrenO8 =  Integer.parseInt(coInput.getText());
-        totalChildrenU8 = Integer.parseInt(cuInput.getText());
-        grainC = Integer.parseInt(twgInput.getText());
-        fvc = Integer.parseInt(fvInput.getText());
-        proC = Integer.parseInt(proInput.getText());
-        OthersC = Integer.parseInt(oInput.getText());
-        CaloriesC = Integer.parseInt(cInput.getText());
-
-        String orders;
-        String request =null;
-
-        int decision = validateInput();
         
-        if(decision == 1){
-            int option = validateOption();
-
-            if(option == 1){
-                
-                Hamper testHamper = new Hamper(totalMale, totalFemale, 
-				totalChildrenO8, totalChildrenU8);
-                orders = testHamper.getHamper();
-                request = totalMale + " Males, " + totalFemale + " Females, " 
-                + totalChildrenO8 + " Children over 8, " + totalChildrenU8 + " Children under 8";
-                
-                try {
-                    Order orderrr = new Order(request, orders, hamperNumber);
-                    JOptionPane.showMessageDialog(this,orderrr.returnFinalOrder());
-                    hamperNumber ++;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            
-            else if(option == 2){
-				Hamper testHamper = new Hamper(grainC, fvc, proC,OthersC, CaloriesC);
-				orders = testHamper.getHamper();
-				request = grainC + " Wheat Content, " + fvc + " Fruit Veggies Content, " 
-				+ proC + " Protein Content, " + OthersC + " Other Content, " + CaloriesC + 
-				" Calories Content";
-
-                try {
-                    Order orderrr = new Order(request, orders, hamperNumber);
-                    JOptionPane.showMessageDialog(this,orderrr.returnFinalOrder());
-                    hamperNumber++;
-                    
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            
-            else{
-                JOptionPane.showMessageDialog(this,
-                "Invalid Input: Ummm looks like you filled out both options. Please only fill out the one you need. :(");
-            }
-        }
-        
-        else{
-            JOptionPane.showMessageDialog(this,
-            "Invalid Input: Ummm looks like you entered negative number(s) :(");
-        }
     }
 
     /*
