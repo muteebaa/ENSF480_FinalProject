@@ -22,24 +22,19 @@ import java.io.PrintStream;
 import java.io.*;
 
 public class MovieAppMain{
-   // private static GUI gui;
+    private static GUI gui;
     public final String DBURL;
     public final String USERNAME;
     public final String PASSWORD;
-    private static String[][] clientDetails = new String[5][7]; 
-
-
-    private static LinkedList<String[]> allFoodDetails = new LinkedList<String[]>();
- //   private static LinkedList<Food> allFoodObj = new LinkedList<Food>();
-    private static String[] foodDetails;
-    
-    // movie details
-
-    private static LinkedList<Movie> movies = new LinkedList<Movie>();
-    private static LinkedList<Theatre> theatres = new LinkedList<Theatre>();
 
     private static Connection dbConnect;
     private ResultSet results;
+
+     // this is a linked list of all the movies in the database 
+     private static LinkedList<Movie> movies = new LinkedList<Movie>();
+
+     // this is a linked list of all the theatres in the database 
+     private static LinkedList<Theatre> theatres = new LinkedList<Theatre>();
     
      ////////////////////////////////////////////////////////////////////
     /*
@@ -76,8 +71,10 @@ public class MovieAppMain{
     String getPassword(){
         return this.PASSWORD;
     }
-    /* 
-    public static void deleteFood(String id){
+
+    // we dont really need this right now but i left it here so we can borrow the code if we want to remove movies later on
+
+/*    public static void deleteFood(String id){
         try{
             
             String str = "DELETE FROM available_food WHERE ItemID = ?";
@@ -98,7 +95,9 @@ public class MovieAppMain{
             }
             
     }           
-    */
+*/
+
+    /* this method stores all out data from the database into the linked lists */
     public String storeData(String tableName){     
 
         StringBuilder comp = new  StringBuilder();         
@@ -110,62 +109,49 @@ public class MovieAppMain{
                 int i = 0;
                 boolean flag = false;
                 while(results.next()){
-                    
+                    // a movie object is created and added to the linked list
                     Movie mov = new Movie(results.getString("Movie"), results.getString("timeM"),results.getString("Seats"), results.getString("Theatre") );
                     movies.add(mov);
-
+                    
+                    // if its not the first item in the database then it will traverse through the linked list of the theatres
                     if (i != 0){
                              
                         for (int x = 0; x<theatres.size(); x++) {
+                            // if a theatre is already found to be in the linked list, then the movie object will be appended to it
+                            // i did it this way because it makes sense to have multiple movie objects as each will have different timings but,
+                            // it doesnt make sense to have multiple theatre objects --- 1 theatre has many movies
                             if (theatres.get(x).getName().contains(results.getString("Theatre"))) {
                                 theatres.get(x).addMovie(mov);
                                 flag = true;
                                 break;
                             }
                         }
+
+                        // if the flag is false this means that the theatre isnt already in the list so we go ahead and add it
                         if (flag == false){
                             Theatre th = new Theatre(results.getString("Theatre"));
                             th.addMovie(mov);
                             theatres.add(th);
                         }
                     }
+
+                    // this is for the first item in the database
                     else {
                         Theatre th = new Theatre(results.getString("Theatre"));
                         th.addMovie(mov);
                         theatres.add(th);
                     }
+
+                    // flag is reset to false 
                     flag = false;
+
+                    // set to 1 after the first item is added, so consecutive runs will go through the first if statement
                     i = 1;
                 }
                 statement.close();
             }
             catch(SQLException ex){
                 ex.printStackTrace();
-            }
-            String str = comp.toString();
-            return str.trim();
-        }
-        
-        if(tableName.equals("available_food")){
-            try{
-                Statement statement = dbConnect.createStatement();  
-                results = statement.executeQuery("SELECT ItemID, Name, GrainContent, FVContent, ProContent, Other, Calories from available_food");
-            
-                while(results.next()){
-                    foodDetails = new String[7];
-                     
-                    //foodDetails[0] = results.getString("ItemID");
-                    
-
-                    allFoodDetails.add(foodDetails);
-                }
-                
-                statement.close();
-            }
-            catch(SQLException ex){
-
-                ex.printStackTrace();   
-        
             }
             String str = comp.toString();
             return str.trim();
@@ -182,17 +168,17 @@ public class MovieAppMain{
      */
     ////////////////////////////////////////////////////////////////////
     
+    // this is the search function used to search for a movie
     public static void search(String movieName){
         System.out.println("Search results for "+ movieName);
+        // traverses through the theatres list and searches each theatre for a movie
+        // you can see how the display happens in the theatre/movie classes
         for(int i=0; i<theatres.size(); i++){
-           
-            System.out.println(theatres.get(i).getName());
             theatres.get(i).searchMovies(movieName);
         }
     }
     public static void main(String[] args) throws FileNotFoundException {
-       GUI gui = new GUI();
-      //  Food foodObj;
+        GUI gui = new GUI();
         
         //Use the following account information: Username = student, Password = ensf
         MovieAppMain myJDBC = new MovieAppMain("jdbc:mysql://localhost/data_cinema","user1","ensf");
@@ -202,7 +188,8 @@ public class MovieAppMain{
         System.out.println();
         
         System.out.println(myJDBC.storeData("projectData"));
-
+ 
+        /// i used these print statements to make sure the linked lists were correct and to test the search method
        /* System.out.println("--------------movies----------------");
         for(int i=0; i<movies.size(); i++){
             System.out.println(movies.get(i).getName());
@@ -214,12 +201,12 @@ public class MovieAppMain{
             System.out.println(theatres.get(i).getName());
             System.out.println("------movies-------");
             theatres.get(i).getMovies();
-        } */
+        } 
         System.out.println("--------test search for wakanda----");
         search("Wakanda Forvever");
-        
-       // System.out.println(myJDBC.clients("available_food"));
-
+        */
+        GUI.run();
+        // this is all old stuff from the last project in case we want to use it
     /*     String[][] clients = {
             {clientDetails[0][0],clientDetails[0][1],clientDetails[0][2],clientDetails[0][3],clientDetails[0][4],clientDetails[0][5],clientDetails[0][6]},
             {clientDetails[1][0],clientDetails[1][1],clientDetails[1][2],clientDetails[1][3],clientDetails[1][4],clientDetails[1][5],clientDetails[1][6]},
@@ -251,7 +238,6 @@ public class MovieAppMain{
             catch (IOException e) {e.printStackTrace();}
 
         */
-		GUI.run();
 
     }
 }
