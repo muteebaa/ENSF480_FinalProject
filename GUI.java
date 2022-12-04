@@ -34,7 +34,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
     private JLabel instructions;
     private JLabel instructions1;
     
-    private JLabel searchLabel;
+   // private JLabel searchLabel;
 
     private javax.swing.JPanel jPanel1;
 
@@ -341,9 +341,9 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         i.setFont(new java.awt.Font("Segoe UI", 0, 17)); 
         i.setForeground(new java.awt.Color(0,0,0));
 
-        searchLabel = new JLabel("Search a movie:");
-        searchLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
-        searchLabel.setForeground(new java.awt.Color(0,0,0));
+        JLabel s = new JLabel("Search a movie:");
+        s.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
+        s.setForeground(new java.awt.Color(0,0,0));
 
         JPanel top = new JPanel();
         top.setLayout(new FlowLayout());
@@ -357,13 +357,20 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         content.add(new JLabel("Strange World"));
         //headerPanel.add(instructions1);
     
-        content.add(searchLabel);
-        content.add(searchInput);
-        content.add(submitInfo);
+        content.add(s);
+       // content.add(searchInput);
+       // content.add(submitInfo);
 
         
         searchScreen.add(top, BorderLayout.NORTH);
         searchScreen.add(content, BorderLayout.CENTER);
+
+        searchScreen.setSize(400,300);
+        searchScreen.setVisible(true);
+
+        System.out.println("seats: "+seats);
+        System.out.println("movie: "+movID);
+
       //  this.add(submitPanel, BorderLayout.SOUTH);
       //  this.add(exitPanel, BorderLayout.EAST);
        // this.add(moviePanel, BorderLayout.SOUTH);
