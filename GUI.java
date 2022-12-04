@@ -208,45 +208,46 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             if (check != null){
                 String[] dates = new String[5];
                 int j = 0;
+                Object d;
+                Object t;
+
                 for (int i = 0; i < movies.size(); i ++) {
-                    dates[j] = movies.get(i).getDate();
-                    j++;
+                    dates[i] = movies.get(i).getDate();
                 
-                  /*   if (j == 5){
-                        break;
-                    }
-                    
-                    i = i + 3;    */   
                 }
 
-                Object d = JOptionPane.showInputDialog(null, "Please select a date.", 
+                d = JOptionPane.showInputDialog(null, "Please select a date.", 
                     "Dates", JOptionPane.QUESTION_MESSAGE, null, dates, dates[0]);
                 
                 if (d == dates[0]){
                     System.out.println("works!");
                 }
+                String[] times = new String[4];
                 if(d instanceof String){
-                    String[] times = new String[4];
+                    
                     int k = 0;
                     for (int i = 0; i < movies.size(); i ++) {
-                        times[k] = movies.get(i).getTime();
-                        k++;
-                    
-                        if (k == 4){
-                            break;
-                        }       
+                        times[i] = movies.get(i).getTime();
+      
                     }
-    
-                    Object t = JOptionPane.showInputDialog(null, "Please select a showtime.", 
-                            "Showtimes", JOptionPane.QUESTION_MESSAGE, null, times, times[0]);
                     
-                    if(t instanceof String){
+                 /*    if(t instanceof String){
                         System.out.println("here");
                         Seats seat = new Seats(1);
                       //  seat.init();
                         dispose();
-                    }
+                    }*/
+
                 }
+                t = JOptionPane.showInputDialog(null, "Please select a showtime.", 
+                "Showtimes", JOptionPane.QUESTION_MESSAGE, null, times, times[0]);
+
+                // finding the movie
+                for (int i = 0; i < movies.size(); i ++) {
+                    if (d == movies.get(i).getDate() && t == movies.get(i).getTime())
+                    System.out.println("yeah good");
+                }
+
             }
             
             else{
