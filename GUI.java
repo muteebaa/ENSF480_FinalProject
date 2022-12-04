@@ -23,8 +23,10 @@ import java.awt.FlowLayout;
 public class GUI extends JFrame implements ActionListener, MouseListener{
 	// variables required for implementation
     private String movieSearch;
-    private int tickets;
+    private String seats;
     private int movID;
+
+    private Guest user1;
 
 	
 	// variables required for the GUI
@@ -43,7 +45,10 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
     
     private JButton submitInfo;
     private JButton purchaseTicket;
-    
+    private JButton guestBtn;
+  
+  //  private JFrame paymentScreen = new JFrame();
+    JButton pay;
     
     /*
      * GUI() Constructor
@@ -88,7 +93,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         movInput = new JTextField("Movie ID...", 15);
         movInput.addMouseListener(this);
 
-        testInput = new JTextField("(test)number of tickets...", 15);
+        testInput = new JTextField("e.g. a1 a2 a3", 15);
         testInput.addMouseListener(this);
 
         submitInfo = new JButton("Search");
@@ -96,6 +101,9 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 
         purchaseTicket = new JButton("Purchase");
         purchaseTicket.addActionListener(this);
+
+        guestBtn = new JButton("guest");
+        guestBtn.addActionListener(this);
 
         JButton exit = new JButton("Exit");
 		exit.addActionListener (new ActionListener () {
@@ -119,6 +127,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         headerPanel.add(instructions);
         headerPanel.add(instructions1);
     
+        clientPanel.add(guestBtn);
+
         clientPanel.add(searchLabel);
         clientPanel.add(searchInput);
         clientPanel.add(submitInfo);
@@ -150,15 +160,66 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
            
             System.out.println("submit clieckd");
         }
+
+        if(event.getSource() == guestBtn){
+            user1 = new Guest(new GuestPayment());
+        }
         
         if(event.getSource() == purchaseTicket){
             ///need to throw error if an int isnt entered
-            tickets = Integer.parseInt(testInput.getText());
+            seats = testInput.getText();
             movID = Integer.parseInt(movInput.getText());
-
-            System.out.println("buyingticket");
+ 
+            paymentScreen();
         }
 
+        if(event.getSource() == pay){
+            System.out.println("okthis worked ");
+        }
+
+    }
+
+    public void paymentScreen(){
+        JDialog paymentTab = new JDialog(this, "Payment");
+        
+        JLabel title = new JLabel("Payment");
+        title.setFont(new java.awt.Font("Segoe UI", 0, 17)); 
+        title.setForeground(new java.awt.Color(0,0,0));
+
+        JPanel top = new JPanel();
+        top.setLayout(new FlowLayout());
+        top.add(title);
+
+        JPanel content = new JPanel(new FlowLayout(4,4,4));
+        
+        JTextField ccInfo = new JTextField("ccinfo...", 15);
+        ccInfo.setSize(20,100);
+        ccInfo.addMouseListener(this);
+
+        JTextField email = new JTextField("email...", 15);
+        email.setSize(20,100);
+        email.addMouseListener(this);
+
+        pay = new JButton("pay");
+        pay.addActionListener(this);
+
+      //  GridBagConstraints c = new GridBagConstraints();
+        content.add(ccInfo);
+        content.add(email);
+        content.add(pay);
+
+
+        paymentTab.add(top);
+        paymentTab.add(content);
+        //  paymentTab.add(email);
+        paymentTab.setSize(400,300);
+        paymentTab.setVisible(true);
+
+
+        // user1.makePayment(3, MovieAppMain.get());
+
+        System.out.println("seats: "+seats);
+        System.out.println("movie: "+movID);
     }
 
     /*

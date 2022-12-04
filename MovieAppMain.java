@@ -204,6 +204,9 @@ public class MovieAppMain{
         return details;
     }
 
+    public static Movie get(){
+        return movies.get(1);
+    }
     public static void main(String[] args) throws FileNotFoundException {
         GUI gui = new GUI();
         
