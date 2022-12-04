@@ -191,7 +191,26 @@ public class MovieAppMain{
         System.out.println();
         
         System.out.println(myJDBC.storeData("projectData"));
- 
+        
+        // ticket payment
+        System.out.println("seats for "+ movies.get(1).getName()+" before: "+ movies.get(1).getSeats());
+        Guest user = new Guest(new GuestPayment());
+    
+
+        user.makePayment(3, movies.get(1));
+
+        System.out.println("seats for "+ movies.get(1).getName()+" after(should b 7): "+ movies.get(1).getSeats());
+        RegisteredUser user1 = new RegisteredUser(new RegisteredPayment());
+        user.makePayment(1, movies.get(1));
+        
+        System.out.println("seats for "+ movies.get(1).getName()+" after(should b 6): "+ movies.get(1).getSeats());
+
+        user1.cancelPayment(3, movies.get(1));
+        user1.annualFee();
+
+        System.out.println("seats for "+ movies.get(1).getName()+" after(should b 9): "+ movies.get(1).getSeats());
+
+      //  search("Wakanda Forever");
         /// i used these print statements to make sure the linked lists were correct and to test the search method
        /* System.out.println("--------------movies----------------");
         for(int i=0; i<movies.size(); i++){
@@ -208,7 +227,7 @@ public class MovieAppMain{
         System.out.println("--------test search for wakanda----");
         search("Wakanda Forever");
         */
-        GUI.run();
+      // GUI.run();
         // this is all old stuff from the last project in case we want to use it
     /*     String[][] clients = {
             {clientDetails[0][0],clientDetails[0][1],clientDetails[0][2],clientDetails[0][3],clientDetails[0][4],clientDetails[0][5],clientDetails[0][6]},

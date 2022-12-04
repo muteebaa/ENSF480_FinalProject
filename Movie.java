@@ -32,4 +32,19 @@ public class Movie {
         details +="\n";
         return details;
     }
+
+
+    public void decreaseSeats(int n){
+        seats.decrease(n);
+    }
+
+    public void increaseSeats(int n){
+        seats.increase(n);
+    }
+
+    public int getSeats(){
+        return seats.getSeats();
+    }
+    
+    
 }

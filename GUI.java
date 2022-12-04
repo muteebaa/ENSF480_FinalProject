@@ -3,9 +3,9 @@
  * muteeba.jamal@ucalgary.ca</a>
  * @authour: shahzill naveed <a href="mailto:shahzill.naveed@ucalgary.ca">
  * shahzill.naveed@ucalgary.ca</a>
- * @authour: michele pham zia <a href="mailto:----@ucalgary.ca">
+ * @authour: michele phan zia <a href="mailto:----@ucalgary.ca">
  * ----@ucalgary.ca</a>
- * @authour: samira kham <a href="mailto:-----@ucalgary.ca">
+ * @authour: samira khan <a href="mailto:-----@ucalgary.ca">
  * ----@ucalgary.ca</a>
  * @version 1.4
  * @since 1.0
@@ -155,7 +155,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             ///need to throw error if an int isnt entered
             tickets = Integer.parseInt(testInput.getText());
             movID = Integer.parseInt(movInput.getText());
-            
+
             System.out.println("buyingticket");
         }
 
