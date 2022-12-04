@@ -24,16 +24,19 @@ public class Theatre {
         } 
     }
 
-    public String searchMovies(String search){
+    public Movie searchMovies(String search){
         String movDetails ="";
         exists = 0;
+        Movie found = null;
         for(int i=0; i<movies.size(); i++){
             exists = 1;
             if(movies.get(i).getName().contains(search)){
                 movDetails+= movies.get(i).details()+"\n";
+                found = movies.get(i);
             }
         }
-        return movDetails;
+        
+        return found;
     }
 
     public int getExist(){

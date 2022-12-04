@@ -191,29 +191,31 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
     public void actionPerformed(ActionEvent event){
         if(event.getSource().equals(searchBtn)){
             movieSearch = searchInput.getText();  
+            
             MovieAppMain.search(movieSearch);
             
-           
-            //System.out.println("submit clicked");
 
+            //System.out.println("submit clicked");
             //MovieAppMain appmain = new MovieAppMain(movieSearch, movieSearch, movieSearch);
 
-            LinkedList<Movie> movies = MovieAppMain.getMovies();
-            int check = 0;
-            check = MovieAppMain.getFoundMovie();
-            System.out.println("whats check: " + check);
-            if (check == 1){
+            LinkedList<Movie> movies = MovieAppMain.search(movieSearch);
+            // MovieAppMain.getMovies();
+          //  int check = 0;
+            Movie check = MovieAppMain.getFoundMovie();
+            
+       //     System.out.println("whats check: " + check);
+            if (check != null){
                 String[] dates = new String[5];
                 int j = 0;
                 for (int i = 0; i < movies.size(); i ++) {
                     dates[j] = movies.get(i).getDate();
                     j++;
                 
-                    if (j == 5){
+                  /*   if (j == 5){
                         break;
                     }
                     
-                    i = i + 3;       
+                    i = i + 3;    */   
                 }
 
                 Object d = JOptionPane.showInputDialog(null, "Please select a date.", 

@@ -32,7 +32,7 @@ public class MovieAppMain{
 
      // this is a linked list of all the movies in the database 
      private static LinkedList<Movie> movies = new LinkedList<Movie>();
-     private static int movieFound;
+     private static Movie movieFound;
      // this is a linked list of all the theatres in the database 
      private static LinkedList<Theatre> theatres = new LinkedList<Theatre>();
      private static LinkedList<RegisteredUser> regUsers = new LinkedList<RegisteredUser>();
@@ -204,8 +204,9 @@ public class MovieAppMain{
         return details;
     }*/
     // this is the search function used to search for a movie
-    public static String search(String movieName){
+    public static LinkedList<Movie> search(String movieName){
         System.out.println();
+        LinkedList<Movie> allFound = new LinkedList<Movie>();
         String details = "Search results for "+ movieName;
         // traverses through the theatres list and searches each theatre for a movie
         // you can see how the display happens in the theatre/movie classes
@@ -213,15 +214,17 @@ public class MovieAppMain{
         System.out.println("hi?");
         int exists = 0;
         for(int i=0; i<theatres.size(); i++){
-            details += theatres.get(i).searchMovies(movieName);
+          //  details += theatres.get(i).searchMovies(movieName);
             if (exists == 0){
                 exists = theatres.get(i).getExist();
                 System.out.println("what exists: " + exists);
             }
-            movieFound = exists;
+           // movieFound = exists;
+           movieFound = theatres.get(i).searchMovies(movieName);
+           allFound.add(movieFound);
         }
 
-        if(movieFound != 1){
+        if(allFound.size() == 0){
             details = "Movie not found. Please enter a valid movie name.";
         }
 
@@ -233,12 +236,12 @@ public class MovieAppMain{
         // int exists = t.getExist();
         // System.out.println("Whats exists: " + exists);
         
-        return details;
+        return allFound;
     }
     static LinkedList<Movie> getMovies(){
         return movies;
     }
-    public static int getFoundMovie(){
+    public static Movie getFoundMovie(){
         return movieFound;
     }
     public static String register(){
