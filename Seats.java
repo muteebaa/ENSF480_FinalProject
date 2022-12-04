@@ -1,11 +1,11 @@
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
 
 public class Seats {
     private int available;
     private LinkedList<String> seats= new LinkedList<String>();
-    Map<String, Boolean> seat = new HashMap<String, Boolean>(); 
+    LinkedHashMap<String, Boolean> seat = new LinkedHashMap<String, Boolean>(); 
     
     String next = "A";
 
