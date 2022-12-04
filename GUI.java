@@ -227,8 +227,9 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
                     
                     int k = 0;
                     for (int i = 0; i < movies.size(); i ++) {
-                        times[i] = movies.get(i).getTime();
-      
+                        if (d == movies.get(i).getDate()){
+                            times[i] = movies.get(i).getTime();
+                        }
                     }
                     
                  /*    if(t instanceof String){
