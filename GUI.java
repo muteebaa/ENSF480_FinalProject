@@ -19,6 +19,7 @@ import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.*;
 import java.awt.FlowLayout;
 
 public class GUI extends JFrame implements ActionListener, MouseListener{
@@ -398,7 +399,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         seatScreen.setLayout((new FlowLayout()));
        
         JPanel seatPanel = new JPanel();
-        seatPanel.setLayout(new GridLayout(4,5,4,5));
+        seatPanel.setLayout(new GridLayout(0,5,4,5));
 
        
         JButton copyButton = new JButton("Select");
@@ -414,29 +415,15 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             }
         });
 
-        LinkedList<String> seats = selected.getSeats().getSeats();
-        for (int i = 0; i < seats.size(); i++){
-            seatPanel.add(new JButton(seats.get(i)));
-            // seatPanel.add(new JButton("A2"));
-            // seatPanel.add(new JButton("A3"));
-            // seatPanel.add(new JButton("A4"));
-            // seatPanel.add(new JButton("A5"));
-            // seatPanel.add(new JButton("B1"));
-            // seatPanel.add(new JButton("B2"));
-            // seatPanel.add(new JButton("B3"));
-            // seatPanel.add(new JButton("B4"));
-            // seatPanel.add(new JButton("B5"));
-            // seatPanel.add(new JButton("C1"));
-            // seatPanel.add(new JButton("C2"));
-            // seatPanel.add(new JButton("C3"));
-            // seatPanel.add(new JButton("C4"));
-            // seatPanel.add(new JButton("C5"));
-            // seatPanel.add(new JButton("D1"));
-            // seatPanel.add(new JButton("D2"));
-            // seatPanel.add(new JButton("D3"));
-            // seatPanel.add(new JButton("D4"));
-            // seatPanel.add(new JButton("D5"));
+        Map<String, Boolean> seats = selected.getSeats().getSeats();
+
+        for (Map.Entry<String, Boolean> s : seats.entrySet()) {
+                
+                seatPanel.add(new JButton(s.getKey()));
         }
+     //   for (int i = 0; i < seats.size(); i++){
+     //       seatPanel.add(new JButton(seats.get(i)));
+     //   }
 
         seatScreen.add(seatPanel, BorderLayout.CENTER);
 
