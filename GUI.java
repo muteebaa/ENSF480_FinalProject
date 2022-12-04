@@ -23,25 +23,35 @@ import java.awt.FlowLayout;
 public class GUI extends JFrame implements ActionListener, MouseListener{
 	// variables required for implementation
     private String movieSearch;
+    private int tickets;
+    private int movID;
+
 	
 	// variables required for the GUI
     private JLabel instructions;
     private JLabel instructions1;
+    
     private JLabel searchLabel;
- 
+
     private javax.swing.JPanel jPanel1;
 
     private JTextField searchInput;
 
     private JLabel testLabel;
     private JTextField testInput;
+    private JTextField movInput;
+    
+    private JButton submitInfo;
+    private JButton purchaseTicket;
+    
+    
     /*
      * GUI() Constructor
      */ 
     public GUI(){
         super("Group 4 Project");
         setupGUI();
-        setSize(400,200);
+        setSize(400,300);
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);        
     }
@@ -68,22 +78,24 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         searchLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
         searchLabel.setForeground(new java.awt.Color(0,0,0));
        
-        
+        testLabel = new JLabel("Buy Tickets:");
+        testLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
+        testLabel.setForeground(new java.awt.Color(0,0,0));
+     
         searchInput = new JTextField("Erase and type movie...", 15);
         searchInput.addMouseListener(this);
 
+        movInput = new JTextField("Movie ID...", 15);
+        movInput.addMouseListener(this);
 
-        /// BUYING A TICKET
-        testLabel = new JLabel("(test) number of tickets:");
-        testLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
-        testLabel.setForeground(new java.awt.Color(0,0,0));
-
-        testInput = new JTextField("number of ...", 15);
+        testInput = new JTextField("(test)number of tickets...", 15);
         testInput.addMouseListener(this);
 
-        
-        JButton submitInfo = new JButton("Submit");
+        submitInfo = new JButton("Search");
         submitInfo.addActionListener(this);
+
+        purchaseTicket = new JButton("Purchase");
+        purchaseTicket.addActionListener(this);
 
         JButton exit = new JButton("Exit");
 		exit.addActionListener (new ActionListener () {
@@ -109,41 +121,44 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
     
         clientPanel.add(searchLabel);
         clientPanel.add(searchInput);
+        clientPanel.add(submitInfo);
 
         clientPanel.add(testLabel);
-        clientPanel.add(testInput);
+        clientPanel.add(movInput);
+        clientPanel.add(testInput);    
+        clientPanel.add(purchaseTicket);
 
 
-        submitPanel.add(submitInfo);
+      ///  submitPanel.add(submitInfo);
         exitPanel.add(exit);
        
         this.add(headerPanel, BorderLayout.NORTH);
         this.add(clientPanel, BorderLayout.CENTER);
-        this.add(submitPanel, BorderLayout.SOUTH);
+      //  this.add(submitPanel, BorderLayout.SOUTH);
         this.add(exitPanel, BorderLayout.EAST);
     }
     
     /*
      * actionPerformed(ActionEvent event) Method
      * 
-     * Once the user inputs data and presses submit, the data is assigned 
-     * to the variables we defined above.
-     * 
-     * Depending on which option the user decided to fill out, the 
-     * corresponding Hamper constructor is called to create an object of
-     * Hamper.Then an order object is created.
-     * 
-     * The details of the hamper created or an error messgae is displayed 
-     * depending on wether or not a hamper was able to be created. 
-     * 
-     * There is a popup error message if:
-     * 		- both options are filled out,
-     * 		- invalid data (e.g. negative numbers) is inputted.
+     * calls the search method and search results are printed to main
      */ 
     public void actionPerformed(ActionEvent event){
-        movieSearch = searchInput.getText();
+        if(event.getSource().equals(submitInfo)){
+            movieSearch = searchInput.getText();  
+            JOptionPane.showMessageDialog(this,  MovieAppMain.search(movieSearch));
+           
+            System.out.println("submit clieckd");
+        }
         
-        MovieAppMain.search(movieSearch);
+        if(event.getSource() == purchaseTicket){
+            ///need to throw error if an int isnt entered
+            tickets = Integer.parseInt(testInput.getText());
+            movID = Integer.parseInt(movInput.getText());
+            
+            System.out.println("buyingticket");
+        }
+
     }
 
     /*
@@ -205,6 +220,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 	 */ 
     public static void run() { 
         GUI X = new GUI();
+       // X.getContentPane().add(BorderLayout.NORTH, clientPanel);
         X.setVisible(true);
     }     
 }

@@ -6,8 +6,10 @@ public class Movie {
     private Seats seats;
     private String theatre;
     private String date;
+    private int id;
     
-    Movie(String nam, String tim, String d, String n, String th){
+    Movie(String id, String nam, String tim, String d, String n, String th){
+        this.id = Integer.parseInt(id);
         name = nam;
         time = tim;
         tickets = new Ticket[Integer.parseInt(n)];
@@ -23,10 +25,11 @@ public class Movie {
         return name;
     }
     
-    public void display(){
-        System.out.println("showing at "+theatre);
-        System.out.println("date: " + date);
-        System.out.println("time: " + time);
-        System.out.println();
+    public String details(){
+        String details = "\nid: "+ id +" showing at "+theatre;
+        details +="\ndate: " + date;
+        details +="\ntime: " + time;
+        details +="\n";
+        return details;
     }
 }

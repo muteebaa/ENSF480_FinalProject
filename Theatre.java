@@ -23,12 +23,14 @@ public class Theatre {
         } 
     }
 
-    public void searchMovies(String search){
+    public String searchMovies(String search){
+        String movDetails ="";
         for(int i=0; i<movies.size(); i++){
             if(movies.get(i).getName().contains(search)){
-                movies.get(i).display();
+                movDetails+= movies.get(i).details()+"\n";
             }
         }
+        return movDetails;
     }
 
 }

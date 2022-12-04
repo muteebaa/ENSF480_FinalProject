@@ -105,12 +105,12 @@ public class MovieAppMain{
         if(tableName.equals("projectData")){
             try{
                 Statement statement = dbConnect.createStatement();  
-                results = statement.executeQuery("SELECT Theatre, Movie, dateM, dayM, timeM, Seats from projectData");
+                results = statement.executeQuery("SELECT Theatre, Movie, dateM, dayM, timeM, Seats, Item from projectData");
                 int i = 0;
                 boolean flag = false;
                 while(results.next()){
                     // a movie object is created and added to the linked list
-                    Movie mov = new Movie(results.getString("Movie"), results.getString("dateM"),results.getString("Movie"),results.getString("Seats"), results.getString("Theatre") );
+                    Movie mov = new Movie(results.getString("Item"),results.getString("Movie"), results.getString("dateM"),results.getString("Movie"),results.getString("Seats"), results.getString("Theatre") );
                     movies.add(mov);
                     
                     // if its not the first item in the database then we will traverse through the linked list of theatres
@@ -169,13 +169,16 @@ public class MovieAppMain{
     ////////////////////////////////////////////////////////////////////
     
     // this is the search function used to search for a movie
-    public static void search(String movieName){
-        System.out.println("Search results for "+ movieName);
+    public static String search(String movieName){
+        System.out.println();
+        String details = "Search results for "+ movieName;
         // traverses through the theatres list and searches each theatre for a movie
         // you can see how the display happens in the theatre/movie classes
         for(int i=0; i<theatres.size(); i++){
-            theatres.get(i).searchMovies(movieName);
+            details += theatres.get(i).searchMovies(movieName);
         }
+
+        return details;
     }
     public static void main(String[] args) throws FileNotFoundException {
         GUI gui = new GUI();
