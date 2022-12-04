@@ -418,8 +418,9 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         Map<String, Boolean> seats = selected.getSeats().getSeats();
 
         for (Map.Entry<String, Boolean> s : seats.entrySet()) {
-                
-                seatPanel.add(new JButton(s.getKey()));
+                JButton btn = new JButton(s.getKey());
+                if (!s.getValue()) {btn.setEnabled(false);}
+                seatPanel.add(btn);
         }
      //   for (int i = 0; i < seats.size(); i++){
      //       seatPanel.add(new JButton(seats.get(i)));
