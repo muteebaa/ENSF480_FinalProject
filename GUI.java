@@ -251,8 +251,9 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         }
         
         if(event.getSource().equals(guest)){
+            searchScreen();
           //  SearchMovie.run();
-            dispose();
+           // dispose();
         }
 
         if(event.getSource().equals(register)){
@@ -331,6 +332,41 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             System.out.println("okthis worked ");
         }
 
+    }
+
+    public void searchScreen(){
+        JDialog searchScreen = new JDialog(this, "Search");
+
+        JLabel i = new JLabel("Search a movie");
+        i.setFont(new java.awt.Font("Segoe UI", 0, 17)); 
+        i.setForeground(new java.awt.Color(0,0,0));
+
+        searchLabel = new JLabel("Search a movie:");
+        searchLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
+        searchLabel.setForeground(new java.awt.Color(0,0,0));
+
+        JPanel top = new JPanel();
+        top.setLayout(new FlowLayout());
+        top.add(i);
+
+        JPanel content = new JPanel(new FlowLayout(4,4,4));
+
+        content.add(new JLabel("Wakanda Forever"));
+        content.add(new JLabel("Smile"));
+        content.add(new JLabel("Black Adam"));
+        content.add(new JLabel("Strange World"));
+        //headerPanel.add(instructions1);
+    
+        content.add(searchLabel);
+        content.add(searchInput);
+        content.add(submitInfo);
+
+        
+        searchScreen.add(top, BorderLayout.NORTH);
+        searchScreen.add(content, BorderLayout.CENTER);
+      //  this.add(submitPanel, BorderLayout.SOUTH);
+      //  this.add(exitPanel, BorderLayout.EAST);
+       // this.add(moviePanel, BorderLayout.SOUTH);
     }
 
     public void paymentScreen(){
