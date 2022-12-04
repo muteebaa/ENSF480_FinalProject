@@ -248,6 +248,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
                     if (d == movies.get(i).getDate() && t == movies.get(i).getTime()){
                         selected = movies.get(i);
                         System.out.println("amazing!");
+                        seatScreen(selected);
                         break;
 
                     }
