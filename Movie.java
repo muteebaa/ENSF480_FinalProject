@@ -6,23 +6,38 @@ public class Movie {
     private Seats seats;
     private String theatre;
     private String date;
+    private String day;
     private int id;
     
-    Movie(String id, String nam, String tim, String d, String n, String th){
+    Movie(String id, String Theatre, String Movie, String dateM, String dayM, String timeM, String seats){
         this.id = Integer.parseInt(id);
-        name = nam;
-        time = tim;
-        tickets = new Ticket[Integer.parseInt(n)];
-        for (int i = 0; i < Integer.parseInt(n); i ++){
-            //tickets[i] = new Ticket(1);
+        theatre = Theatre;
+        this.name = Movie;
+        this.date = dateM;
+        this.day = dayM;
+        this.time = timeM;
+        tickets = new Ticket[Integer.parseInt(seats)];
+        for (int i = 0; i < Integer.parseInt(seats); i ++){
+           // tickets[i] = new Ticket(1);
         }
-        seats = new Seats(Integer.parseInt(n));
-        theatre = th;
-        date = d;
+        this.seats = new Seats(Integer.parseInt(seats));
+        
     }
 
     public String getName(){
         return name;
+    }  
+    
+    String getDate(){
+        return date;
+    }
+
+    public String getDay(){
+        return day;
+    }
+
+    public String getTime(){
+        return time;
     }
     
     public String details(){

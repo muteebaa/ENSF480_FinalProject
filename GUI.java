@@ -18,6 +18,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.awt.FlowLayout;
 
 public class GUI extends JFrame implements ActionListener, MouseListener{
@@ -46,6 +47,24 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
     private JButton submitInfo;
     private JButton purchaseTicket;
     private JButton guestBtn;
+
+
+    private JTextField email;   // for login
+    private JTextField pw;
+
+    private JTextField emailreg;       // for registering
+    private JTextField pwreg;
+    private JTextField name;
+    private JTextField cardno;
+    private JTextField cvv;
+    private JTextField expiry;
+
+    
+    private JButton register;
+    private JButton login;
+    private JButton guest;
+
+    private JButton viewSeats;
   
   //  private JFrame paymentScreen = new JFrame();
     JButton pay;
@@ -75,48 +94,58 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         instructions.setFont(new java.awt.Font("Segoe UI", 0, 17)); 
         instructions.setForeground(new java.awt.Color(0,0,0));
 
-        instructions1 = new JLabel("Movie Booking" );
+        instructions1 = new JLabel("\n Movie Booking" );
         instructions1.setFont(new java.awt.Font("Segoe UI", 0, 17));
-        instructions1.setForeground(new java.awt.Color(0,0,0));
-
-        searchLabel = new JLabel("Search a movie:");
-        searchLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
-        searchLabel.setForeground(new java.awt.Color(0,0,0));
+        instructions1.setForeground(new java.awt.Color(0,0,0));    
+        
+        // searchLabel = new JLabel("Search a movie:");
+        // searchLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
+        // searchLabel.setForeground(new java.awt.Color(0,0,0));
        
-        testLabel = new JLabel("Buy Tickets:");
-        testLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
-        testLabel.setForeground(new java.awt.Color(0,0,0));
+        // testLabel = new JLabel("Buy Tickets:");
+        // testLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
+        // testLabel.setForeground(new java.awt.Color(0,0,0));
      
-        searchInput = new JTextField("Erase and type movie...", 15);
-        searchInput.addMouseListener(this);
+        // searchInput = new JTextField("Erase and type movie...", 15);
+        // searchInput.addMouseListener(this);
 
-        movInput = new JTextField("Movie ID...", 15);
-        movInput.addMouseListener(this);
+        // movInput = new JTextField("Movie ID...", 15);
+        // movInput.addMouseListener(this);
 
-        testInput = new JTextField("e.g. a1 a2 a3", 15);
-        testInput.addMouseListener(this);
+        // testInput = new JTextField("(test)number of tickets...", 15);
+        // testInput.addMouseListener(this);
 
-        submitInfo = new JButton("Search");
-        submitInfo.addActionListener(this);
+        register = new JButton("Sign up here");
+        register.addActionListener(this);
 
-        purchaseTicket = new JButton("Purchase");
-        purchaseTicket.addActionListener(this);
+        login = new JButton("Login here");
+        login.addActionListener(this);
 
-        guestBtn = new JButton("guest");
-        guestBtn.addActionListener(this);
+        guest = new JButton("Continue as guest");
+        guest.addActionListener(this);
 
-        JButton exit = new JButton("Exit");
-		exit.addActionListener (new ActionListener () {
-			public void actionPerformed (ActionEvent e) {
-			System.exit(0);
-			}
-        });
+        
+        // submitInfo = new JButton("Search");
+        // submitInfo.addActionListener(this);
+
+        // viewSeats = new JButton("View available seats");
+        // viewSeats.addActionListener(this);
+
+        // purchaseTicket = new JButton("Purchase");
+        // purchaseTicket.addActionListener(this);
+
+        // JButton exit = new JButton("Exit");
+		// exit.addActionListener (new ActionListener () {
+		// 	public void actionPerformed (ActionEvent e) {
+		// 	System.exit(0);
+		// 	}
+        // });
 
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new FlowLayout());
         
         JPanel clientPanel = new JPanel();
-        clientPanel.setLayout(new BoxLayout(clientPanel, 1));
+        clientPanel.setLayout(new GridLayout(3,3,2,2));
 
         JPanel submitPanel = new JPanel();
         submitPanel.setLayout(new FlowLayout());
@@ -126,24 +155,29 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         
         headerPanel.add(instructions);
         headerPanel.add(instructions1);
-    
-        clientPanel.add(guestBtn);
+        
+        clientPanel.add(guest);
+        clientPanel.add(login);
+        clientPanel.add(register);
 
-        clientPanel.add(searchLabel);
-        clientPanel.add(searchInput);
-        clientPanel.add(submitInfo);
+        
 
-        clientPanel.add(testLabel);
-        clientPanel.add(movInput);
-        clientPanel.add(testInput);    
-        clientPanel.add(purchaseTicket);
+        // clientPanel.add(searchLabel);
+        // clientPanel.add(searchInput);
+        // clientPanel.add(submitInfo);
+        // clientPanel.add(viewSeats);
 
+
+        // clientPanel.add(testLabel);
+        // clientPanel.add(movInput);
+        // clientPanel.add(testInput);    
+        // clientPanel.add(purchaseTicket);
 
       ///  submitPanel.add(submitInfo);
-        exitPanel.add(exit);
+        // exitPanel.add(exit);
        
-        this.add(headerPanel, BorderLayout.NORTH);
-        this.add(clientPanel, BorderLayout.CENTER);
+        this.add(headerPanel, BorderLayout.CENTER);
+        this.add(clientPanel, BorderLayout.SOUTH);
       //  this.add(submitPanel, BorderLayout.SOUTH);
         this.add(exitPanel, BorderLayout.EAST);
     }
@@ -154,6 +188,126 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
      * calls the search method and search results are printed to main
      */ 
     public void actionPerformed(ActionEvent event){
+        if(event.getSource().equals(submitInfo)){
+            movieSearch = searchInput.getText();  
+            MovieAppMain.search(movieSearch);
+            
+           
+            //System.out.println("submit clicked");
+
+            //MovieAppMain appmain = new MovieAppMain(movieSearch, movieSearch, movieSearch);
+
+            LinkedList<Movie> movies = MovieAppMain.getMovies();
+            int check = 0;
+            check = MovieAppMain.getFoundMovie();
+            System.out.println("whats check: " + check);
+            if (check == 1){
+                String[] dates = new String[5];
+                int j = 0;
+                for (int i = 0; i < movies.size(); i ++) {
+                    dates[j] = movies.get(i).getDate();
+                    j++;
+                
+                    if (j == 5){
+                        break;
+                    }
+                    
+                    i = i + 3;       
+                }
+
+                Object d = JOptionPane.showInputDialog(null, "Please select a date.", 
+                    "Dates", JOptionPane.QUESTION_MESSAGE, null, dates, dates[0]);
+                
+                if (d == dates[0]){
+                    System.out.println("works!");
+                }
+                if(d instanceof String){
+                    String[] times = new String[4];
+                    int k = 0;
+                    for (int i = 0; i < movies.size(); i ++) {
+                        times[k] = movies.get(i).getTime();
+                        k++;
+                    
+                        if (k == 4){
+                            break;
+                        }       
+                    }
+    
+                    Object t = JOptionPane.showInputDialog(null, "Please select a showtime.", 
+                            "Showtimes", JOptionPane.QUESTION_MESSAGE, null, times, times[0]);
+                    
+                    if(t instanceof String){
+                        System.out.println("here");
+                        Seats seat = new Seats(1);
+                      //  seat.init();
+                        dispose();
+                    }
+                }
+            }
+            
+            else{
+                JOptionPane.showMessageDialog(this,  MovieAppMain.search(movieSearch));
+            }
+        }
+        
+        if(event.getSource().equals(guest)){
+          //  SearchMovie.run();
+            dispose();
+        }
+
+        if(event.getSource().equals(register)){
+            // MICHELE'S PLAN B4 SHE DIED: 
+            // MAKE IT SO THAT WHEN "SIGN UP HERE" IS CLICKED ANOTHER WINDOW OPENS AND ALLOWS USER TO ENTER STUFF
+            // ASK SAMU OR SAYMA
+
+            JOptionPane.showConfirmDialog(this, MovieAppMain.register(),"Registered", JOptionPane.OK_CANCEL_OPTION);
+            System.out.println("registered clicked");
+        }
+
+        if(event.getSource().equals(login)){
+            // FOR SAMU USER HAS LOGGED IN AND UH CANT DO AGAIN??
+            email = new JTextField(10);
+            pw = new JTextField(10);
+      
+            JPanel myPanel = new JPanel();
+            myPanel.add(new JLabel("Email"));
+            myPanel.add(email);
+            myPanel.add(Box.createHorizontalStrut(15)); // a spacer
+            myPanel.add(new JLabel("Password"));
+            myPanel.add(pw);
+      
+            var enteredEmail = JOptionPane.showInputDialog("Please enter your email: ");
+            var userEmail = enteredEmail;   
+
+            var enteredPW = JOptionPane.showInputDialog("Please enter your password: ");
+            var userPW = enteredPW;     
+            // HOW TO CONFIRM W DATABASE
+
+            try
+            {
+                MovieAppMain myJDBC = new MovieAppMain("jdbc:mysql://localhost:3306/ENSF480Final","root","");
+                myJDBC.initializeConnection(); 
+                
+                String query = "SELECT * FROM userdata where Email = '" + userEmail + "' and Password = '" + userPW + "'";
+                // execute query 
+                // if userEmail == Email and userPW == Password
+                    //System.out.println("Log in successful");
+                    // button allows user to go to movie search page 
+                    // button allows user to go view announcemtns??? (michele thinks this part is bonus)
+                // else
+                    //System.out.println("Email or password is incorrect. Try again!");
+
+            }
+
+            finally{
+                ;
+            }
+            
+           
+            System.out.println("login clicked");
+        }
+
+    
         if(event.getSource().equals(submitInfo)){
             movieSearch = searchInput.getText();  
             JOptionPane.showMessageDialog(this,  MovieAppMain.search(movieSearch));

@@ -32,7 +32,7 @@ public class MovieAppMain{
 
      // this is a linked list of all the movies in the database 
      private static LinkedList<Movie> movies = new LinkedList<Movie>();
-
+     private static int movieFound;
      // this is a linked list of all the theatres in the database 
      private static LinkedList<Theatre> theatres = new LinkedList<Theatre>();
      private static LinkedList<RegisteredUser> regUsers = new LinkedList<RegisteredUser>();
@@ -110,7 +110,7 @@ public class MovieAppMain{
                 boolean flag = false;
                 while(results.next()){
                     // a movie object is created and added to the linked list
-                    Movie mov = new Movie(results.getString("Item"),results.getString("Movie"), results.getString("timeM"),results.getString("dateM"),results.getString("Seats"), results.getString("Theatre") );
+                    Movie mov = new Movie(results.getString("Item"), results.getString("Theatre"), results.getString("Movie"), results.getString("dateM"), results.getString("dayM"),results.getString("timeM"), results.getString("Seats"));
                     movies.add(mov);
                     
                     // if its not the first item in the database then we will traverse through the linked list of theatres
@@ -192,7 +192,7 @@ public class MovieAppMain{
     ////////////////////////////////////////////////////////////////////
     
     // this is the search function used to search for a movie
-    public static String search(String movieName){
+    /*public static String search(String movieName){
         System.out.println();
         String details = "Search results for "+ movieName;
         // traverses through the theatres list and searches each theatre for a movie
@@ -202,8 +202,50 @@ public class MovieAppMain{
         }
 
         return details;
-    }
+    }*/
+    // this is the search function used to search for a movie
+    public static String search(String movieName){
+        System.out.println();
+        String details = "Search results for "+ movieName;
+        // traverses through the theatres list and searches each theatre for a movie
+        // you can see how the display happens in the theatre/movie classes
+        
+        System.out.println("hi?");
+        int exists = 0;
+        for(int i=0; i<theatres.size(); i++){
+            details += theatres.get(i).searchMovies(movieName);
+            if (exists == 0){
+                exists = theatres.get(i).getExist();
+                System.out.println("what exists: " + exists);
+            }
+            movieFound = exists;
+        }
 
+        if(movieFound != 1){
+            details = "Movie not found. Please enter a valid movie name.";
+        }
+
+        // if(movieName == null){
+        //     details = "Please enter a movie name.";
+        // }
+        // Theatre t = new Theatre(movieName);
+        // t.searchMovies(details);
+        // int exists = t.getExist();
+        // System.out.println("Whats exists: " + exists);
+        
+        return details;
+    }
+    static LinkedList<Movie> getMovies(){
+        return movies;
+    }
+    public static int getFoundMovie(){
+        return movieFound;
+    }
+    public static String register(){
+        System.out.println("hehehe registering"); 
+        String done =  "registered!!!";
+        return done;       
+    }
     public static Movie get(){
         return movies.get(1);
     }
