@@ -63,6 +63,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
     private JButton register;
     private JButton login;
     private JButton guest;
+    private JButton searchBtn;
 
     private JButton viewSeats;
   
@@ -188,7 +189,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
      * calls the search method and search results are printed to main
      */ 
     public void actionPerformed(ActionEvent event){
-        if(event.getSource().equals(submitInfo)){
+        if(event.getSource().equals(searchBtn)){
             movieSearch = searchInput.getText();  
             MovieAppMain.search(movieSearch);
             
@@ -345,6 +346,12 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         s.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
         s.setForeground(new java.awt.Color(0,0,0));
 
+        JTextField searchV = new JTextField("Erase and type movie...", 15);
+        searchV.addMouseListener(this);
+
+        searchBtn = new JButton("Search");
+        searchBtn.addActionListener(this);
+
         JPanel top = new JPanel();
         top.setLayout(new FlowLayout());
         top.add(i);
@@ -358,8 +365,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         //headerPanel.add(instructions1);
     
         content.add(s);
-       // content.add(searchInput);
-       // content.add(submitInfo);
+        content.add(searchV);
+        content.add(searchBtn);
 
         
         searchScreen.add(top, BorderLayout.NORTH);
