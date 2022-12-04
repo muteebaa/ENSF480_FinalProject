@@ -399,8 +399,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
        
         JPanel seatPanel = new JPanel();
         seatPanel.setLayout(new GridLayout(4,5,4,5));
-        
-        JList jListForCopy;
+
        
         JButton copyButton = new JButton("Select");
         
@@ -414,8 +413,10 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
                 
             }
         });
-        for (int i = 0; i < selected.getSeats().getAvailable(); i++){
-            seatPanel.add(new JButton());
+
+        LinkedList<String> seats = selected.getSeats().getSeats();
+        for (int i = 0; i < seats.size(); i++){
+            seatPanel.add(new JButton(seats.get(i)));
             // seatPanel.add(new JButton("A2"));
             // seatPanel.add(new JButton("A3"));
             // seatPanel.add(new JButton("A4"));
