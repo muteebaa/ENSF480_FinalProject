@@ -3,10 +3,10 @@
  * muteeba.jamal@ucalgary.ca</a>
  * @authour: shahzill naveed <a href="mailto:shahzill.naveed@ucalgary.ca">
  * shahzill.naveed@ucalgary.ca</a>
- * @authour: michele pham <a href="mailto:---@ucalgary.ca">
- * ---@ucalgary.ca</a>
- * @authour: samira khan <a href="mailto:---@ucalgary.ca">
- * ---@ucalgary.ca</a>
+ * @authour: michele pham <a href="mailto:michele.pham@ucalgary.ca">
+ * michele.pham@ucalgary.ca</a>
+ * @authour: samira khan <a href="mailto:samira.khan@ucalgary.ca">
+ * samira.khan@ucalgary.ca</a>
  * @version 1.0
  * @since 1.0
  */
@@ -184,7 +184,7 @@ public class MovieAppMain{
         GUI gui = new GUI();
         
         //Use the following account information: Username = user1, Password = ensf
-        MovieAppMain myJDBC = new MovieAppMain("jdbc:mysql://localhost/data_cinema","user1","ensf");
+        MovieAppMain myJDBC = new MovieAppMain("jdbc:mysql://localhost:3306/MovieTheater","root","");
         myJDBC.initializeConnection();
 
         System.out.println("------------------------------");
