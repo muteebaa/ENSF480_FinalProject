@@ -203,7 +203,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             // MovieAppMain.getMovies();
           //  int check = 0;
             Movie check = MovieAppMain.getFoundMovie();
-            
+            Movie selected;
        //     System.out.println("whats check: " + check);
             if (check != null){
                 String[] dates = new String[5];
@@ -244,7 +244,11 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 
                 // finding the movie
                 for (int i = 0; i < movies.size(); i ++) {
-                    if (d == movies.get(i).getDate() && t == movies.get(i).getTime())
+                    if (d == movies.get(i).getDate() && t == movies.get(i).getTime()){
+                        selected = movies.get(i);
+                        System.out.println("amazing!");
+
+                    }
                     System.out.println("yeah good");
                 }
 
