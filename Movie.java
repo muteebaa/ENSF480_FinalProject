@@ -57,8 +57,8 @@ public class Movie {
         seats.increase(n);
     }
 
-    public int getSeats(){
-        return seats.getSeats();
+    public Seats getSeats(){
+        return seats;
     }
     
     

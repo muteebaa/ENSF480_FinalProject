@@ -414,27 +414,28 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
                 
             }
         });
-
-        seatPanel.add(new JButton("A1"));
-        seatPanel.add(new JButton("A2"));
-        seatPanel.add(new JButton("A3"));
-        seatPanel.add(new JButton("A4"));
-        seatPanel.add(new JButton("A5"));
-        seatPanel.add(new JButton("B1"));
-        seatPanel.add(new JButton("B2"));
-        seatPanel.add(new JButton("B3"));
-        seatPanel.add(new JButton("B4"));
-        seatPanel.add(new JButton("B5"));
-        seatPanel.add(new JButton("C1"));
-        seatPanel.add(new JButton("C2"));
-        seatPanel.add(new JButton("C3"));
-        seatPanel.add(new JButton("C4"));
-        seatPanel.add(new JButton("C5"));
-        seatPanel.add(new JButton("D1"));
-        seatPanel.add(new JButton("D2"));
-        seatPanel.add(new JButton("D3"));
-        seatPanel.add(new JButton("D4"));
-        seatPanel.add(new JButton("D5"));
+        for (int i = 0; i < selected.getSeats().getAvailable(); i++){
+            seatPanel.add(new JButton());
+            // seatPanel.add(new JButton("A2"));
+            // seatPanel.add(new JButton("A3"));
+            // seatPanel.add(new JButton("A4"));
+            // seatPanel.add(new JButton("A5"));
+            // seatPanel.add(new JButton("B1"));
+            // seatPanel.add(new JButton("B2"));
+            // seatPanel.add(new JButton("B3"));
+            // seatPanel.add(new JButton("B4"));
+            // seatPanel.add(new JButton("B5"));
+            // seatPanel.add(new JButton("C1"));
+            // seatPanel.add(new JButton("C2"));
+            // seatPanel.add(new JButton("C3"));
+            // seatPanel.add(new JButton("C4"));
+            // seatPanel.add(new JButton("C5"));
+            // seatPanel.add(new JButton("D1"));
+            // seatPanel.add(new JButton("D2"));
+            // seatPanel.add(new JButton("D3"));
+            // seatPanel.add(new JButton("D4"));
+            // seatPanel.add(new JButton("D5"));
+        }
 
         seatScreen.add(seatPanel, BorderLayout.CENTER);
 
@@ -445,7 +446,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         seatScreen.setLocationRelativeTo(null);
         seatScreen.setVisible(true);
     }
-    
+
     public void paymentScreen(){
         JDialog paymentTab = new JDialog(this, "Payment");
         

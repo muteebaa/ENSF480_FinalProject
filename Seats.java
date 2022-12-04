@@ -13,7 +13,7 @@ public class Seats {
         available = available+ n;
     }
 
-    public int getSeats(){
+    public int getAvailable(){
         return available;
     }
 }
