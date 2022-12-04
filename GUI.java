@@ -248,6 +248,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
                     if (d == movies.get(i).getDate() && t == movies.get(i).getTime()){
                         selected = movies.get(i);
                         System.out.println("amazing!");
+                        break;
 
                     }
                     System.out.println("yeah good");
@@ -256,7 +257,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             }
             
             else{
-                JOptionPane.showMessageDialog(this,  MovieAppMain.search(movieSearch));
+                JOptionPane.showMessageDialog(this,  "Movie not found!");
             }
         }
         
@@ -391,7 +392,59 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
       //  this.add(exitPanel, BorderLayout.EAST);
        // this.add(moviePanel, BorderLayout.SOUTH);
     }
+    public void seatScreen(Movie selected){
+        JDialog seatScreen = new JDialog(this, "Seat Map");
+        seatScreen.setLayout((new FlowLayout()));
+       
+        JPanel seatPanel = new JPanel();
+        seatPanel.setLayout(new GridLayout(4,5,4,5));
+        
+        JList jListForCopy;
+       
+        JButton copyButton = new JButton("Select");
+        
+        copyButton.addActionListener(new ActionListener() {
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+              //  jListForCopy.setListData(jList.getSelectedValues());
+                System.out.println("ok");
+                
+                
+            }
+        });
 
+        seatPanel.add(new JButton("A1"));
+        seatPanel.add(new JButton("A2"));
+        seatPanel.add(new JButton("A3"));
+        seatPanel.add(new JButton("A4"));
+        seatPanel.add(new JButton("A5"));
+        seatPanel.add(new JButton("B1"));
+        seatPanel.add(new JButton("B2"));
+        seatPanel.add(new JButton("B3"));
+        seatPanel.add(new JButton("B4"));
+        seatPanel.add(new JButton("B5"));
+        seatPanel.add(new JButton("C1"));
+        seatPanel.add(new JButton("C2"));
+        seatPanel.add(new JButton("C3"));
+        seatPanel.add(new JButton("C4"));
+        seatPanel.add(new JButton("C5"));
+        seatPanel.add(new JButton("D1"));
+        seatPanel.add(new JButton("D2"));
+        seatPanel.add(new JButton("D3"));
+        seatPanel.add(new JButton("D4"));
+        seatPanel.add(new JButton("D5"));
+
+        seatScreen.add(seatPanel, BorderLayout.CENTER);
+
+        seatScreen.setTitle("Seat Chart");
+        seatScreen.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        seatScreen.setSize(600,600);
+        seatScreen.setMinimumSize(new Dimension(450,450));
+        seatScreen.setLocationRelativeTo(null);
+        seatScreen.setVisible(true);
+    }
+    
     public void paymentScreen(){
         JDialog paymentTab = new JDialog(this, "Payment");
         
