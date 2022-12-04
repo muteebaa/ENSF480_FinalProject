@@ -35,7 +35,7 @@ public class MovieAppMain{
 
      // this is a linked list of all the theatres in the database 
      private static LinkedList<Theatre> theatres = new LinkedList<Theatre>();
-    
+     private static LinkedList<RegisteredUser> regUsers = new LinkedList<RegisteredUser>();
      ////////////////////////////////////////////////////////////////////
     /*
      * Start of Methods required to access and manipulate the SQL Databse. 
@@ -110,7 +110,7 @@ public class MovieAppMain{
                 boolean flag = false;
                 while(results.next()){
                     // a movie object is created and added to the linked list
-                    Movie mov = new Movie(results.getString("Item"),results.getString("Movie"), results.getString("dateM"),results.getString("Movie"),results.getString("Seats"), results.getString("Theatre") );
+                    Movie mov = new Movie(results.getString("Item"),results.getString("Movie"), results.getString("timeM"),results.getString("dateM"),results.getString("Seats"), results.getString("Theatre") );
                     movies.add(mov);
                     
                     // if its not the first item in the database then we will traverse through the linked list of theatres
@@ -157,6 +157,29 @@ public class MovieAppMain{
             return str.trim();
         }
 
+
+        else if(tableName.equals("userData")){
+            try{
+                Statement statement = dbConnect.createStatement();  
+                results = statement.executeQuery("SELECT Email, Password, CCinfo from userData");
+                int i = 0;
+                boolean flag = false;
+                while(results.next()){
+                    // a movie object is created and added to the linked list
+                    RegisteredUser reg = new RegisteredUser(new RegisteredPayment(),results.getString("Email"),results.getString("Password"), results.getString("CCinfo"));
+                    regUsers.add(reg);
+                    
+                }
+                statement.close();
+            }
+            catch(SQLException ex){
+                ex.printStackTrace();
+            }
+            String str = comp.toString();
+            return str.trim();
+        }
+
+
         else{
             String str = "Wrong input";
             return str;
@@ -180,35 +203,42 @@ public class MovieAppMain{
 
         return details;
     }
+
     public static void main(String[] args) throws FileNotFoundException {
         GUI gui = new GUI();
         
         //Use the following account information: Username = user1, Password = ensf
-        MovieAppMain myJDBC = new MovieAppMain("jdbc:mysql://localhost:3306/MovieTheater","root","");
+        MovieAppMain myJDBC = new MovieAppMain("jdbc:mysql://localhost:3306/data_cinema","user1","ensf");
         myJDBC.initializeConnection();
 
         System.out.println("------------------------------");
         System.out.println();
         
         System.out.println(myJDBC.storeData("projectData"));
+        System.out.println(myJDBC.storeData("userData"));
         
         // ticket payment
-        System.out.println("seats for "+ movies.get(1).getName()+" before: "+ movies.get(1).getSeats());
+     /*System.out.println("seats for "+ movies.get(1).getName()+" before: "+ movies.get(1).getSeats());
         Guest user = new Guest(new GuestPayment());
     
 
         user.makePayment(3, movies.get(1));
 
         System.out.println("seats for "+ movies.get(1).getName()+" after(should b 7): "+ movies.get(1).getSeats());
-        RegisteredUser user1 = new RegisteredUser(new RegisteredPayment());
         user.makePayment(1, movies.get(1));
         
         System.out.println("seats for "+ movies.get(1).getName()+" after(should b 6): "+ movies.get(1).getSeats());
 
-        user1.cancelPayment(3, movies.get(1));
-        user1.annualFee();
 
         System.out.println("seats for "+ movies.get(1).getName()+" after(should b 9): "+ movies.get(1).getSeats());
+
+        for(int i = 0; i < regUsers.size(); i++){
+            System.out.println(regUsers.get(i).getEmail()+ " done\n");
+        }*/
+
+       /* boolean serachUser(String email, String password){
+            
+        }*/
 
       //  search("Wakanda Forever");
         /// i used these print statements to make sure the linked lists were correct and to test the search method
@@ -227,7 +257,7 @@ public class MovieAppMain{
         System.out.println("--------test search for wakanda----");
         search("Wakanda Forever");
         */
-      // GUI.run();
+       GUI.run();
         // this is all old stuff from the last project in case we want to use it
     /*     String[][] clients = {
             {clientDetails[0][0],clientDetails[0][1],clientDetails[0][2],clientDetails[0][3],clientDetails[0][4],clientDetails[0][5],clientDetails[0][6]},

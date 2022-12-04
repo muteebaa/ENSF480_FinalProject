@@ -14,7 +14,7 @@ public class Movie {
         time = tim;
         tickets = new Ticket[Integer.parseInt(n)];
         for (int i = 0; i < Integer.parseInt(n); i ++){
-            tickets[i] = new Ticket(1);
+            //tickets[i] = new Ticket(1);
         }
         seats = new Seats(Integer.parseInt(n));
         theatre = th;

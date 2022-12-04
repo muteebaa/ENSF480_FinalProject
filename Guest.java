@@ -1,6 +1,6 @@
 public class Guest {
     protected Payment p;
-    private int movieCredit;
+   // private int movieCredit;
 
     Guest(Payment type){
         p = type;

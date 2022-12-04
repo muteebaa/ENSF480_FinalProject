@@ -15,6 +15,8 @@ public class RegisteredPayment implements Payment {
         System.out.println("we have your email address");
         String email = e.nextLine();
         int x = 0;
+
+        obj.decreaseSeats(numberOfTickets);
     }
     
     @Override

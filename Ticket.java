@@ -1,7 +1,15 @@
 public class Ticket {
 
-    Ticket(int n){
+   /* private string movi3;
+    private string seat;
+
+    Ticket(movie, seat){
        
     }
+
+    emailTicket(){
+
+    }*/
+
     
 }

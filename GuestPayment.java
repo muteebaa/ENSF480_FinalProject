@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class GuestPayment implements Payment {
 
     @Override
-    public void makePayment(int numberOfTickets, Movie obj) {
+    public void makePayment(int n, Movie obj) {
         // prompt user to pay
         Scanner c = new Scanner(System.in);
         System.out.println("Please enter your card number");
@@ -15,7 +15,14 @@ public class GuestPayment implements Payment {
         String email = e.nextLine();
         int x = 0;
 
-        obj.decreaseSeats(numberOfTickets);
+        obj.decreaseSeats(n);
+        
+     /*   for (all in seats){
+        create ticket
+        get ticket
+        email ticket
+        }*/
+
 
     }
 
