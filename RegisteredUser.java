@@ -1,3 +1,6 @@
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.*;
 public class RegisteredUser extends Guest{
     private RegisteredPayment test1;
     private String email;
@@ -6,6 +9,8 @@ public class RegisteredUser extends Guest{
     private String cvv;
     private String expiry;
     private Boolean feePaid;
+    //private LinkedLink<Movie> moviesBooked = new LinkedList<Movie>();
+    private Map<Movie, String> moviesBooked = new HashMap<Movie, String>(); 
 
     RegisteredUser(RegisteredPayment type, String email, String password, String cardNumber, String cvv, String expiry, Boolean feePaid ) {
         
@@ -21,6 +26,7 @@ public class RegisteredUser extends Guest{
 
 
     public void annualFee(){
+        feePaid= true;
         test1.annualFee();
     }
 
@@ -46,6 +52,29 @@ public class RegisteredUser extends Guest{
 
     public Boolean getFeePaid(){
         return feePaid;
+    }
+
+    public void addMovie(Movie mov, String seats, String tickets){
+        System.out.println("adding a movie");
+      
+        moviesBooked.put(mov, seats);
+    }
+
+    //// this isnt wokring!!!
+    public String getMovies(){
+        System.out.println("CalLED!!");
+        String all ="";
+  
+        for (Map.Entry<Movie, String> s : moviesBooked.entrySet()) {
+            all += s.getKey().getName();
+            System.out.println(s.getKey().getName());
+            all += ": ";
+            all += s.getValue();
+            System.out.println(s.getValue());
+        }
+        
+        System.out.println(all);
+        return all;
     }
 
 }

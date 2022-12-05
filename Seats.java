@@ -15,11 +15,8 @@ public class Seats {
         for (int i = 0; i < n; i++){
             String s = "A";
             if (i!= 0 && i%5 == 0){
-               
-                System.out.println(i);
                 int charValue = s.charAt(0);
                 next = String.valueOf( (char) (charValue + 1));      
-                System.out.println(s);
             }
             s = next;
             s += String.valueOf(i+1);

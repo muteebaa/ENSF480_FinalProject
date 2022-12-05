@@ -356,7 +356,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             var userPW = enteredPW;
                 
             // HOW TO CONFIRM W DATABASE
-
+            System.out.println("okkkkkk");
             userChecker = MovieAppMain.userSearch(userEmail, userPW);
 
             if (userChecker != null){
@@ -534,11 +534,13 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
     }
 
     public void userPortal(RegisteredUser user){
-        JDialog userPortal = new JDialog(this, "Seat Map");
-        userPortal.setLayout((new FlowLayout()));
+        System.out.println("ummmm ");
+        System.out.println(user.getMovies());
+        JDialog userPortal = new JDialog(this, "User Portal");
+      //  userPortal.setLayout((new FlowLayout()));
        
         JPanel userData = new JPanel();
-        userData.setLayout(new GridLayout(0,5,4,5));
+        userData.setLayout(new BoxLayout(userData, BoxLayout.PAGE_AXIS));
 
         JLabel email = new JLabel(user.getEmail());
         email.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
@@ -547,6 +549,10 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         JLabel card = new JLabel(user.getCardNumber().substring(0,4)+"*********");
         card.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
         card.setForeground(new java.awt.Color(0,0,0));
+
+        JLabel movies = new JLabel(user.getMovies());
+        movies.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
+        movies.setForeground(new java.awt.Color(0,0,0));
 
         JButton continueNoPay =  new JButton("Browse without paying");
         JButton continuePay =  new JButton("Pay and Browse");
@@ -562,6 +568,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         continuePay.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //user.annualFee();
                 searchScreen();
             }
         });
@@ -573,6 +580,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         });
         userData.add(email);
         userData.add(card);
+
+        userData.add(movies);
 
         if(!user.getFeePaid()){
             userData.add(continueNoPay);
@@ -687,7 +696,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             
             @Override
             public void actionPerformed(ActionEvent e) {
-               user1.makePayment(seats, movie);
+                user1.makePayment(seats, movie);
+                if(userChecker!= null) {System.out.println("its not null");userChecker.addMovie(movie, seats, seats);}
                String tickDetails = user1.getTicketDetails(seats, movie);
                JOptionPane.showMessageDialog(paymentTab,  "Successfully processed transaction for: "+seats+"\n"+tickDetails);
             }
