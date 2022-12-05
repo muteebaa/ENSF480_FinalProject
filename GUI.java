@@ -478,6 +478,14 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         JTextField email = new JTextField("email...", 15);
         email.setSize(20,100);
         email.addMouseListener(this);
+        
+        JLabel confirmLabel = new JLabel("Yay!");
+        confirmLabel.setFont(new java.awt.Font("Segoe UI", 0, 17)); 
+        confirmLabel.setForeground(new java.awt.Color(0,0,0));
+
+        JPanel paid = new JPanel();
+        paid.setLayout(new FlowLayout());
+        paid.add(confirmLabel);
 
         pay = new JButton("pay");
         pay.addActionListener(new ActionListener() {
