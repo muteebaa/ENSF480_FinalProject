@@ -33,7 +33,7 @@ public class MovieAppMain{
 
      // this is a linked list of all the movies in the database 
      private static LinkedList<Movie> movies = new LinkedList<Movie>();
-     private static Movie movieFound;
+     private static String movieFound;
      // this is a linked list of all the theatres in the database 
      private static LinkedList<Theatre> theatres = new LinkedList<Theatre>();
      private static LinkedList<RegisteredUser> regUsers = new LinkedList<RegisteredUser>();
@@ -221,6 +221,10 @@ regUsers.add(reg);
 
         return details;
     }*/
+    public static LinkedList<Theatre> getThreatres(){
+        return theatres;
+    }
+
     // this is the search function used to search for a movie
     public static LinkedList<Movie> search(String movieName){
         System.out.println();
@@ -232,18 +236,17 @@ regUsers.add(reg);
         System.out.println("hi?");
         int exists = 0;
         for(int i=0; i<theatres.size(); i++){
-          //  details += theatres.get(i).searchMovies(movieName);
-            if (exists == 0){
-                exists = theatres.get(i).getExist();
-                System.out.println("what exists: " + exists);
-            }
-           // movieFound = exists;
-           movieFound = theatres.get(i).searchMovies(movieName);
-           allFound.add(movieFound);
+           
+           allFound.addAll(theatres.get(i).searchMovies(movieName));
         }
 
         if(allFound.size() == 0){
             details = "Movie not found. Please enter a valid movie name.";
+            movieFound = "no";
+        }
+        else{
+             
+            movieFound = "yes";
         }
 
         // if(movieName == null){
@@ -259,7 +262,7 @@ regUsers.add(reg);
     static LinkedList<Movie> getMovies(){
         return movies;
     }
-    public static Movie getFoundMovie(){
+    public static String getFoundMovie(){
         return movieFound;
     }
     public static String register(){

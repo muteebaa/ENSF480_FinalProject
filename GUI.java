@@ -196,79 +196,92 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
     public void actionPerformed(ActionEvent event){
         if(event.getSource().equals(searchBtn)){
             movieSearch = searchV.getText();  
-        
-            
-
-            //System.out.println("submit clicked");
-            //MovieAppMain appmain = new MovieAppMain(movieSearch, movieSearch, movieSearch);
 
             LinkedList<Movie> movies = MovieAppMain.search(movieSearch);
             // MovieAppMain.getMovies();
           //  int check = 0;
-            Movie check = MovieAppMain.getFoundMovie();
+            String check = MovieAppMain.getFoundMovie();
             Movie selected;
-       //     System.out.println("whats check: " + check);
-            if (check != null){
-                
-                int j = 0;
-                Object d;
-                Object t;
 
-                LinkedList<String> dates = new LinkedList<String>();
-                for (int i = 0; i < movies.size(); i ++) {
-                    dates.add(movies.get(i).getDate());
-                
+            if(check.equals("yes")){
+
+            LinkedList<Movie> Theatres = MovieAppMain.search(movieSearch);
+
+            for(int i=0; i<Theatres.size(); i++){
+                System.out.println(Theatres.get(i).getTheatre());
+            }
+            LinkedList<String> thea = new LinkedList<String>();
+                for (int k = 0; k < Theatres.size();  k ++) {
+                    if(!thea.contains(Theatres.get(k).getTheatre())){
+                        thea.add(Theatres.get(k).getTheatre());
+                    }
                 }
 
-                String[] arrayD = dates.toArray(new String[dates.size()]);
 
-                d = JOptionPane.showInputDialog(null, "Please select a date.", 
-                    "Dates", JOptionPane.QUESTION_MESSAGE, null, arrayD, arrayD[0]);
+
+
+        String[] arrayTh = thea.toArray(new String[thea.size()]);
+
+        Object th;
+        th = JOptionPane.showInputDialog(null, "Please select a Theatre.", 
+                    "Theatres", JOptionPane.QUESTION_MESSAGE, null, arrayTh, arrayTh[0]);
+    
         
-                
+            
+            
+            Object d;
+            Object t;
+
+            LinkedList<String> dates = new LinkedList<String>();
+            for (int i = 0; i < Theatres.size(); i ++) {
+
+                if(Theatres.get(i).getTheatre().equals(th)){
+                    if(!dates.contains(Theatres.get(i).getDate()))
+                    dates.add(Theatres.get(i).getDate());
+                }
+            
+            }
+
+            String[] arrayD = dates.toArray(new String[dates.size()]);
+
+            d = JOptionPane.showInputDialog(null, "Please select a date.", 
+                "Dates", JOptionPane.QUESTION_MESSAGE, null, arrayD, arrayD[0]);
+
+
                 LinkedList<String> times = new LinkedList<String>();
-                if(d instanceof String){
-                    
-                    int k = 0;
-                    for (int i = 0; i < movies.size(); i ++) {
-                        if (d == movies.get(i).getDate()){
-                            times.add(movies.get(i).getTime());
+                for (int i = 0; i < Theatres.size(); i ++) {
 
-                            //times[i] = movies.get(i).getTime();
-                        }
+                    if(Theatres.get(i).getTheatre().equals(th) && Theatres.get(i).getDate().equals(d)){
+                        if(!times.contains(Theatres.get(i).getDate()))
+                        times.add(Theatres.get(i).getTime());
                     }
-                    
-                 /*    if(t instanceof String){
-                        System.out.println("here");
-                        Seats seat = new Seats(1);
-                      //  seat.init();
-                        dispose();
-                    }*/
-
-                }
-                String[] arrayT = times.toArray(new String[times.size()]);
                 
-                t = JOptionPane.showInputDialog(null, "Please select a showtime.", 
-                "Showtimes", JOptionPane.QUESTION_MESSAGE, null, arrayT,arrayT[0]);
-
-                // finding the movie
-                for (int i = 0; i < movies.size(); i ++) {
-                    if (d == movies.get(i).getDate() && t == movies.get(i).getTime()){
-                        selected = movies.get(i);
-                        System.out.println("amazing!");
-                        options(selected);
-                        
-                        break;
-
-                    }
-                    System.out.println("yeah good");
                 }
+
+                String[] arrayt = times.toArray(new String[dates.size()]);
+
+                t = JOptionPane.showInputDialog(null, "Please select a time.", 
+                    "Times", JOptionPane.QUESTION_MESSAGE, null, arrayt, arrayt[0]);
+                
+                    for (int i = 0; i < Theatres.size(); i ++) {
+                        // System.out.println("datee  "+ Theatres.get(i).getDate() + "time " + Theatres.get(i).getTime() );
+                        if (d.equals(Theatres.get(i).getDate()) && t.equals(Theatres.get(i).getTime())){
+                            selected = movies.get(i);
+                            System.out.println("amazing!");
+                            options(selected);
+                            
+                            break;
+    
+                        }
+                        System.out.println("yeah good");
+                    }
+    
+            }
+            else{
+                JOptionPane.showMessageDialog(this,  "Movie not found!");
 
             }
             
-            else{
-                JOptionPane.showMessageDialog(this,  "Movie not found!");
-            }
         }
         
         if(event.getSource().equals(guest)){

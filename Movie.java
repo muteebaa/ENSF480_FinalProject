@@ -85,7 +85,9 @@ public class Movie {
         return ticketDetails;
     }
 
-
+    public String getTheatre(){
+        return theatre;
+    }
     public void removeTickets(String code){
         for(int i = 0 ; i < tickets.size(); i++){
             if(tickets.get(i).getCode() == code){
