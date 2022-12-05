@@ -385,6 +385,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             
             @Override
             public void actionPerformed(ActionEvent e) {
+                searchScreen.setVisible(false);
                 searchMovie();
             }
         });
@@ -543,10 +544,19 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
               cancelScreen(selected);
             }
         });
+        JButton newSearch = new JButton("New Search");
+        newSearch.addActionListener(new ActionListener() {
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                searchScreen();;
+            }
+        });
 
         content.add(i);
         content.add(search);
         content.add(cancel);
+        content.add(newSearch);
 
         optionsScreen.add(content, BorderLayout.CENTER);
         optionsScreen.setSize(400,300);
