@@ -582,6 +582,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             
             @Override
             public void actionPerformed(ActionEvent e) {
+                
                 searchScreen();;
             }
         });
@@ -589,6 +590,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         optionsScreen.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e)
             {
+                optionsScreen.dispose();
                 searchScreen();
             }
         });
@@ -685,6 +687,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             
             @Override
             public void actionPerformed(ActionEvent e) {
+                seatScreen.dispose();
                 paymentScreen(textArea.getText(), selected);
             }
         });
