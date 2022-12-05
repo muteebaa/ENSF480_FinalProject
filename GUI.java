@@ -438,7 +438,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             
             @Override
             public void actionPerformed(ActionEvent e) {
-                paymentScreen(textArea.getText());
+                paymentScreen(textArea.getText(), selected);
             }
         });
 
@@ -458,7 +458,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         seatScreen.setVisible(true);
     }
 
-    public void paymentScreen(String seats){
+    public void paymentScreen(String seats, Movie movie){
         JDialog paymentTab = new JDialog(this, "Payment");
         
         JLabel title = new JLabel("Payment");
@@ -480,8 +480,14 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         email.addMouseListener(this);
 
         pay = new JButton("pay");
-        pay.addActionListener(this);
-
+        pay.addActionListener(new ActionListener() {
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               user1.makePayment(seats, movie);
+            }
+        });
+        
       //  GridBagConstraints c = new GridBagConstraints();
         content.add(ccInfo);
         content.add(email);
