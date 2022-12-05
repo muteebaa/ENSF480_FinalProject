@@ -490,7 +490,11 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         paymentTab.add(top);
         paymentTab.add(content);
         //  paymentTab.add(email);
-        paymentTab.setSize(400,300);
+        paymentTab.setTitle("Payment");
+        paymentTab.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        paymentTab.setSize(600,600);
+        paymentTab.setMinimumSize(new Dimension(450,450));
+        paymentTab.setLocationRelativeTo(null);
         paymentTab.setVisible(true);
 
 
