@@ -76,7 +76,7 @@ public class Movie {
         for(int i = 0 ; i < tickets.size(); i++){
             System.out.println("ticket seat: "+ tickets.get(i).getSeat());
             System.out.println(" seat: "+n);
-            if(tickets.get(i).getSeat() == n){
+            if(tickets.get(i).getSeat().equals(n)){
                 ticketDetails += "Ticket for seat "+n;
                 ticketDetails += " has code: "+ tickets.get(i).getCode()+"\n";
             }
@@ -88,14 +88,16 @@ public class Movie {
     public String getTheatre(){
         return theatre;
     }
-    public void removeTickets(String code){
+    public String removeTickets(String code){
         for(int i = 0 ; i < tickets.size(); i++){
-            if(tickets.get(i).getCode() == code){
+            if(tickets.get(i).getCode().equals(code)){
                 increaseSeats(tickets.get(i).getSeat());
+                String s ="Booking for "+tickets.get(i).getSeat()+" was cancelled";
                 tickets.remove(i);
-                break;
+                return s;
             }
         }
+       return "Incorrect code!";
     }
 
 

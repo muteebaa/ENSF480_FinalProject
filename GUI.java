@@ -463,8 +463,9 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             
             @Override
             public void actionPerformed(ActionEvent e) {
+                String seatCancelled = selected.removeTickets(cancel.getText());
                 user1.cancelPayment(cancel.getText(), selected);
-                JOptionPane.showMessageDialog(cancelScreen,  "Successfully cancelled ticket for: "+cancel.getText());
+                JOptionPane.showMessageDialog(cancelScreen,  seatCancelled);
             }
         });
 
