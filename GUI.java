@@ -70,7 +70,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
     private JButton book;
 
     private JButton viewSeats;
-    private boolean userChecker;
+    private RegisteredUser userChecker;
   
   //  private JFrame paymentScreen = new JFrame();
     JButton pay;
@@ -285,7 +285,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         }
         
         if(event.getSource().equals(guest)){
-            userChecker = false;
+            userChecker = null;
             user1 = new Guest(new GuestPayment());
             searchScreen();
            // searchScreen();
@@ -355,7 +355,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 
             userChecker = MovieAppMain.userSearch(userEmail, userPW);
 
-            if (userChecker == true){
+            if (userChecker != null){
+                user1 = userChecker;
                 searchScreen();
             }
             else{
@@ -478,7 +479,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
     public void searchScreen(){
         JLabel i;
 
-        if(userChecker == false){
+        if(userChecker == null){
 
             i = new JLabel("Logged in a guest. Please search a movie");
             i.setFont(new java.awt.Font("Segoe UI", 0, 17)); 

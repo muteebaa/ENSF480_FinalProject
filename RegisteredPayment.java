@@ -4,7 +4,7 @@ public class RegisteredPayment implements Payment {
     
     @Override
     public void makePayment(String seatsToBook, Movie obj){
-        String[] seatsArray = seatsToBook.split(" ");
+        String[] seatsArray = seatsToBook.split("\n");
         
         for (String e : seatsArray){
             System.out.println(e);

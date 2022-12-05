@@ -274,7 +274,7 @@ regUsers.add(reg);
         return movies.get(1);
     }
 
-    public static boolean userSearch(String email, String password){
+    public static RegisteredUser userSearch(String email, String password){
         //System.out.println(email + " " + password);
 
         regUsers.clear();
@@ -284,11 +284,11 @@ regUsers.add(reg);
 
             if(regUsers.get(i).getEmail().equals(email) && regUsers.get(i).getPassword().equals(password)){
                 System.out.println("matched");
-                return true;
+                return regUsers.get(i);
             }
             
         }
-        return false;
+        return null;
     }
     public static void main(String[] args) throws FileNotFoundException {
         GUI gui = new GUI();
