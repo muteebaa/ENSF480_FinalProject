@@ -165,9 +165,9 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 
     }
 
-    public void error(){
+    public void error(String message){
         JPanel myPanel = new JPanel();
-        JOptionPane.showMessageDialog(myPanel, "Eggs are not supposed to be green.");
+        JOptionPane.showMessageDialog(myPanel, message);
 
     }
 
@@ -206,16 +206,24 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             var enteredExpiry = expiry.getText();
             var enteredCVV = cvv.getText();
             
-            if(!enteredCardNumber.matches("[0-9]{5,10}") || !enteredExpiry.matches("[0-9]+") || !enteredCVV.matches("[0-9]+") ) {
-                error();
+            boolean emailCheck = MovieAppMain.checkEmail(enteredEmail);
+
+            if(!enteredCardNumber.matches("[0-9]{5,100}") || !enteredExpiry.matches("[0-9]+") || !enteredCVV.matches("[0-9]+") ) {
+                error("Credit Card Number should have more than 5 numbers and no other character");
             }
             else{
-                MovieAppMain.registerUser(enteredEmail, enteredPW, enteredCardNumber, enteredExpiry, enteredCVV);
+                if(emailCheck){
+                    MovieAppMain.registerUser(enteredEmail, enteredPW, enteredCardNumber, enteredExpiry, enteredCVV);
 
-                RegisteredUser regUser = MovieAppMain.userSearch(enteredEmail, enteredPW);
-                user1 = regUser;
-                
-                userPortal(regUser);
+                    RegisteredUser regUser = MovieAppMain.userSearch(enteredEmail, enteredPW);
+                    user1 = regUser;
+                    
+                    userPortal(regUser);
+                }
+                else{
+                    error("The email already has an account associated");
+
+                }
             }
         }
         
@@ -295,11 +303,15 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         JPanel userData = new JPanel();
         userData.setLayout(new BoxLayout(userData, BoxLayout.PAGE_AXIS));
 
-        JLabel email = new JLabel(user.getEmail());
+        JLabel email = new JLabel("Email Address: " + user.getEmail());
         email.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
         email.setForeground(new java.awt.Color(0,0,0));
 
-        JLabel card = new JLabel(user.getCardNumber().substring(0,4)+"*********");
+        JLabel card = new JLabel("Card Number: " + user.getCardNumber().substring(0,4)+"*********");
+        card.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
+        card.setForeground(new java.awt.Color(0,0,0));
+
+        JLabel feeP = new JLabel("Membership Paid: " + user.getFeePaid());
         card.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
         card.setForeground(new java.awt.Color(0,0,0));
 
@@ -321,7 +333,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         continuePay.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //user.annualFee();
+                user.annualFee();
                 searchScreen();
             }
         });
@@ -333,7 +345,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         });
         userData.add(email);
         userData.add(card);
-
+        userData.add(feeP);
         userData.add(movies);
 
         if(!user.getFeePaid()){
@@ -438,7 +450,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             String check = MovieAppMain.getFoundMovie();
             Movie selected;
 
-            if(check.equals("yes")){
+            if(check.equals("yes") && movieSearch.length() != 0){
 
             LinkedList<Movie> Theatres = MovieAppMain.search(movieSearch);
 
@@ -597,6 +609,20 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         JPanel seatPanel = new JPanel();
         seatPanel.setLayout(new GridLayout(0,5,4,5));
 
+        JPanel header = new JPanel();
+        header.setLayout(new BoxLayout(header, BoxLayout.PAGE_AXIS));
+        JLabel screen = new JLabel("Screen");
+
+        JLabel screen1 = new JLabel("_________________________________________________________________________");
+
+        JLabel movieName = new JLabel(selected.getName());
+        movieName.setFont(new java.awt.Font("Segoe UI", 0, 17)); 
+
+
+        header.add(movieName);
+        header.add(screen);
+        header.add(screen1);
+        
 
         Map<String, Boolean> seats = selected.getSeats().getSeats();
         JButton btn = new JButton();
@@ -641,6 +667,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         textArea.setEditable(false);
         seatPanel.add(textArea);
         
+        seatScreen.add(header, BorderLayout.NORTH);
         seatScreen.add(seatPanel, BorderLayout.CENTER);
         seatScreen.add(submitPanel, BorderLayout.SOUTH);
 

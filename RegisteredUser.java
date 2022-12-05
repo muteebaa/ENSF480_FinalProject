@@ -27,6 +27,7 @@ public class RegisteredUser extends Guest{
 
     public void annualFee(){
         feePaid= true;
+        MovieAppMain.feePayment(email);
         test1.annualFee();
     }
 

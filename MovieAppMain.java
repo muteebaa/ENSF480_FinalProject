@@ -33,7 +33,7 @@ public class MovieAppMain{
 
      // this is a linked list of all the movies in the database 
      private static LinkedList<Movie> movies = new LinkedList<Movie>();
-     private static String movieFound;
+     private static String movieFound = "no";
      // this is a linked list of all the theatres in the database 
      private static LinkedList<Theatre> theatres = new LinkedList<Theatre>();
      private static LinkedList<RegisteredUser> regUsers = new LinkedList<RegisteredUser>();
@@ -289,6 +289,30 @@ regUsers.add(reg);
             
         }
         return null;
+    }
+    public static boolean checkEmail(String email){
+        regUsers.clear();
+        System.out.println(myJDBC.storeData("userData"));
+        for(int i = 0; i < regUsers.size(); i++){ 
+            if(regUsers.get(i).getEmail().equals(email)){
+                return false;
+            }
+        }
+        return true;
+
+    }
+
+    public static void feePayment(String email){
+        try {
+            Statement stmt = dbConnect.createStatement();
+            String str = "Update userData set FeePaid = 1 Where Email = '" + email + "'";
+            stmt.executeUpdate(str);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        String str = "Update userData set FeePaid = 1 Where Email = '" + email + "'";
+        
     }
     public static void main(String[] args) throws FileNotFoundException {
         GUI gui = new GUI();
