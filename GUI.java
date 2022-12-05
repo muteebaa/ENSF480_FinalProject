@@ -256,7 +256,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
                     if (d == movies.get(i).getDate() && t == movies.get(i).getTime()){
                         selected = movies.get(i);
                         System.out.println("amazing!");
-                        seatScreen(selected);
+                        options(selected);
+                        
                         break;
 
                     }
@@ -273,7 +274,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         if(event.getSource().equals(guest)){
             userChecker = false;
             user1 = new Guest(new GuestPayment());
-            options();
+            searchScreen();
            // searchScreen();
           //  SearchMovie.run();
            // dispose();
@@ -398,7 +399,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         failureTab.setVisible(true);
 
     }
-    public void options(){
+    public void options(Movie selected){
         JDialog optionsScreen = new JDialog(this, "Movie Theatre");
         JPanel content = new JPanel(new FlowLayout(4,4,4));
 
@@ -407,12 +408,12 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         i.setForeground(new java.awt.Color(0,0,0));
         
 
-        JButton search = new JButton("Search Movie");
+        JButton search = new JButton("Make Booking");
         search.addActionListener(new ActionListener() {
             
             @Override
             public void actionPerformed(ActionEvent e) {
-              searchScreen();
+                seatScreen(selected);
             }
         });
 
@@ -421,7 +422,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             
             @Override
             public void actionPerformed(ActionEvent e) {
-              cancelScreen();
+              cancelScreen(selected);
             }
         });
 
@@ -434,11 +435,13 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         optionsScreen.setVisible(true);
 
     }
+   
 
-    public void cancelScreen(){
+    public void cancelScreen(Movie selected){
         JDialog cancelScreen = new JDialog(this, "Ticket Cancellation");
         JPanel content = new JPanel(new FlowLayout(4,4,4));
 
+        JLabel cancelCode = new JLabel("Please enter cancellation code");
         JTextField cancel = new JTextField("", 15);
 
         JButton cancelBtn = new JButton("Cancel Booking");
@@ -446,10 +449,12 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             
             @Override
             public void actionPerformed(ActionEvent e) {
-             // user1.cancelPayment(seats, movie);
+                user1.cancelPayment(cancel.getText(), selected);
+                JOptionPane.showMessageDialog(cancelScreen,  "Successfully cancelled ticket for: "+cancel.getText());
             }
         });
 
+        content.add(cancelCode);
         content.add(cancel);
         content.add(cancelBtn);
         cancelScreen.add(content);

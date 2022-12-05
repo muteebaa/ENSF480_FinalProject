@@ -24,19 +24,8 @@ public class GuestPayment implements Payment {
     }
 
     @Override
-    public void cancelPayment(String seatsToCancel, Movie obj) {
-        System.out.println("tickets have been cancelled.");
-        System.out.println("There was a 15% administration fee");
-        System.out.print(" and you have received $");
-
-        String[] seatsArray = seatsToCancel.split(" ");
-        
-        
-        for (String e : seatsArray){
-            System.out.println(e);
-        }
-
-        obj.increaseSeats(seatsArray);
+    public void cancelPayment(String cancelCode, Movie obj) {
+        obj.removeTickets(cancelCode);
     }
 
 }

@@ -34,10 +34,9 @@ public class Seats {
        }
     }
 
-    public void increase(String[] seatsCancelled){
-        for (String s: seatsCancelled){
-            seat.put(s, true);
-       }
+    public void increase(String seatCancelled){
+       seat.put(seatCancelled, true);
+   
     }
 
     public int getAvailable(){
