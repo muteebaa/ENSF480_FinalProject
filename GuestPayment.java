@@ -6,14 +6,11 @@ public class GuestPayment implements Payment {
     public void makePayment(String seatsToBook, Movie obj){
         // prompt user to pay
         
-        String[] seatsArray = seatsToBook.split(" ");
-        
-        
-        for (String e : seatsArray){
-            System.out.println(e);
-        }
+        String[] seatsArray = seatsToBook.split("\n");
 
         obj.decreaseSeats(seatsArray);
+
+
      /*   for (all in seats){
         create ticket
         get ticket

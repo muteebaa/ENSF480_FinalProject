@@ -49,7 +49,7 @@ public class Movie {
 
 
     public void decreaseSeats(String[] n){
-        addTickets(n);
+         addTickets(n);
         seats.decrease(n);
     }
 
@@ -62,10 +62,29 @@ public class Movie {
     }
 
     public void addTickets(String[] n){
+
         for(int i = 0 ; i < n.length; i++){
-            tickets.add(new Ticket(n[i]));
+            Ticket newT = new Ticket(n[i]);
+            tickets.add(newT);
         }
     }
+
+    public String getTicketDetails(String n){
+        
+        String ticketDetails ="";
+       
+        for(int i = 0 ; i < tickets.size(); i++){
+            System.out.println("ticket seat: "+ tickets.get(i).getSeat());
+            System.out.println(" seat: "+n);
+            if(tickets.get(i).getSeat() == n){
+                ticketDetails += "Ticket for seat "+n;
+                ticketDetails += " has code: "+ tickets.get(i).getCode()+"\n";
+            }
+        }
+
+        return ticketDetails;
+    }
+
 
     public void removeTickets(String code){
         for(int i = 0 ; i < tickets.size(); i++){
@@ -76,5 +95,7 @@ public class Movie {
             }
         }
     }
+
+
     
 }

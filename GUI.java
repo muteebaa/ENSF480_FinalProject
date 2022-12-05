@@ -610,7 +610,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             @Override
             public void actionPerformed(ActionEvent e) {
                user1.makePayment(seats, movie);
-               JOptionPane.showMessageDialog(paymentTab,  "Successfully processed transaction for: "+seats);
+               String tickDetails = user1.getTicketDetails(seats, movie);
+               JOptionPane.showMessageDialog(paymentTab,  "Successfully processed transaction for: "+seats+"\n"+tickDetails);
             }
         });
         

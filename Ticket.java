@@ -8,7 +8,8 @@ public class Ticket {
     Ticket(String s){
         byte[] array = new byte[7]; // length is bounded by 7
         new Random().nextBytes(array);
-        code = new String(array, Charset.forName("UTF-8"));
+        code = "random";
+        //new String(array, Charset.forName("UTF-8"));
         seat = s;
     }
 

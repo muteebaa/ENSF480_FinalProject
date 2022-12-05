@@ -15,5 +15,18 @@ public class Guest {
         p.cancelPayment(seatsToCancel, obj);
     }
 
+    String getTicketDetails(String n, Movie obj){
+        String[] seatsArray = n.split("\n");
+        String det="";
+        
+        for (String e : seatsArray){
+            det+=obj.getTicketDetails(e);
+        }
+        System.out.println("AAAAAA");
+        System.out.println(det);
+        return det;
+        
+    }
+
 
 }
