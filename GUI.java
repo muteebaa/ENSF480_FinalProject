@@ -490,8 +490,10 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         th = JOptionPane.showInputDialog(null, "Please select a Theatre.", 
                     "Theatres", JOptionPane.QUESTION_MESSAGE, null, arrayTh, arrayTh[0]);
     
-        
-            
+      if(th==null){
+        searchScreen();
+        return;
+      }
             
             Object d;
             Object t;
@@ -511,6 +513,10 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             d = JOptionPane.showInputDialog(null, "Please select a date.", 
                 "Dates", JOptionPane.QUESTION_MESSAGE, null, arrayD, arrayD[0]);
 
+                if(d==null){
+                    searchScreen();
+                    return;
+                  }
 
                 LinkedList<String> times = new LinkedList<String>();
                 for (int i = 0; i < Theatres.size(); i ++) {
@@ -526,7 +532,11 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 
                 t = JOptionPane.showInputDialog(null, "Please select a time.", 
                     "Times", JOptionPane.QUESTION_MESSAGE, null, arrayt, arrayt[0]);
-                
+                    if(t==null){
+                        searchScreen();
+                        return;
+                      }
+
                     for (int i = 0; i < Theatres.size(); i ++) {
                         if (d.equals(Theatres.get(i).getDate()) && t.equals(Theatres.get(i).getTime())){
                             selected = movies.get(i);
@@ -584,7 +594,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             public void windowClosing(WindowEvent e)
             {
                 optionsScreen.dispose();
-                searchScreen();
+                showMainScreen();
             }
         });
 
