@@ -14,8 +14,11 @@
 import java.awt.*;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.*;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -75,6 +78,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         super("Group 4 Project");
         setupGUI();
         setSize(400,300);
+
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);        
     }
@@ -86,16 +90,21 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
      */ 
      public void setupGUI(){
         jPanel1 = new javax.swing.JPanel();
-        jPanel1.setBackground(new java.awt.Color(30, 31, 38));
-        jPanel1.setForeground(new java.awt.Color(153, 255, 102));
+        jPanel1.setBackground(new java.awt.Color(117, 19, 8));
+        jPanel1.setForeground(new java.awt.Color(255,255,255));
         
+        this.setBackground(new java.awt.Color(117, 19, 8));
+
         instructions = new JLabel("Group 4 Project - ENSF480");
         instructions.setFont(new java.awt.Font("Segoe UI", 0, 17)); 
-        instructions.setForeground(new java.awt.Color(0,0,0));
+        instructions.setForeground(Color.WHITE);
+        instructions.setBackground(new java.awt.Color(117, 19, 8));
 
         instructions1 = new JLabel("\n Movie Booking" );
         instructions1.setFont(new java.awt.Font("Segoe UI", 0, 17));
-        instructions1.setForeground(new java.awt.Color(0,0,0));    
+        instructions1.setForeground(Color.WHITE);
+
+        instructions.setBackground(new java.awt.Color(117, 19, 8));
         
 
         register = new JButton("Sign up here");
@@ -107,24 +116,27 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         guest = new JButton("Continue as guest");
         guest.addActionListener(this);
 
-        // JButton exit = new JButton("Exit");
-		// exit.addActionListener (new ActionListener () {
-		// 	public void actionPerformed (ActionEvent e) {
-		// 	System.exit(0);
-		// 	}
-        // });
+      
 
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new FlowLayout());
+        headerPanel.setBackground(new java.awt.Color(117, 19, 8));
+
         
         JPanel clientPanel = new JPanel();
         clientPanel.setLayout(new GridLayout(3,3,2,2));
+        clientPanel.setBackground(new java.awt.Color(117, 19, 8));
+
 
         JPanel submitPanel = new JPanel();
         submitPanel.setLayout(new FlowLayout());
+        submitPanel.setBackground(new java.awt.Color(117, 19, 8));
+
 
         JPanel exitPanel = new JPanel();
         exitPanel.setLayout(new FlowLayout());
+        exitPanel.setBackground(new java.awt.Color(117, 19, 8));
+
         
         headerPanel.add(instructions);
         headerPanel.add(instructions1);
@@ -133,10 +145,13 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         clientPanel.add(login);
         clientPanel.add(register);
 
-    
+        
+        this.setLocationRelativeTo(null);
+
         this.add(headerPanel, BorderLayout.CENTER);
         this.add(clientPanel, BorderLayout.SOUTH);
         this.add(exitPanel, BorderLayout.EAST);
+       
     }
     
     /*
@@ -847,6 +862,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
     public void mouseReleased(MouseEvent event){
         
     }
+    
       
 	/*
 	 * run() Method
@@ -856,6 +872,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
     public static void run() { 
         GUI X = new GUI();
        // X.getContentPane().add(BorderLayout.NORTH, clientPanel);
+       
         X.setVisible(true);
     }     
 }
