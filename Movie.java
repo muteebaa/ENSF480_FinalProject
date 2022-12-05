@@ -53,7 +53,7 @@ public class Movie {
         seats.decrease(n);
     }
 
-    public void increaseSeats(int n){
+    public void increaseSeats(String[] n){
         seats.increase(n);
     }
 

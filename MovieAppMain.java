@@ -26,6 +26,7 @@ public class MovieAppMain{
     public final String DBURL;
     public final String USERNAME;
     public final String PASSWORD;
+    private static MovieAppMain myJDBC;
 
     private static Connection dbConnect;
     private ResultSet results;
@@ -166,8 +167,9 @@ public class MovieAppMain{
                 boolean flag = false;
                 while(results.next()){
                     // a movie object is created and added to the linked list
-                    RegisteredUser reg = new RegisteredUser(new RegisteredPayment(),results.getString("Email"),results.getString("Password"), results.getString("CCinfo"));
-                    regUsers.add(reg);
+                    RegisteredUser reg = new RegisteredUser(new RegisteredPayment(),results.getString("Email"),results.getString("Password"),
+                    results.getString("CNumber"), results.getString("Cvv"), results.getString("Expiry"), results.getBoolean("FeePaid"));
+regUsers.add(reg);
                     
                 }
                 statement.close();
@@ -185,6 +187,22 @@ public class MovieAppMain{
             return str;
         }
     }
+    public static void registerUser(String email, String password, String cardNumber, String expiry, String cvv){
+        try {
+            int id = regUsers.size()+1;
+            Statement stmt = dbConnect.createStatement();
+            String str = "INSERT INTO userData " + 
+                        //"VALUES (5,'shah@gmail.com', 'shah', '350519263647', '333', '06/25', 0)";
+                        "VALUES ("+id+",'" + email +"','"+password+"','"+cardNumber+"','"+cvv+"','"+expiry+"',"+0+")";
+            System.out.println(str);
+            stmt.executeUpdate(str);
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
     ////////////////////////////////////////////////////////////////////
     /*
      * End of Methods required to access and manipulate the SQL Databse. 
@@ -252,11 +270,28 @@ public class MovieAppMain{
     public static Movie get(){
         return movies.get(1);
     }
+
+    public static boolean userSearch(String email, String password){
+        //System.out.println(email + " " + password);
+
+        regUsers.clear();
+        System.out.println(myJDBC.storeData("userData"));
+        for(int i = 0; i < regUsers.size(); i++){
+           // System.out.println("matching " + regUsers.get(i).getEmail() + " with " +  email + " " + regUsers.get(i).getPassword() + " with " + password);
+
+            if(regUsers.get(i).getEmail().equals(email) && regUsers.get(i).getPassword().equals(password)){
+                System.out.println("matched");
+                return true;
+            }
+            
+        }
+        return false;
+    }
     public static void main(String[] args) throws FileNotFoundException {
         GUI gui = new GUI();
         
         //Use the following account information: Username = user1, Password = ensf
-        MovieAppMain myJDBC = new MovieAppMain("jdbc:mysql://localhost:3306/data_cinema","user1","ensf");
+        myJDBC = new MovieAppMain("jdbc:mysql://localhost:3306/data_cinema","user1","ensf");
         myJDBC.initializeConnection();
 
         System.out.println("------------------------------");

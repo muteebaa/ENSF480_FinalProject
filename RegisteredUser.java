@@ -2,15 +2,21 @@ public class RegisteredUser extends Guest{
     private RegisteredPayment test1;
     private String email;
     private String password;
-    private String ccInfo;
+    private String cardNumber;
+    private String cvv;
+    private String expiry;
+    private Boolean feePaid;
 
-    RegisteredUser(RegisteredPayment type, String email, String password, String ccInfo ) {
+    RegisteredUser(RegisteredPayment type, String email, String password, String cardNumber, String cvv, String expiry, Boolean feePaid ) {
         
         super(type);
         test1 = type;
         this.email = email;
         this.password = password;
-        this.ccInfo = ccInfo;
+        this.cardNumber = cardNumber;
+        this.cvv = cvv;
+        this.expiry = expiry;
+        this.feePaid = feePaid;
     }
 
 
@@ -26,8 +32,20 @@ public class RegisteredUser extends Guest{
         return password;
     }
 
-    public String getCCInfo(){
-        return ccInfo;
+    public String getCardNumber(){
+        return cardNumber;
+    }
+
+    public String getCVV(){
+        return cvv;
+    }
+
+    public String getExpiry(){
+        return expiry;
+    }
+
+    public Boolean getFeePaid(){
+        return feePaid;
     }
 
 }

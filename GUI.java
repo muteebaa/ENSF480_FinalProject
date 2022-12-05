@@ -70,6 +70,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
     private JButton book;
 
     private JButton viewSeats;
+    private boolean userChecker;
   
   //  private JFrame paymentScreen = new JFrame();
     JButton pay;
@@ -273,11 +274,42 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         }
 
         if(event.getSource().equals(register)){
-            // MICHELE'S PLAN B4 SHE DIED: 
-            // MAKE IT SO THAT WHEN "SIGN UP HERE" IS CLICKED ANOTHER WINDOW OPENS AND ALLOWS USER TO ENTER STUFF
-            // ASK SAMU OR SAYMA
-        
-            JOptionPane.showConfirmDialog(this, MovieAppMain.register(),"Registered", JOptionPane.OK_CANCEL_OPTION);
+            
+            emailreg = new JTextField(10);
+            pwreg = new JTextField(10);
+            cvv = new JTextField(10);
+            cardno = new JTextField(10);
+            expiry = new JTextField(10);
+
+      
+            JPanel myPanel = new JPanel();
+            myPanel.add(new JLabel("Email"));
+            myPanel.add(emailreg);
+            myPanel.add(Box.createHorizontalStrut(15)); // a spacer
+            myPanel.add(new JLabel("Password"));
+            myPanel.add(pwreg);
+            myPanel.add(Box.createHorizontalStrut(15)); // a spacer
+            myPanel.add(new JLabel("Card Number"));
+            myPanel.add(cardno);
+            myPanel.add(Box.createHorizontalStrut(15)); // a spacer
+            myPanel.add(new JLabel("Expiry"));
+            myPanel.add(expiry);
+            myPanel.add(Box.createHorizontalStrut(15)); // a spacer
+            myPanel.add(new JLabel("CVV"));
+            myPanel.add(cvv);
+      
+            var enteredEmail = JOptionPane.showInputDialog("Please enter your email: ");
+
+            var enteredPW = JOptionPane.showInputDialog("Please enter your password: ");
+
+            var enteredCardNumber = JOptionPane.showInputDialog("Please enter your card number: ");
+         
+            var enteredExpiry = JOptionPane.showInputDialog("Please enter the expiry date of the card: ");
+
+            var enteredCVV = JOptionPane.showInputDialog("Please enter the cvv: ");
+
+            MovieAppMain.registerUser(enteredEmail, enteredPW, enteredCardNumber, enteredExpiry, enteredCVV);
+
             System.out.println("registered clicked");
         }
 
@@ -297,27 +329,17 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             var userEmail = enteredEmail;   
 
             var enteredPW = JOptionPane.showInputDialog("Please enter your password: ");
-            var userPW = enteredPW;     
+            var userPW = enteredPW;
+                
             // HOW TO CONFIRM W DATABASE
 
-            try
-            {
-                MovieAppMain myJDBC = new MovieAppMain("jdbc:mysql://localhost:3306/ENSF480Final","root","");
-                myJDBC.initializeConnection(); 
-                
-                String query = "SELECT * FROM userdata where Email = '" + userEmail + "' and Password = '" + userPW + "'";
-                // execute query 
-                // if userEmail == Email and userPW == Password
-                    //System.out.println("Log in successful");
-                    // button allows user to go to movie search page 
-                    // button allows user to go view announcemtns??? (michele thinks this part is bonus)
-                // else
-                    //System.out.println("Email or password is incorrect. Try again!");
+            userChecker = MovieAppMain.userSearch(userEmail, userPW);
 
+            if (userChecker == true){
+                searchScreen();
             }
-
-            finally{
-                ;
+            else{
+                isNotAUser();
             }
             
            
@@ -349,13 +371,103 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         }
 
     }
+    
+    public void isNotAUser(){
+        JDialog failureTab = new JDialog(this, "Login Failed");
 
-    public void searchScreen(){
-        JDialog searchScreen = new JDialog(this, "Search");
+        JLabel i = new JLabel("Your credentials do not match our records. Please try again or register as a new user");
+        i.setFont(new java.awt.Font("Segoe UI", 0, 13)); 
+        i.setForeground(new java.awt.Color(0,0,0));
 
-        JLabel i = new JLabel("Search a movie");
+
+        JPanel top = new JPanel();
+        top.setLayout(new FlowLayout());
+        top.add(i);
+
+
+        
+        failureTab.add(top, BorderLayout.CENTER);
+
+        failureTab.setSize(600,100);
+        failureTab.setVisible(true);
+
+    }
+    public void options(){
+        JDialog optionsScreen = new JDialog(this, "Movie Theatre");
+        JPanel content = new JPanel(new FlowLayout(4,4,4));
+
+        JLabel i = new JLabel("Select an option");
         i.setFont(new java.awt.Font("Segoe UI", 0, 17)); 
         i.setForeground(new java.awt.Color(0,0,0));
+        
+
+        JButton search = new JButton("Search Movie");
+        search.addActionListener(new ActionListener() {
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+              searchScreen();
+            }
+        });
+
+        JButton cancel = new JButton("Cancel Booking");
+        cancel.addActionListener(new ActionListener() {
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+              cancelScreen();
+            }
+        });
+
+        content.add(i);
+        content.add(search);
+        content.add(cancel);
+
+        optionsScreen.add(content, BorderLayout.CENTER);
+        optionsScreen.setSize(400,300);
+        optionsScreen.setVisible(true);
+
+    }
+
+    public void cancelScreen(){
+        JDialog cancelScreen = new JDialog(this, "Ticket Cancellation");
+        JPanel content = new JPanel(new FlowLayout(4,4,4));
+
+        JTextField cancel = new JTextField("", 15);
+
+        JButton cancelBtn = new JButton("Cancel Booking");
+        cancelBtn.addActionListener(new ActionListener() {
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+             // user1.cancelPayment(seats, movie);
+            }
+        });
+
+        content.add(cancel);
+        content.add(cancelBtn);
+        cancelScreen.add(content);
+        cancelScreen.setSize(400,300);
+        cancelScreen.setVisible(true);
+    }
+
+    public void searchScreen(){
+        JLabel i;
+
+        if(userChecker == false){
+
+            i = new JLabel("Logged in a guest. Please search a movie");
+            i.setFont(new java.awt.Font("Segoe UI", 0, 17)); 
+            i.setForeground(new java.awt.Color(0,0,0));
+
+        }
+        else{
+           i = new JLabel("Login was successful. Please search a movie");
+            i.setFont(new java.awt.Font("Segoe UI", 0, 17)); 
+            i.setForeground(new java.awt.Color(0,0,0));
+
+        }
+        JDialog searchScreen = new JDialog(this, "Search");
 
         JLabel s = new JLabel("Search a movie:");
         s.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
@@ -389,14 +501,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 
         searchScreen.setSize(400,300);
         searchScreen.setVisible(true);
-
-        System.out.println("seats: "+seats);
-        System.out.println("movie: "+movID);
-
-      //  this.add(submitPanel, BorderLayout.SOUTH);
-      //  this.add(exitPanel, BorderLayout.EAST);
-       // this.add(moviePanel, BorderLayout.SOUTH);
     }
+
     public void seatScreen(Movie selected){
         JDialog seatScreen = new JDialog(this, "Seat Map");
         seatScreen.setLayout((new FlowLayout()));

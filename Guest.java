@@ -11,8 +11,8 @@ public class Guest {
         p.makePayment(seatsToBook, obj);
     }
 
-    void cancelPayment(int numberOfTickets, Movie obj){
-        p.cancelPayment(numberOfTickets, obj);
+    void cancelPayment(String seatsToCancel, Movie obj){
+        p.cancelPayment(seatsToCancel, obj);
     }
 
 

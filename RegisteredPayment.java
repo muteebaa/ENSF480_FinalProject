@@ -20,11 +20,18 @@ public class RegisteredPayment implements Payment {
     }
     
     @Override
-    public void cancelPayment(int numberOfTickets, Movie obj) {
+    public void cancelPayment(String seatsToCancel, Movie obj){
         System.out.println("tickets have been cancelled.");
         System.out.println("You have been fully refunded");
 
-        obj.increaseSeats(numberOfTickets);
+        String[] seatsArray = seatsToCancel.split(" ");
+        
+        
+        for (String e : seatsArray){
+            System.out.println(e);
+        }
+
+        obj.increaseSeats(seatsArray);
     }
 
     public void annualFee(){
