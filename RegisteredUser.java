@@ -55,10 +55,15 @@ public class RegisteredUser extends Guest{
         return feePaid;
     }
 
-    public void addMovie(Movie mov, String seats, String tickets){
+    public void addMovie(Movie mov, String seats){
         System.out.println("adding a movie");
-      
-        moviesBooked.put(mov, seats);
+        String[] seatsArray = seats.split("\n");
+        String details ="";
+        for (int i = 0 ; i < seatsArray.length; i++){
+            details += mov.getTicketDetails(seatsArray[i]);
+            details += "\n";
+        }
+        moviesBooked.put(mov, details);
     }
 
     //// this isnt wokring!!!

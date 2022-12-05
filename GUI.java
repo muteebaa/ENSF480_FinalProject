@@ -355,6 +355,14 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         else{
             userData.add(cont);
         }
+        
+        userPortal.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e)
+            {
+                showMainScreen();
+            }
+        });
+
 
         userPortal.add(userData, BorderLayout.CENTER);
         
@@ -442,8 +450,9 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         {
         public void windowClosing(WindowEvent e)
         {
-            System.out.println("jdialog window closed");
+            if(userChecker==null)
             showMainScreen();
+            else{userPortal(userChecker);}
         }});
 
         searchScreen.setVisible(true);
@@ -538,7 +547,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             }
             else{
                 JOptionPane.showMessageDialog(this,  "Movie not found!");
-
+                searchScreen();
             }
     }
 
@@ -574,6 +583,13 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             @Override
             public void actionPerformed(ActionEvent e) {
                 searchScreen();;
+            }
+        });
+
+        optionsScreen.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e)
+            {
+                searchScreen();
             }
         });
 
@@ -704,13 +720,9 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 
         JPanel content = new JPanel(new FlowLayout(4,4,4));
         
-        JTextField ccInfo = new JTextField("ccinfo...", 15);
-        ccInfo.setSize(20,100);
-        ccInfo.addMouseListener(this);
+        JTextField ccInfo;
 
-        JTextField email = new JTextField("email...", 15);
-        email.setSize(20,100);
-        email.addMouseListener(this);
+        JTextField email;
         
         JLabel confirmLabel = new JLabel("Yay!");
         confirmLabel.setFont(new java.awt.Font("Segoe UI", 0, 17)); 
@@ -726,15 +738,34 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             @Override
             public void actionPerformed(ActionEvent e) {
                 user1.makePayment(seats, movie);
-                if(userChecker!= null) {System.out.println("its not null");userChecker.addMovie(movie, seats, seats);}
+                if(userChecker!= null) {System.out.println("its not null");userChecker.addMovie(movie, seats);}
                String tickDetails = user1.getTicketDetails(seats, movie);
                JOptionPane.showMessageDialog(paymentTab,  "Successfully processed transaction for: "+seats+"\n"+tickDetails);
             }
         });
         
       //  GridBagConstraints c = new GridBagConstraints();
-        content.add(ccInfo);
+        if(userChecker==null){
+            ccInfo  = new JTextField("ccinfo...", 15);
+            ccInfo.setSize(20,100);
+            ccInfo.addMouseListener(this);
+
+            email = new JTextField("email...", 15);
+            email.setSize(20,100);
+            email.addMouseListener(this);
+        }
+        else{
+            ccInfo  = new JTextField(userChecker.getCardNumber().substring(0, 4)+"*********", 15);
+            ccInfo.setSize(20,100);
+            ccInfo.setEditable(false);
+
+            email = new JTextField(userChecker.getEmail(), 15);
+            email.setSize(20,100);
+            email.setEditable(false);
+        }
+
         content.add(email);
+        content.add(ccInfo);
         content.add(pay);
 
 
