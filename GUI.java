@@ -329,6 +329,10 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             var enteredCVV = JOptionPane.showInputDialog("Please enter the cvv: ");
 
             MovieAppMain.registerUser(enteredEmail, enteredPW, enteredCardNumber, enteredExpiry, enteredCVV);
+            
+            RegisteredUser regUser = MovieAppMain.userSearch(enteredEmail, enteredPW);
+            user1 = regUser;
+            userPortal(regUser);
 
             System.out.println("registered clicked");
         }
@@ -357,7 +361,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 
             if (userChecker != null){
                 user1 = userChecker;
-                searchScreen();
+                userPortal(userChecker);
             }
             else{
                 isNotAUser();
@@ -527,6 +531,65 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 
         searchScreen.setSize(400,300);
         searchScreen.setVisible(true);
+    }
+
+    public void userPortal(RegisteredUser user){
+        JDialog userPortal = new JDialog(this, "Seat Map");
+        userPortal.setLayout((new FlowLayout()));
+       
+        JPanel userData = new JPanel();
+        userData.setLayout(new GridLayout(0,5,4,5));
+
+        JLabel email = new JLabel(user.getEmail());
+        email.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
+        email.setForeground(new java.awt.Color(0,0,0));
+
+        JLabel card = new JLabel(user.getCardNumber().substring(0,4)+"*********");
+        card.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
+        card.setForeground(new java.awt.Color(0,0,0));
+
+        JButton continueNoPay =  new JButton("Browse without paying");
+        JButton continuePay =  new JButton("Pay and Browse");
+        JButton cont =  new JButton("Browse Movies");
+        
+        continueNoPay.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                searchScreen();
+            }
+        });
+
+        continuePay.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                searchScreen();
+            }
+        });
+        cont.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                searchScreen();
+            }
+        });
+        userData.add(email);
+        userData.add(card);
+
+        if(!user.getFeePaid()){
+            userData.add(continueNoPay);
+            userData.add(continuePay);
+        }
+        else{
+            userData.add(cont);
+        }
+
+        userPortal.add(userData, BorderLayout.CENTER);
+        
+        userPortal.setTitle("User Portal");
+        userPortal.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        userPortal.setSize(600,600);
+        userPortal.setMinimumSize(new Dimension(450,450));
+        userPortal.setLocationRelativeTo(null);
+        userPortal.setVisible(true);
     }
 
     public void seatScreen(Movie selected){
