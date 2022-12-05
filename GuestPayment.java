@@ -3,20 +3,17 @@ import java.util.Scanner;
 public class GuestPayment implements Payment {
 
     @Override
-    public void makePayment(int n, Movie obj) {
+    public void makePayment(String seatsToBook, Movie obj){
         // prompt user to pay
-        Scanner c = new Scanner(System.in);
-        System.out.println("Please enter your card number");
-        String card = c.nextLine();
+        
+        String[] seatsArray = seatsToBook.split(" ");
         
         
-        Scanner e = new Scanner(System.in);
-        System.out.println("Please enter your email address");
-        String email = e.nextLine();
-        int x = 0;
+        for (String e : seatsArray){
+            System.out.println(e);
+        }
 
-        obj.decreaseSeats(n);
-        
+        obj.decreaseSeats(seatsArray);
      /*   for (all in seats){
         create ticket
         get ticket
@@ -34,4 +31,5 @@ public class GuestPayment implements Payment {
 
         obj.increaseSeats(numberOfTickets);
     }
+
 }

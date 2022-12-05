@@ -7,8 +7,8 @@ public class Guest {
 
     }
 
-    void makePayment(int numberOfTickets, Movie obj){
-        p.makePayment(numberOfTickets, obj);
+    void makePayment(String seatsToBook, Movie obj){
+        p.makePayment(seatsToBook, obj);
     }
 
     void cancelPayment(int numberOfTickets, Movie obj){

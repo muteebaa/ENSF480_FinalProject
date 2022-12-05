@@ -4,7 +4,7 @@ public class RegisteredPayment implements Payment {
     
 
     @Override
-    public void makePayment(int numberOfTickets, Movie obj) {
+    public  void makePayment(String seatsToBook, Movie obj) {
         // prompt user to pay
         Scanner c = new Scanner(System.in);
         System.out.println("we have ur card number");
@@ -16,7 +16,7 @@ public class RegisteredPayment implements Payment {
         String email = e.nextLine();
         int x = 0;
 
-        obj.decreaseSeats(numberOfTickets);
+     //   obj.decreaseSeats(numberOfTickets);
     }
     
     @Override

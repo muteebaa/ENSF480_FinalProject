@@ -49,7 +49,7 @@ public class Movie {
     }
 
 
-    public void decreaseSeats(int n){
+    public void decreaseSeats(String[] n){
         seats.decrease(n);
     }
 

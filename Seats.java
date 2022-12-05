@@ -28,8 +28,10 @@ public class Seats {
         }
     }
 
-    public void decrease(int n){
-        available = available- n;
+    public void decrease( String[] seatsBooked){
+       for (String s: seatsBooked){
+            seat.put(s, false);
+       }
     }
 
     public void increase(int n){

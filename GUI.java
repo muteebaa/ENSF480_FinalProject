@@ -266,6 +266,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         }
         
         if(event.getSource().equals(guest)){
+            user1 = new Guest(new GuestPayment());
             searchScreen();
           //  SearchMovie.run();
            // dispose();
@@ -275,7 +276,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             // MICHELE'S PLAN B4 SHE DIED: 
             // MAKE IT SO THAT WHEN "SIGN UP HERE" IS CLICKED ANOTHER WINDOW OPENS AND ALLOWS USER TO ENTER STUFF
             // ASK SAMU OR SAYMA
-
+        
             JOptionPane.showConfirmDialog(this, MovieAppMain.register(),"Registered", JOptionPane.OK_CANCEL_OPTION);
             System.out.println("registered clicked");
         }
