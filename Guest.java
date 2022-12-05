@@ -22,8 +22,7 @@ public class Guest {
         for (String e : seatsArray){
             det+=obj.getTicketDetails(e);
         }
-        System.out.println("AAAAAA");
-        System.out.println(det);
+        
         return det;
         
     }

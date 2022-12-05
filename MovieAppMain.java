@@ -73,30 +73,7 @@ public class MovieAppMain{
         return this.PASSWORD;
     }
 
-    // we dont really need this right now but i left it here so we can borrow the code if we want to remove movies later on
 
-/*    public static void deleteFood(String id){
-        try{
-            
-            String str = "DELETE FROM available_food WHERE ItemID = ?";
-            PreparedStatement statement = dbConnect.prepareStatement(str);  
-            
-            statement.setString(1,id);
-            int len = statement.executeUpdate();
-            
-            if(len == 0){
-                System.out.println("No updating done");
-               }
-            
-            
-            statement.close();}
-            
-            catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            
-    }           
-*/
 
     /* this method stores all our data from the database into the linked lists */
     public String storeData(String tableName){     
@@ -196,7 +173,6 @@ regUsers.add(reg);
             String str = "INSERT INTO userData " + 
                         //"VALUES (5,'shah@gmail.com', 'shah', '350519263647', '333', '06/25', 0)";
                         "VALUES ("+id+",'" + email +"','"+password+"','"+cardNumber+"','"+cvv+"','"+expiry+"',"+0+")";
-            System.out.println(str);
             stmt.executeUpdate(str);
 
         } catch (SQLException e) {
@@ -229,13 +205,11 @@ regUsers.add(reg);
 
     // this is the search function used to search for a movie
     public static LinkedList<Movie> search(String movieName, RegisteredUser exclusive){
-        System.out.println();
         LinkedList<Movie> allFound = new LinkedList<Movie>();
         String details = "Search results for "+ movieName;
         // traverses through the theatres list and searches each theatre for a movie
         // you can see how the display happens in the theatre/movie classes
         
-        System.out.println("hi?");
         int exists = 0;
         for(int i=0; i<theatres.size(); i++){
            if(exclusive == null){
@@ -273,7 +247,6 @@ regUsers.add(reg);
         return movieFound;
     }
     public static String register(){
-        System.out.println("hehehe registering"); 
         String done =  "registered!!!";
         return done;       
     }
@@ -287,10 +260,8 @@ regUsers.add(reg);
         regUsers.clear();
         System.out.println(myJDBC.storeData("userData"));
         for(int i = 0; i < regUsers.size(); i++){
-           // System.out.println("matching " + regUsers.get(i).getEmail() + " with " +  email + " " + regUsers.get(i).getPassword() + " with " + password);
 
             if(regUsers.get(i).getEmail().equals(email) && regUsers.get(i).getPassword().equals(password)){
-                System.out.println("matched");
                 return regUsers.get(i);
             }
             

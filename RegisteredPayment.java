@@ -26,6 +26,6 @@ public class RegisteredPayment implements Payment {
     }
 
     public void annualFee(){
-        System.out.println("$20 annual fee paid");
+        
     }
 }

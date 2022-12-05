@@ -295,8 +295,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
     }
 
     public void userPortal(RegisteredUser user){
-        System.out.println("ummmm ");
-        System.out.println(user.getMovies());
+        
         JDialog userPortal = new JDialog(this, "User Portal");
       //  userPortal.setLayout((new FlowLayout()));
        
@@ -464,7 +463,6 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 
     public void searchMovie(){
         movieSearch = searchV.getText();  
-            System.out.println("USER CHECKKKER" + userChecker);
             LinkedList<Movie> movies = MovieAppMain.search(movieSearch, userChecker);
             // MovieAppMain.getMovies();
           //  int check = 0;
@@ -475,9 +473,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 
             LinkedList<Movie> Theatres = MovieAppMain.search(movieSearch, userChecker);
 
-            for(int i=0; i<Theatres.size(); i++){
-                System.out.println(Theatres.get(i).getTheatre());
-            }
+            
             LinkedList<String> thea = new LinkedList<String>();
                 for (int k = 0; k < Theatres.size();  k ++) {
                     if(!thea.contains(Theatres.get(k).getTheatre())){
@@ -532,16 +528,13 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
                     "Times", JOptionPane.QUESTION_MESSAGE, null, arrayt, arrayt[0]);
                 
                     for (int i = 0; i < Theatres.size(); i ++) {
-                        // System.out.println("datee  "+ Theatres.get(i).getDate() + "time " + Theatres.get(i).getTime() );
                         if (d.equals(Theatres.get(i).getDate()) && t.equals(Theatres.get(i).getTime())){
                             selected = movies.get(i);
-                            System.out.println("amazing!");
                             options(selected);
                             
                             break;
     
                         }
-                        System.out.println("yeah good");
                     }
     
             }
@@ -741,7 +734,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             @Override
             public void actionPerformed(ActionEvent e) {
                 user1.makePayment(seats, movie);
-                if(userChecker!= null) {System.out.println("its not null");userChecker.addMovie(movie, seats);}
+                if(userChecker!= null) {userChecker.addMovie(movie, seats);}
                String tickDetails = user1.getTicketDetails(seats, movie);
                JOptionPane.showMessageDialog(paymentTab,  "Successfully processed transaction for: "+seats+"\n"+tickDetails);
             }

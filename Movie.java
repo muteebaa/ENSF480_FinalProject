@@ -80,8 +80,7 @@ public class Movie {
         String ticketDetails ="";
        
         for(int i = 0 ; i < tickets.size(); i++){
-            System.out.println("ticket seat: "+ tickets.get(i).getSeat());
-            System.out.println(" seat: "+n);
+            
             if(tickets.get(i).getSeat().equals(n)){
                 ticketDetails += "Ticket for seat "+n;
                 ticketDetails += " has code: "+ tickets.get(i).getCode()+"\n";

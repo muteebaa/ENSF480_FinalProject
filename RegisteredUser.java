@@ -56,7 +56,7 @@ public class RegisteredUser extends Guest{
     }
 
     public void addMovie(Movie mov, String seats){
-        System.out.println("adding a movie");
+        
         String[] seatsArray = seats.split("\n");
         String details ="";
         for (int i = 0 ; i < seatsArray.length; i++){
@@ -68,18 +68,14 @@ public class RegisteredUser extends Guest{
 
     //// this isnt wokring!!!
     public String getMovies(){
-        System.out.println("CalLED!!");
         String all ="";
   
         for (Map.Entry<Movie, String> s : moviesBooked.entrySet()) {
             all += s.getKey().getName();
-            System.out.println(s.getKey().getName());
             all += ": ";
             all += s.getValue();
-            System.out.println(s.getValue());
         }
         
-        System.out.println(all);
         return all;
     }
 
