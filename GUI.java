@@ -196,8 +196,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
     public void actionPerformed(ActionEvent event){
         if(event.getSource().equals(searchBtn)){
             movieSearch = searchV.getText();  
-            
-            MovieAppMain.search(movieSearch);
+        
             
 
             //System.out.println("submit clicked");
@@ -210,29 +209,32 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             Movie selected;
        //     System.out.println("whats check: " + check);
             if (check != null){
-                String[] dates = new String[5];
+                
                 int j = 0;
                 Object d;
                 Object t;
 
+                LinkedList<String> dates = new LinkedList<String>();
                 for (int i = 0; i < movies.size(); i ++) {
-                    dates[i] = movies.get(i).getDate();
+                    dates.add(movies.get(i).getDate());
                 
                 }
 
+                String[] arrayD = dates.toArray(new String[dates.size()]);
+
                 d = JOptionPane.showInputDialog(null, "Please select a date.", 
-                    "Dates", JOptionPane.QUESTION_MESSAGE, null, dates, dates[0]);
+                    "Dates", JOptionPane.QUESTION_MESSAGE, null, arrayD, arrayD[0]);
+        
                 
-                if (d == dates[0]){
-                    System.out.println("works!");
-                }
-                String[] times = new String[4];
+                LinkedList<String> times = new LinkedList<String>();
                 if(d instanceof String){
                     
                     int k = 0;
                     for (int i = 0; i < movies.size(); i ++) {
                         if (d == movies.get(i).getDate()){
-                            times[i] = movies.get(i).getTime();
+                            times.add(movies.get(i).getTime());
+
+                            //times[i] = movies.get(i).getTime();
                         }
                     }
                     
@@ -244,8 +246,10 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
                     }*/
 
                 }
+                String[] arrayT = times.toArray(new String[times.size()]);
+                
                 t = JOptionPane.showInputDialog(null, "Please select a showtime.", 
-                "Showtimes", JOptionPane.QUESTION_MESSAGE, null, times, times[0]);
+                "Showtimes", JOptionPane.QUESTION_MESSAGE, null, arrayT,arrayT[0]);
 
                 // finding the movie
                 for (int i = 0; i < movies.size(); i ++) {
@@ -267,8 +271,10 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         }
         
         if(event.getSource().equals(guest)){
+            userChecker = false;
             user1 = new Guest(new GuestPayment());
-            searchScreen();
+            options();
+           // searchScreen();
           //  SearchMovie.run();
            // dispose();
         }

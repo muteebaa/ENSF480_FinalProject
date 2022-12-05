@@ -162,7 +162,7 @@ public class MovieAppMain{
         else if(tableName.equals("userData")){
             try{
                 Statement statement = dbConnect.createStatement();  
-                results = statement.executeQuery("SELECT Email, Password, CCinfo from userData");
+                results = statement.executeQuery("SELECT Email, Password, CNumber, Cvv, Expiry, FeePaid from userData");
                 int i = 0;
                 boolean flag = false;
                 while(results.next()){
