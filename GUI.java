@@ -25,9 +25,6 @@ import java.awt.FlowLayout;
 public class GUI extends JFrame implements ActionListener, MouseListener{
 	// variables required for implementation
     private String movieSearch;
-    private String seats;
-    private int movID;
-
     private Guest user1;
 
 	
@@ -35,19 +32,15 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
     private JLabel instructions;
     private JLabel instructions1;
     
-   // private JLabel searchLabel;
 
     private javax.swing.JPanel jPanel1;
 
     private JTextField searchInput;
 
-    private JLabel testLabel;
+   
     private JTextField testInput;
     private JTextField movInput;
-    
-    private JButton submitInfo;
-    private JButton purchaseTicket;
-    private JButton guestBtn;
+
 
 
     private JTextField email;   // for login
@@ -104,22 +97,6 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         instructions1.setFont(new java.awt.Font("Segoe UI", 0, 17));
         instructions1.setForeground(new java.awt.Color(0,0,0));    
         
-        // searchLabel = new JLabel("Search a movie:");
-        // searchLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
-        // searchLabel.setForeground(new java.awt.Color(0,0,0));
-       
-        // testLabel = new JLabel("Buy Tickets:");
-        // testLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
-        // testLabel.setForeground(new java.awt.Color(0,0,0));
-     
-        // searchInput = new JTextField("Erase and type movie...", 15);
-        // searchInput.addMouseListener(this);
-
-        // movInput = new JTextField("Movie ID...", 15);
-        // movInput.addMouseListener(this);
-
-        // testInput = new JTextField("(test)number of tickets...", 15);
-        // testInput.addMouseListener(this);
 
         register = new JButton("Sign up here");
         register.addActionListener(this);
@@ -129,16 +106,6 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 
         guest = new JButton("Continue as guest");
         guest.addActionListener(this);
-
-        
-        // submitInfo = new JButton("Search");
-        // submitInfo.addActionListener(this);
-
-        // viewSeats = new JButton("View available seats");
-        // viewSeats.addActionListener(this);
-
-        // purchaseTicket = new JButton("Purchase");
-        // purchaseTicket.addActionListener(this);
 
         // JButton exit = new JButton("Exit");
 		// exit.addActionListener (new ActionListener () {
@@ -166,36 +133,303 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         clientPanel.add(login);
         clientPanel.add(register);
 
-        
-
-        // clientPanel.add(searchLabel);
-        // clientPanel.add(searchInput);
-        // clientPanel.add(submitInfo);
-        // clientPanel.add(viewSeats);
-
-
-        // clientPanel.add(testLabel);
-        // clientPanel.add(movInput);
-        // clientPanel.add(testInput);    
-        // clientPanel.add(purchaseTicket);
-
-      ///  submitPanel.add(submitInfo);
-        // exitPanel.add(exit);
-       
+    
         this.add(headerPanel, BorderLayout.CENTER);
         this.add(clientPanel, BorderLayout.SOUTH);
-      //  this.add(submitPanel, BorderLayout.SOUTH);
         this.add(exitPanel, BorderLayout.EAST);
     }
     
     /*
      * actionPerformed(ActionEvent event) Method
      * 
-     * calls the search method and search results are printed to main
+     * for the buttons on the main page
      */ 
     public void actionPerformed(ActionEvent event){
-        if(event.getSource().equals(searchBtn)){
-            movieSearch = searchV.getText();  
+        
+        if(event.getSource().equals(guest)){
+            userChecker = null;
+            user1 = new Guest(new GuestPayment());
+            searchScreen();
+           // searchScreen();
+          //  SearchMovie.run();
+           // dispose();
+        }
+
+        if(event.getSource().equals(register)){
+            registerAccount();
+        }
+
+        if(event.getSource().equals(login)){
+            validateLogin();
+        }
+
+    }
+
+    public void error(){
+        JPanel myPanel = new JPanel();
+        JOptionPane.showMessageDialog(myPanel, "Eggs are not supposed to be green.");
+
+    }
+
+    public void registerAccount(){
+        this.setVisible(false);
+        emailreg = new JTextField(10);
+        pwreg = new JTextField(10);
+        cvv = new JTextField(10);
+        cardno = new JTextField(10);
+        expiry = new JTextField(10);
+
+    
+        JPanel myPanel = new JPanel();
+        myPanel.add(new JLabel("Email"));
+        myPanel.add(emailreg);
+        myPanel.add(Box.createHorizontalStrut(15)); // a spacer
+        myPanel.add(new JLabel("Password"));
+        myPanel.add(pwreg);
+        myPanel.add(Box.createHorizontalStrut(15)); // a spacer
+        myPanel.add(new JLabel("Card Number"));
+        myPanel.add(cardno);
+        myPanel.add(Box.createHorizontalStrut(15)); // a spacer
+        myPanel.add(new JLabel("Expiry"));
+        myPanel.add(expiry);
+        myPanel.add(Box.createHorizontalStrut(15)); // a spacer
+        myPanel.add(new JLabel("CVV"));
+        myPanel.add(cvv);
+
+        int result = JOptionPane.showConfirmDialog(null, myPanel, 
+        "Please enter the following details", JOptionPane.OK_CANCEL_OPTION);
+
+        if (result == JOptionPane.OK_OPTION) {
+            var enteredEmail = emailreg.getText();
+            var enteredPW = pwreg.getText();
+            var enteredCardNumber = cardno.getText();
+            var enteredExpiry = expiry.getText();
+            var enteredCVV = cvv.getText();
+            
+            if(!enteredCardNumber.matches("[0-9]{5,10}") || !enteredExpiry.matches("[0-9]+") || !enteredCVV.matches("[0-9]+") ) {
+                error();
+            }
+            else{
+                MovieAppMain.registerUser(enteredEmail, enteredPW, enteredCardNumber, enteredExpiry, enteredCVV);
+
+                RegisteredUser regUser = MovieAppMain.userSearch(enteredEmail, enteredPW);
+                user1 = regUser;
+                
+                userPortal(regUser);
+            }
+        }
+        
+        else if (result == JOptionPane.NO_OPTION) { showMainScreen();} 
+        else { showMainScreen(); }
+       
+    }
+ 
+    public void validateLogin(){
+        this.setVisible(false);
+        email = new JTextField(10);
+        pw = new JTextField(10);
+    
+        JPanel myPanel = new JPanel();
+        myPanel.add(new JLabel("Email"));
+        myPanel.add(email);
+        myPanel.add(Box.createHorizontalStrut(15)); // a spacer
+        myPanel.add(new JLabel("Password"));
+        myPanel.add(pw);
+    
+        // var enteredEmail = JOptionPane.showInputDialog("Please enter your email: ");
+         var userEmail = "enteredEmail";   
+
+        // var enteredPW = JOptionPane.showInputDialog("Please enter your password: ");
+         var userPW = "enteredPW";
+        
+        int result = JOptionPane.showConfirmDialog(null, myPanel, 
+               "Please Enter Email and Password", JOptionPane.OK_CANCEL_OPTION);
+        
+        if (result == JOptionPane.OK_OPTION) {
+            userEmail = email.getText();
+            userPW = pw.getText();
+            
+            // checking datbase
+            userChecker = MovieAppMain.userSearch(userEmail, userPW);
+
+            if (userChecker != null){
+                user1 = userChecker;
+                userPortal(userChecker);
+            }
+            else{
+                isNotAUser();
+                showMainScreen();
+            }
+        }
+        
+        else if (result == JOptionPane.NO_OPTION) {showMainScreen();} 
+        else {showMainScreen();}
+       
+    }
+
+    public void isNotAUser(){
+        JDialog failureTab = new JDialog(this, "Login Failed");
+
+        JLabel i = new JLabel("Your credentials do not match our records. Please try again or register as a new user");
+        i.setFont(new java.awt.Font("Segoe UI", 0, 13)); 
+        i.setForeground(new java.awt.Color(0,0,0));
+
+
+        JPanel top = new JPanel();
+        top.setLayout(new FlowLayout());
+        top.add(i);
+        
+        failureTab.add(top, BorderLayout.CENTER);
+
+        failureTab.setSize(600,100);
+        failureTab.setVisible(true);
+
+    }
+
+    public void userPortal(RegisteredUser user){
+        System.out.println("ummmm ");
+        System.out.println(user.getMovies());
+        JDialog userPortal = new JDialog(this, "User Portal");
+      //  userPortal.setLayout((new FlowLayout()));
+       
+        JPanel userData = new JPanel();
+        userData.setLayout(new BoxLayout(userData, BoxLayout.PAGE_AXIS));
+
+        JLabel email = new JLabel(user.getEmail());
+        email.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
+        email.setForeground(new java.awt.Color(0,0,0));
+
+        JLabel card = new JLabel(user.getCardNumber().substring(0,4)+"*********");
+        card.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
+        card.setForeground(new java.awt.Color(0,0,0));
+
+        JLabel movies = new JLabel(user.getMovies());
+        movies.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
+        movies.setForeground(new java.awt.Color(0,0,0));
+
+        JButton continueNoPay =  new JButton("Browse without paying");
+        JButton continuePay =  new JButton("Pay and Browse");
+        JButton cont =  new JButton("Browse Movies");
+        
+        continueNoPay.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                searchScreen();
+            }
+        });
+
+        continuePay.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //user.annualFee();
+                searchScreen();
+            }
+        });
+        cont.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                searchScreen();
+            }
+        });
+        userData.add(email);
+        userData.add(card);
+
+        userData.add(movies);
+
+        if(!user.getFeePaid()){
+            userData.add(continueNoPay);
+            userData.add(continuePay);
+        }
+        else{
+            userData.add(cont);
+        }
+
+        userPortal.add(userData, BorderLayout.CENTER);
+        
+        userPortal.setTitle("User Portal");
+        userPortal.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        userPortal.setSize(600,600);
+        userPortal.setMinimumSize(new Dimension(450,450));
+        userPortal.setLocationRelativeTo(null);
+        userPortal.setVisible(true);
+    }
+   
+    public void searchScreen(){
+        this.setVisible(false);
+        JLabel i;
+
+        if(userChecker == null){
+
+            i = new JLabel("Logged in a guest. Please search a movie");
+            i.setFont(new java.awt.Font("Segoe UI", 0, 17)); 
+            i.setForeground(new java.awt.Color(0,0,0));
+
+        }
+        else{
+           i = new JLabel("Login was successful. Please search a movie");
+            i.setFont(new java.awt.Font("Segoe UI", 0, 17)); 
+            i.setForeground(new java.awt.Color(0,0,0));
+
+        }
+        JDialog searchScreen = new JDialog(this, "Search");
+
+        JLabel s = new JLabel("Search a movie:");
+        s.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
+        s.setForeground(new java.awt.Color(0,0,0));
+
+        searchV = new JTextField("", 15);
+        searchV.addMouseListener(this);
+
+        searchBtn = new JButton("Search");
+        searchBtn.addActionListener(new ActionListener() {
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                searchMovie();
+            }
+        });
+
+        JPanel top = new JPanel();
+        top.setLayout(new FlowLayout());
+        top.add(i);
+
+        JPanel content = new JPanel(new FlowLayout(4,4,4));
+
+        content.add(new JLabel("Wakanda Forever"));
+        content.add(new JLabel("\nSmile"));
+        content.add(new JLabel("\nBlack Adam"));
+        content.add(new JLabel("\nStrange World"));
+        //headerPanel.add(instructions1);
+    
+        content.add(s);
+        content.add(searchV);
+        content.add(searchBtn);
+
+        
+
+        searchScreen.add(top, BorderLayout.NORTH);
+        searchScreen.add(content, BorderLayout.CENTER);
+        searchScreen.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        searchScreen.setSize(400,300);
+        searchScreen.setLocationRelativeTo(null);
+       
+        searchScreen.addWindowListener(new WindowAdapter() 
+        {
+        public void windowClosing(WindowEvent e)
+        {
+            System.out.println("jdialog window closed");
+            showMainScreen();
+        }});
+
+        searchScreen.setVisible(true);
+    }
+
+    public void showMainScreen(){
+        this.setVisible(true);
+    }
+
+    public void searchMovie(){
+        movieSearch = searchV.getText();  
 
             LinkedList<Movie> movies = MovieAppMain.search(movieSearch);
             // MovieAppMain.getMovies();
@@ -281,142 +515,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
                 JOptionPane.showMessageDialog(this,  "Movie not found!");
 
             }
-            
-        }
-        
-        if(event.getSource().equals(guest)){
-            userChecker = null;
-            user1 = new Guest(new GuestPayment());
-            searchScreen();
-           // searchScreen();
-          //  SearchMovie.run();
-           // dispose();
-        }
-
-        if(event.getSource().equals(register)){
-            
-            emailreg = new JTextField(10);
-            pwreg = new JTextField(10);
-            cvv = new JTextField(10);
-            cardno = new JTextField(10);
-            expiry = new JTextField(10);
-
-      
-            JPanel myPanel = new JPanel();
-            myPanel.add(new JLabel("Email"));
-            myPanel.add(emailreg);
-            myPanel.add(Box.createHorizontalStrut(15)); // a spacer
-            myPanel.add(new JLabel("Password"));
-            myPanel.add(pwreg);
-            myPanel.add(Box.createHorizontalStrut(15)); // a spacer
-            myPanel.add(new JLabel("Card Number"));
-            myPanel.add(cardno);
-            myPanel.add(Box.createHorizontalStrut(15)); // a spacer
-            myPanel.add(new JLabel("Expiry"));
-            myPanel.add(expiry);
-            myPanel.add(Box.createHorizontalStrut(15)); // a spacer
-            myPanel.add(new JLabel("CVV"));
-            myPanel.add(cvv);
-      
-            var enteredEmail = JOptionPane.showInputDialog("Please enter your email: ");
-
-            var enteredPW = JOptionPane.showInputDialog("Please enter your password: ");
-
-            var enteredCardNumber = JOptionPane.showInputDialog("Please enter your card number: ");
-         
-            var enteredExpiry = JOptionPane.showInputDialog("Please enter the expiry date of the card: ");
-
-            var enteredCVV = JOptionPane.showInputDialog("Please enter the cvv: ");
-
-            MovieAppMain.registerUser(enteredEmail, enteredPW, enteredCardNumber, enteredExpiry, enteredCVV);
-            
-            RegisteredUser regUser = MovieAppMain.userSearch(enteredEmail, enteredPW);
-            user1 = regUser;
-            userPortal(regUser);
-
-            System.out.println("registered clicked");
-        }
-
-        if(event.getSource().equals(login)){
-            // FOR SAMU USER HAS LOGGED IN AND UH CANT DO AGAIN??
-            email = new JTextField(10);
-            pw = new JTextField(10);
-      
-            JPanel myPanel = new JPanel();
-            myPanel.add(new JLabel("Email"));
-            myPanel.add(email);
-            myPanel.add(Box.createHorizontalStrut(15)); // a spacer
-            myPanel.add(new JLabel("Password"));
-            myPanel.add(pw);
-      
-            var enteredEmail = JOptionPane.showInputDialog("Please enter your email: ");
-            var userEmail = enteredEmail;   
-
-            var enteredPW = JOptionPane.showInputDialog("Please enter your password: ");
-            var userPW = enteredPW;
-                
-            // HOW TO CONFIRM W DATABASE
-            System.out.println("okkkkkk");
-            userChecker = MovieAppMain.userSearch(userEmail, userPW);
-
-            if (userChecker != null){
-                user1 = userChecker;
-                userPortal(userChecker);
-            }
-            else{
-                isNotAUser();
-            }
-            
-           
-            System.out.println("login clicked");
-        }
-
-    
-        if(event.getSource().equals(submitInfo)){
-            movieSearch = searchInput.getText();  
-            JOptionPane.showMessageDialog(this,  MovieAppMain.search(movieSearch));
-           
-            System.out.println("submit clieckd");
-        }
-
-        if(event.getSource() == guestBtn){
-            user1 = new Guest(new GuestPayment());
-        }
-        
-        if(event.getSource() == purchaseTicket){
-            ///need to throw error if an int isnt entered
-            seats = testInput.getText();
-            movID = Integer.parseInt(movInput.getText());
- 
-          //  paymentScreen();
-        }
-
-        if(event.getSource() == pay){
-            System.out.println("okthis worked ");
-        }
-
     }
-    
-    public void isNotAUser(){
-        JDialog failureTab = new JDialog(this, "Login Failed");
 
-        JLabel i = new JLabel("Your credentials do not match our records. Please try again or register as a new user");
-        i.setFont(new java.awt.Font("Segoe UI", 0, 13)); 
-        i.setForeground(new java.awt.Color(0,0,0));
-
-
-        JPanel top = new JPanel();
-        top.setLayout(new FlowLayout());
-        top.add(i);
-
-
-        
-        failureTab.add(top, BorderLayout.CENTER);
-
-        failureTab.setSize(600,100);
-        failureTab.setVisible(true);
-
-    }
     public void options(Movie selected){
         JDialog optionsScreen = new JDialog(this, "Movie Theatre");
         JPanel content = new JPanel(new FlowLayout(4,4,4));
@@ -454,7 +554,6 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 
     }
    
-
     public void cancelScreen(Movie selected){
         JDialog cancelScreen = new JDialog(this, "Ticket Cancellation");
         JPanel content = new JPanel(new FlowLayout(4,4,4));
@@ -479,126 +578,6 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         cancelScreen.add(content);
         cancelScreen.setSize(400,300);
         cancelScreen.setVisible(true);
-    }
-
-    public void searchScreen(){
-        JLabel i;
-
-        if(userChecker == null){
-
-            i = new JLabel("Logged in a guest. Please search a movie");
-            i.setFont(new java.awt.Font("Segoe UI", 0, 17)); 
-            i.setForeground(new java.awt.Color(0,0,0));
-
-        }
-        else{
-           i = new JLabel("Login was successful. Please search a movie");
-            i.setFont(new java.awt.Font("Segoe UI", 0, 17)); 
-            i.setForeground(new java.awt.Color(0,0,0));
-
-        }
-        JDialog searchScreen = new JDialog(this, "Search");
-
-        JLabel s = new JLabel("Search a movie:");
-        s.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
-        s.setForeground(new java.awt.Color(0,0,0));
-
-        searchV = new JTextField("Erase and type movie...", 15);
-        searchV.addMouseListener(this);
-
-        searchBtn = new JButton("Search");
-        searchBtn.addActionListener(this);
-
-        JPanel top = new JPanel();
-        top.setLayout(new FlowLayout());
-        top.add(i);
-
-        JPanel content = new JPanel(new FlowLayout(4,4,4));
-
-        content.add(new JLabel("Wakanda Forever"));
-        content.add(new JLabel("Smile"));
-        content.add(new JLabel("Black Adam"));
-        content.add(new JLabel("Strange World"));
-        //headerPanel.add(instructions1);
-    
-        content.add(s);
-        content.add(searchV);
-        content.add(searchBtn);
-
-        
-        searchScreen.add(top, BorderLayout.NORTH);
-        searchScreen.add(content, BorderLayout.CENTER);
-
-        searchScreen.setSize(400,300);
-        searchScreen.setVisible(true);
-    }
-
-    public void userPortal(RegisteredUser user){
-        System.out.println("ummmm ");
-        System.out.println(user.getMovies());
-        JDialog userPortal = new JDialog(this, "User Portal");
-      //  userPortal.setLayout((new FlowLayout()));
-       
-        JPanel userData = new JPanel();
-        userData.setLayout(new BoxLayout(userData, BoxLayout.PAGE_AXIS));
-
-        JLabel email = new JLabel(user.getEmail());
-        email.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
-        email.setForeground(new java.awt.Color(0,0,0));
-
-        JLabel card = new JLabel(user.getCardNumber().substring(0,4)+"*********");
-        card.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
-        card.setForeground(new java.awt.Color(0,0,0));
-
-        JLabel movies = new JLabel(user.getMovies());
-        movies.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
-        movies.setForeground(new java.awt.Color(0,0,0));
-
-        JButton continueNoPay =  new JButton("Browse without paying");
-        JButton continuePay =  new JButton("Pay and Browse");
-        JButton cont =  new JButton("Browse Movies");
-        
-        continueNoPay.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                searchScreen();
-            }
-        });
-
-        continuePay.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //user.annualFee();
-                searchScreen();
-            }
-        });
-        cont.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                searchScreen();
-            }
-        });
-        userData.add(email);
-        userData.add(card);
-
-        userData.add(movies);
-
-        if(!user.getFeePaid()){
-            userData.add(continueNoPay);
-            userData.add(continuePay);
-        }
-        else{
-            userData.add(cont);
-        }
-
-        userPortal.add(userData, BorderLayout.CENTER);
-        
-        userPortal.setTitle("User Portal");
-        userPortal.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        userPortal.setSize(600,600);
-        userPortal.setMinimumSize(new Dimension(450,450));
-        userPortal.setLocationRelativeTo(null);
-        userPortal.setVisible(true);
     }
 
     public void seatScreen(Movie selected){
@@ -648,7 +627,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 
         submitPanel.add(book);
        
-
+        
+        textArea.setEditable(false);
         seatPanel.add(textArea);
         
         seatScreen.add(seatPanel, BorderLayout.CENTER);
@@ -753,36 +733,13 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         paymentConfirmation.setVisible(true);
     }
 
-    /*
-     * validateInput() Method
-     * 
-     * Ensures data entered by the user is valid (e.g. not negative values)
-     */
-    public int validateInput(){
-        if(true){
-            return 0;
-    
-        }
-        else{
-            return 1;
-        }
+   
+
+    public void windowClosed(WindowEvent e) {
+        //This will only be seen on standard output.
+        
     }
 
-    /*
-     * validateOption() Method
-     * 
-     * Ensures user only inputted data for a single option.
-     */
-    public int validateOption(){
-        if(true ){
-            return 2;
-        }
-        else{
-            return 0;
-        }
-    }
-    
-   
     public void mouseClicked(MouseEvent event){
         
         if(event.getSource().equals(searchInput))
