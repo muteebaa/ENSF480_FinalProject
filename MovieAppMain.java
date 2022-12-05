@@ -106,12 +106,14 @@ public class MovieAppMain{
         if(tableName.equals("projectData")){
             try{
                 Statement statement = dbConnect.createStatement();  
-                results = statement.executeQuery("SELECT Theatre, Movie, dateM, dayM, timeM, Seats, Item from projectData");
+                results = statement.executeQuery("SELECT Theatre, Movie, dateM, dayM, timeM, Seats, memberOnly, Item from projectData");
                 int i = 0;
                 boolean flag = false;
                 while(results.next()){
                     // a movie object is created and added to the linked list
-                    Movie mov = new Movie(results.getString("Item"), results.getString("Theatre"), results.getString("Movie"), results.getString("dateM"), results.getString("dayM"),results.getString("timeM"), results.getString("Seats"));
+                    Movie mov = new Movie(results.getString("Item"), results.getString("Theatre"), results.getString("Movie"),
+                                 results.getString("dateM"), results.getString("dayM"),
+                                 results.getString("timeM"), results.getString("Seats"), results.getBoolean("memberOnly"));
                     movies.add(mov);
                     
                     // if its not the first item in the database then we will traverse through the linked list of theatres
@@ -226,7 +228,7 @@ regUsers.add(reg);
     }
 
     // this is the search function used to search for a movie
-    public static LinkedList<Movie> search(String movieName){
+    public static LinkedList<Movie> search(String movieName, RegisteredUser exclusive){
         System.out.println();
         LinkedList<Movie> allFound = new LinkedList<Movie>();
         String details = "Search results for "+ movieName;
@@ -236,8 +238,13 @@ regUsers.add(reg);
         System.out.println("hi?");
         int exists = 0;
         for(int i=0; i<theatres.size(); i++){
+           if(exclusive == null){
+            allFound.addAll(theatres.get(i).searchMovies(movieName, "guest"));
+           }
+           else{
+            allFound.addAll(theatres.get(i).searchMovies(movieName, "registered"));
+           }
            
-           allFound.addAll(theatres.get(i).searchMovies(movieName));
         }
 
         if(allFound.size() == 0){

@@ -24,17 +24,28 @@ public class Theatre {
         } 
     }
 
-    public LinkedList<Movie> searchMovies(String search){
+    public LinkedList<Movie> searchMovies(String search, String userStatus){
         String movDetails ="";
         exists = 0;
         LinkedList<Movie> found = new LinkedList<Movie>();
         for(int i=0; i<movies.size(); i++){
             exists = 1;
-            if(movies.get(i).getName().contains(search)){
-                
-                found.add(movies.get(i));
 
+            if(userStatus.equals("registered")){
+                if(movies.get(i).getName().contains(search)){
+                
+                    found.add(movies.get(i));
+    
+                }
             }
+            else{
+                if(movies.get(i).getName().contains(search) && movies.get(i).getExclusive() == false){
+                
+                    found.add(movies.get(i));
+    
+                }
+            }
+            
         }
         
         return found;

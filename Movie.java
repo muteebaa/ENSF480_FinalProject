@@ -11,8 +11,9 @@ public class Movie {
     private String day;
     private int id;
     private int tickNumber = 0;
+    private boolean exclusive;
     
-    Movie(String id, String Theatre, String Movie, String dateM, String dayM, String timeM, String seats){
+    Movie(String id, String Theatre, String Movie, String dateM, String dayM, String timeM, String seats, boolean exclusive){
         this.id = Integer.parseInt(id);
         theatre = Theatre;
         this.name = Movie;
@@ -20,6 +21,7 @@ public class Movie {
         this.day = dayM;
         this.time = timeM;
         this.seats = new Seats(Integer.parseInt(seats));
+        this.exclusive = exclusive;
         
     }
 
@@ -27,8 +29,12 @@ public class Movie {
         return name;
     }  
     
-    String getDate(){
+    public String getDate(){
         return date;
+    }
+
+    public boolean getExclusive(){
+        return exclusive;
     }
 
     public String getDay(){

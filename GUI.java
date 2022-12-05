@@ -406,12 +406,22 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         top.setLayout(new FlowLayout());
         top.add(i);
 
+        JPanel header = new JPanel();
+        header.setLayout(new BoxLayout(header, BoxLayout.PAGE_AXIS));
         JPanel content = new JPanel(new FlowLayout(4,4,4));
 
-        content.add(new JLabel("Wakanda Forever"));
-        content.add(new JLabel("\nSmile"));
-        content.add(new JLabel("\nBlack Adam"));
-        content.add(new JLabel("\nStrange World"));
+        if(userChecker == null){
+            header.add(new JLabel("\nSmile"));
+            header.add(new JLabel("\nBlack Adam"));
+        }
+        else{
+            header.add(new JLabel("\nSmile"));
+            header.add(new JLabel("\nBlack Adam"));
+            header.add(new JLabel("Exclusively for members:"));
+            header.add(new JLabel("Wakanda Forever "));
+           
+        }
+        
         //headerPanel.add(instructions1);
     
         content.add(s);
@@ -421,7 +431,9 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         
 
         searchScreen.add(top, BorderLayout.NORTH);
-        searchScreen.add(content, BorderLayout.CENTER);
+        searchScreen.add(header, BorderLayout.CENTER);
+        searchScreen.add(content, BorderLayout.SOUTH);
+        
         searchScreen.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         searchScreen.setSize(400,300);
         searchScreen.setLocationRelativeTo(null);
@@ -443,8 +455,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 
     public void searchMovie(){
         movieSearch = searchV.getText();  
-
-            LinkedList<Movie> movies = MovieAppMain.search(movieSearch);
+            System.out.println("USER CHECKKKER" + userChecker);
+            LinkedList<Movie> movies = MovieAppMain.search(movieSearch, userChecker);
             // MovieAppMain.getMovies();
           //  int check = 0;
             String check = MovieAppMain.getFoundMovie();
@@ -452,7 +464,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 
             if(check.equals("yes") && movieSearch.length() != 0){
 
-            LinkedList<Movie> Theatres = MovieAppMain.search(movieSearch);
+            LinkedList<Movie> Theatres = MovieAppMain.search(movieSearch, userChecker);
 
             for(int i=0; i<Theatres.size(); i++){
                 System.out.println(Theatres.get(i).getTheatre());
