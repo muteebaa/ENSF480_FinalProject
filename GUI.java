@@ -415,33 +415,34 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             }
         });
 
+        JTextArea textArea = new JTextArea();
         Map<String, Boolean> seats = selected.getSeats().getSeats();
         JButton btn = new JButton();
         for (Map.Entry<String, Boolean> s : seats.entrySet()) {
                 btn = new JButton(s.getKey());
                 if (!s.getValue()) {btn.setEnabled(false);}
+                btn.addActionListener(new ActionListener() {
+            
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        Object o = e.getSource();
+                        JButton b = null;
+                        String buttonText = "";
+        
+                        if(o instanceof JButton)
+                            b = (JButton)o;
+        
+                        if(b != null)
+                            buttonText = b.getText();
+        
+                        textArea.append(buttonText+ "\n");
+                    }
+                });
                 seatPanel.add(btn);
         }
         
-        JTextArea textArea = new JTextArea();
 
-        btn.addActionListener(new ActionListener() {
-            
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Object o = e.getSource();
-                JButton b = null;
-                String buttonText = "";
-
-                if(o instanceof JButton)
-                    b = (JButton)o;
-
-                if(b != null)
-                    buttonText = b.getText();
-
-                textArea.append(buttonText);
-            }
-        });
+        
 
         seatPanel.add(textArea);
         seatScreen.add(seatPanel, BorderLayout.CENTER);
