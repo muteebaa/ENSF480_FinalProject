@@ -493,6 +493,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             @Override
             public void actionPerformed(ActionEvent e) {
                user1.makePayment(seats, movie);
+               JOptionPane.showMessageDialog(paymentTab,  "Successfully processed transaction for: "+seats);
             }
         });
         
@@ -512,11 +513,38 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         paymentTab.setLocationRelativeTo(null);
         paymentTab.setVisible(true);
 
+    }
 
-        // user1.makePayment(3, MovieAppMain.get());
+    public void paymentConfirmation(){
+        JDialog paymentConfirmation = new JDialog(this, "Payment Confirmation");
+        
+        JLabel title = new JLabel("Payment Confirmation");
+        title.setFont(new java.awt.Font("Segoe UI", 0, 17)); 
+        title.setForeground(new java.awt.Color(0,0,0));
 
-        System.out.println("seats: "+seats);
-        System.out.println("movie: "+movID);
+        JPanel top = new JPanel();
+        top.setLayout(new FlowLayout());
+        top.add(title);
+
+        JPanel content = new JPanel(new FlowLayout(4,4,4));
+        content.setLayout(new FlowLayout());
+        content.add(title);
+    
+        JLabel confirmLabel = new JLabel("Yay!");
+        confirmLabel.setFont(new java.awt.Font("Segoe UI", 0, 17)); 
+        confirmLabel.setForeground(new java.awt.Color(0,0,0));
+        
+        content.add(confirmLabel);
+
+        paymentConfirmation.add(top);
+        paymentConfirmation.add(content);
+        //  paymentTab.add(email);
+        paymentConfirmation.setTitle("Payment Confirmation");
+        paymentConfirmation.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        paymentConfirmation.setSize(600,600);
+        paymentConfirmation.setMinimumSize(new Dimension(450,450));
+        paymentConfirmation.setLocationRelativeTo(null);
+        paymentConfirmation.setVisible(true);
     }
 
     /*
