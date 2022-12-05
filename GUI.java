@@ -67,6 +67,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
     private JButton guest;
     private JButton searchBtn;
 
+    private JButton book;
+
     private JButton viewSeats;
   
   //  private JFrame paymentScreen = new JFrame();
@@ -338,7 +340,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             seats = testInput.getText();
             movID = Integer.parseInt(movInput.getText());
  
-            paymentScreen();
+          //  paymentScreen();
         }
 
         if(event.getSource() == pay){
@@ -401,23 +403,11 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         JPanel seatPanel = new JPanel();
         seatPanel.setLayout(new GridLayout(0,5,4,5));
 
-       
-        JButton copyButton = new JButton("Select");
-        
-        copyButton.addActionListener(new ActionListener() {
-            
-            @Override
-            public void actionPerformed(ActionEvent e) {
-              //  jListForCopy.setListData(jList.getSelectedValues());
-                System.out.println("ok");
-                
-                
-            }
-        });
 
-        JTextArea textArea = new JTextArea();
         Map<String, Boolean> seats = selected.getSeats().getSeats();
         JButton btn = new JButton();
+        JTextArea textArea = new JTextArea();
+
         for (Map.Entry<String, Boolean> s : seats.entrySet()) {
                 btn = new JButton(s.getKey());
                 if (!s.getValue()) {btn.setEnabled(false);}
@@ -441,11 +431,23 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
                 seatPanel.add(btn);
         }
         
+        JPanel submitPanel = new JPanel();
+        book = new JButton("Book Seats");
+        book.addActionListener(new ActionListener() {
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                paymentScreen(textArea.getText());
+            }
+        });
 
-        
+        submitPanel.add(book);
+       
 
         seatPanel.add(textArea);
+        
         seatScreen.add(seatPanel, BorderLayout.CENTER);
+        seatScreen.add(submitPanel, BorderLayout.SOUTH);
 
         seatScreen.setTitle("Seat Chart");
         seatScreen.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -455,7 +457,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         seatScreen.setVisible(true);
     }
 
-    public void paymentScreen(){
+    public void paymentScreen(String seats){
         JDialog paymentTab = new JDialog(this, "Payment");
         
         JLabel title = new JLabel("Payment");
