@@ -180,13 +180,20 @@ regUsers.add(reg);
             e.printStackTrace();
         }
     }
-    public static void addMovie(String id, String Theatre, String Movie, String dateM, String dayM, String timeM, String seats, boolean exclusive){
+    public static void addMovie(String Theatre, String Movie, String dateM, String dayM, String timeM, String seats, boolean exclusive){
         try {
             Statement stmt = dbConnect.createStatement();
             // String str = "INSERT INTO projectData (Theatre, Movie, dateM, dayM, timeM, Seats, memberOnly) VALUES ("+ id+", " +Theatre +", " +Movie +", "+dateM+","+dayM+","+timeM+","+seats+","+exclusive+");";
             int idEnter = movies.size()+1;
-            String str = "INSERT INTO projectData VALUES ("+ idEnter+", " +Theatre +", " +Movie +", "+dateM+","+dayM+","+timeM+","+seats+","+exclusive+")";
+            int excl;
+            if (exclusive) excl = 1;
+            else excl = 0;
+            String str = "INSERT INTO projectData VALUES ("+ idEnter+",' " +Theatre +"',' " +Movie +"',' "+dateM+"','"+dayM+"','"+timeM+"','"+seats+"','"+excl+"')";
             stmt.executeUpdate(str);
+
+            theatres.clear();
+            movies.clear();
+            System.out.println(myJDBC.storeData("projectData"));
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -307,14 +314,14 @@ regUsers.add(reg);
         GUI gui = new GUI();
         
         //Use the following account information: Username = user1, Password = ensf
-        // myJDBC = new MovieAppMain("jdbc:mysql://localhost:3306/data_cinema","user1","ensf");
-        // myJDBC.initializeConnection();
+        myJDBC = new MovieAppMain("jdbc:mysql://localhost:3306/data_cinema","user1","ensf");
+         myJDBC.initializeConnection();
 
         System.out.println("------------------------------");
         System.out.println();
         
-        // System.out.println(myJDBC.storeData("projectData"));
-        // System.out.println(myJDBC.storeData("userData"));
+         System.out.println(myJDBC.storeData("projectData"));
+         System.out.println(myJDBC.storeData("userData"));
              
         GUI.run();
     }

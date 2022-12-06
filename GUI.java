@@ -242,7 +242,7 @@ public class GUI extends JFrame implements ActionListener{
     public void adminPortal(){
         JDialog adminScreen = new JDialog(this, "Admin Portal - WIP");
         adminScreen.setLayout(new BorderLayout());
-        JPanel content = new JPanel(new GridLayout(9,2));
+        JPanel content = new JPanel(new GridLayout(10,2));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -261,8 +261,6 @@ public class GUI extends JFrame implements ActionListener{
         JTextField seats =  new JTextField(10);
         JTextField exclusive =  new JTextField(10);
 
-        JLabel i =  new JLabel("id");
-        i.setForeground(Color.WHITE);
 
         JLabel th = new JLabel("Theatre");
         th.setForeground(Color.WHITE);
@@ -291,8 +289,8 @@ public class GUI extends JFrame implements ActionListener{
             
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!id.getText().matches(".{1,100}") || !theatre.getText().matches(".{1,100}") || !date.getText().matches(".{1,100}") ||
-                !day.getText().matches(".{1,100}") || ! time.getText().matches(".{1,100}") || !seats.getText().matches("[0-9]+") || 
+                if( !theatre.getText().matches(".{1,100}") || !date.getText().matches(".{1,100}") ||
+                !day.getText().matches(".{1,100}") || ! time.getText().matches(".{1,100}") || !seats.getText().matches("[1-9]+") || 
                 !exclusive.getText().matches("y|n") 
                 
                 ) {
@@ -303,7 +301,7 @@ public class GUI extends JFrame implements ActionListener{
                     boolean excl = false;
                     if (exclusive.getText().equals("yes")){excl = true;}
                     
-                    appAdmin.addMovie(id.getText(), theatre.getText(), theatre.getText(), date.getText(), day.getText(), time.getText(), seats.getText(), excl);
+                    appAdmin.addMovie( theatre.getText(), theatre.getText(), date.getText(), day.getText(), time.getText(), seats.getText(), excl);
                     JOptionPane.showMessageDialog(adminScreen,  "Successfully added movie: "+name.getText());
                 }
             }
@@ -311,8 +309,7 @@ public class GUI extends JFrame implements ActionListener{
         
         content.add(mainTxt);
         content.add(addMov);
-        content.add(i);
-        content.add(id);
+
         content.add(th);
         content.add(theatre);
         content.add(n);
@@ -385,7 +382,7 @@ public class GUI extends JFrame implements ActionListener{
             boolean emailCheck = MovieAppMain.checkEmail(enteredEmail);
 
             if(!enteredCardNumber.matches("[0-9]{5,100}") || !enteredExpiry.matches("[0-9]+") || !enteredCVV.matches("[0-9]+") ) {
-                error("Credit Card Number should have more than 5 numbers and no other character");
+                error("Invalid Input!");
             }
             else{
                 if(emailCheck){
@@ -959,7 +956,7 @@ public class GUI extends JFrame implements ActionListener{
                 btn = new JButton(s.getKey());
                 btn.setOpaque(true);
                 btn.setBackground(Color.BLACK);
-                if (!s.getValue()) {btn.setEnabled(false);}
+                if (!s.getValue()) {btn.setEnabled(false);btn.setBackground(Color.GRAY);}
                 btn.addActionListener(new ActionListener() {
             
                     @Override
@@ -1072,6 +1069,8 @@ public class GUI extends JFrame implements ActionListener{
                 user1.makePayment(seats, movie);
                 if(userChecker!= null) {userChecker.addMovie(movie, seats);}
                String tickDetails = user1.getTicketDetails(seats, movie);
+               paymentTab.dispose();
+
                JOptionPane.showMessageDialog(paymentTab,  "Successfully processed transaction for: "+seats+"\n"+tickDetails);
             }
         });

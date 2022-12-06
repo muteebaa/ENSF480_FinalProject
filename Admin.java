@@ -25,7 +25,7 @@ public class Admin {
         return pw;
     }
 
-    void addMovie(String id, String Theatre, String Movie, String dateM, String dayM, String timeM, String seats, boolean exclusive){
-        MovieAppMain.addMovie(id,  Theatre,  Movie,  dateM,  dayM,  timeM,  seats,  exclusive);
+    void addMovie( String Theatre, String Movie, String dateM, String dayM, String timeM, String seats, boolean exclusive){
+        MovieAppMain.addMovie( Theatre,  Movie,  dateM,  dayM,  timeM,  seats,  exclusive);
     }
 }
