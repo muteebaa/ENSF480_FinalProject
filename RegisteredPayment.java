@@ -6,10 +6,6 @@ public class RegisteredPayment implements Payment {
     public void makePayment(String seatsToBook, Movie obj){
         String[] seatsArray = seatsToBook.split("\n");
         
-        for (String e : seatsArray){
-            System.out.println(e);
-        }
-
         obj.decreaseSeats(seatsArray);
 
         

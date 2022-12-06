@@ -395,7 +395,7 @@ public class GUI extends JFrame implements ActionListener{
                 }
                 else{
                     error("The email already has an account associated");
-
+                    showMainScreen();
                 }
             }
         }
