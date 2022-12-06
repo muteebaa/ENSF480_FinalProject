@@ -385,7 +385,7 @@ public class GUI extends JFrame implements ActionListener{
             boolean emailCheck = MovieAppMain.checkEmail(enteredEmail);
 
             if(!enteredCardNumber.matches("[0-9]{5,100}") || !enteredExpiry.matches("[0-9]+") || !enteredCVV.matches("[0-9]+") ) {
-                error("Credit Card Number should have more than 5 numbers and no other character");
+                error("Invalid input!");
             }
             else{
                 if(emailCheck){

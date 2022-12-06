@@ -182,11 +182,12 @@ regUsers.add(reg);
     }
     public static void addMovie(String id, String Theatre, String Movie, String dateM, String dayM, String timeM, String seats, boolean exclusive){
         try {
+            int idEnter = movies.size()+1;
             Statement stmt = dbConnect.createStatement();
             // String str = "INSERT INTO projectData (Theatre, Movie, dateM, dayM, timeM, Seats, memberOnly) VALUES ("+ id+", " +Theatre +", " +Movie +", "+dateM+","+dayM+","+timeM+","+seats+","+exclusive+");";
-            int idEnter = movies.size()+1;
-            String str = "INSERT INTO projectData VALUES ("+ idEnter+", " +Theatre +", " +Movie +", "+dateM+","+dayM+","+timeM+","+seats+","+exclusive+")";
+            String str = "INSERT INTO projectData VALUES ("+ idEnter+", '" +Theatre +"',' " +Movie +"','"+dateM+"','"+dayM+"','"+timeM+"','"+seats+"','"+exclusive+")";
             stmt.executeUpdate(str);
+            System.out.println(myJDBC.storeData("projectData"));
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
