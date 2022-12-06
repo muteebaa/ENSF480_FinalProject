@@ -33,7 +33,7 @@ public class GUI extends JFrame implements ActionListener{
 	// variables required for implementation
     private String movieSearch;
     private Guest user1;
-
+    private Admin appAdmin = Admin.getOnlyAdmin();
 	
 	// variables required for the GUI
     private JLabel instructions;
@@ -189,7 +189,7 @@ public class GUI extends JFrame implements ActionListener{
         }
 
         if(event.getSource().equals(admin)){
-            adminPortal();
+            validateAdmin();
         }
 
     }
@@ -200,6 +200,45 @@ public class GUI extends JFrame implements ActionListener{
 
     }
     
+    public void validateAdmin(){
+        this.setVisible(false);
+        JTextField em = new JTextField(10);
+        JTextField p = new JTextField(10);
+    
+        JPanel myPanel = new JPanel();
+        myPanel.add(new JLabel("Email"));
+        myPanel.add(em);
+        myPanel.add(Box.createHorizontalStrut(15)); // a spacer
+        myPanel.add(new JLabel("Password"));
+        myPanel.add(p);
+    
+        // var enteredEmail = JOptionPane.showInputDialog("Please enter your email: ");
+         var userName = "";   
+
+        // var enteredPW = JOptionPane.showInputDialog("Please enter your password: ");
+         var userPW = "";
+        
+        int result = JOptionPane.showConfirmDialog(null, myPanel, 
+               "Please Enter Username and Password", JOptionPane.OK_CANCEL_OPTION);
+        
+        if (result == JOptionPane.OK_OPTION) {
+            userName = em.getText();
+            userPW = p.getText();
+            
+            if (userName.equals(appAdmin.getUsername()) && userPW.equals(appAdmin.getPW())){
+                adminPortal();
+            }
+            else{
+                error("Incorrect Credentials");
+                showMainScreen();
+            }
+        }
+        
+        else if (result == JOptionPane.NO_OPTION) {showMainScreen();} 
+        else {showMainScreen();}
+       
+    }
+
     public void adminPortal(){
         JDialog adminScreen = new JDialog(this, "Admin Portal - WIP");
         adminScreen.setLayout(new BorderLayout());
@@ -263,7 +302,8 @@ public class GUI extends JFrame implements ActionListener{
                 else{
                     boolean excl = false;
                     if (exclusive.getText().equals("yes")){excl = true;}
-                    MovieAppMain.addMovie(id.getText(), theatre.getText(), theatre.getText(), date.getText(), day.getText(), time.getText(), seats.getText(), excl);
+                    
+                    appAdmin.addMovie(id.getText(), theatre.getText(), theatre.getText(), date.getText(), day.getText(), time.getText(), seats.getText(), excl);
                     JOptionPane.showMessageDialog(adminScreen,  "Successfully added movie: "+name.getText());
                 }
             }
@@ -289,6 +329,13 @@ public class GUI extends JFrame implements ActionListener{
         content.add(exclusive);
 
         content.setBackground(new java.awt.Color(117,19,8));
+
+        adminScreen.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e)
+            {
+                showMainScreen();
+            }
+        });
 
         adminScreen.add(content, BorderLayout.CENTER);
         adminScreen.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);

@@ -12,7 +12,7 @@ public class Admin {
 
     public static Admin getOnlyAdmin(){
         if (onlyAdmin==null){
-            onlyAdmin= new Admin("smsm", "group4");
+            onlyAdmin= new Admin("smsm", "480");
         }
         return onlyAdmin;
     }
