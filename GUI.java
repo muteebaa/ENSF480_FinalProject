@@ -79,7 +79,7 @@ public class GUI extends JFrame implements ActionListener{
     public GUI(){
         super("Group 4 Project");
         setupGUI();
-        setSize(400,300);
+        setSize(400,200);
 
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);        
@@ -109,6 +109,8 @@ public class GUI extends JFrame implements ActionListener{
 
         instructions.setBackground(new java.awt.Color(117, 19, 8));
         
+        
+       
 
         register = new JButton("Sign up here");
         register.addActionListener(this);
@@ -127,7 +129,7 @@ public class GUI extends JFrame implements ActionListener{
 
         
         JPanel clientPanel = new JPanel();
-        clientPanel.setLayout(new GridLayout(3,3,2,2));
+        clientPanel.setLayout(new GridBagLayout());
         clientPanel.setBackground(new java.awt.Color(117, 19, 8));
 
 
@@ -144,9 +146,18 @@ public class GUI extends JFrame implements ActionListener{
         headerPanel.add(instructions);
         headerPanel.add(instructions1);
         
-        clientPanel.add(guest);
-        clientPanel.add(login);
-        clientPanel.add(register);
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets= new Insets(10,0,0,0);
+
+        clientPanel.add(guest, gbc);
+        gbc.gridy = 1;
+        clientPanel.add(login, gbc);
+        gbc.gridy = 2;
+        gbc.insets= new Insets(10,0,30,0);
+        clientPanel.add(register, gbc);
 
         
         this.setLocationRelativeTo(null);

@@ -296,14 +296,14 @@ regUsers.add(reg);
         GUI gui = new GUI();
         
         //Use the following account information: Username = user1, Password = ensf
-        myJDBC = new MovieAppMain("jdbc:mysql://localhost:3306/data_cinema","user1","ensf");
-        myJDBC.initializeConnection();
+        // myJDBC = new MovieAppMain("jdbc:mysql://localhost:3306/data_cinema","user1","ensf");
+        // myJDBC.initializeConnection();
 
         System.out.println("------------------------------");
         System.out.println();
         
-        System.out.println(myJDBC.storeData("projectData"));
-        System.out.println(myJDBC.storeData("userData"));
+        // System.out.println(myJDBC.storeData("projectData"));
+        // System.out.println(myJDBC.storeData("userData"));
              
         GUI.run();
     }
