@@ -40,34 +40,23 @@ public class GUI extends JFrame implements ActionListener{
 
     private javax.swing.JPanel jPanel1;
 
-    private JTextField searchInput;
-
-   
-    private JTextField testInput;
-    private JTextField movInput;
-
-
 
     private JTextField email;   // for login
     private JTextField pw;
 
     private JTextField emailreg;       // for registering
     private JTextField pwreg;
-    private JTextField name;
     private JTextField cardno;
     private JTextField cvv;
     private JTextField expiry;
     private JTextField searchV;
 
-    
     private JButton register;
     private JButton login;
     private JButton guest;
-    private JButton searchBtn;
 
     private JButton book;
 
-    private JButton viewSeats;
     private RegisteredUser userChecker;
   
   //  private JFrame paymentScreen = new JFrame();
@@ -109,9 +98,6 @@ public class GUI extends JFrame implements ActionListener{
 
         instructions.setBackground(new java.awt.Color(117, 19, 8));
         
-        
-       
-
         register = new JButton("Sign up here");
         register.addActionListener(this);
 
@@ -121,8 +107,7 @@ public class GUI extends JFrame implements ActionListener{
         guest = new JButton("Continue as guest");
         guest.addActionListener(this);
 
-      
-
+    
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new FlowLayout());
         headerPanel.setBackground(new java.awt.Color(117, 19, 8));
@@ -462,7 +447,7 @@ public class GUI extends JFrame implements ActionListener{
        
         searchV = new JTextField("", 15);
 
-        searchBtn = new JButton("Search");
+        JButton searchBtn = new JButton("Search");
         searchBtn.addActionListener(new ActionListener() {
             
             @Override
