@@ -180,7 +180,18 @@ regUsers.add(reg);
             e.printStackTrace();
         }
     }
-
+    public static void addMovie(String id, String Theatre, String Movie, String dateM, String dayM, String timeM, String seats, boolean exclusive){
+        try {
+            Statement stmt = dbConnect.createStatement();
+            // String str = "INSERT INTO projectData (Theatre, Movie, dateM, dayM, timeM, Seats, memberOnly) VALUES ("+ id+", " +Theatre +", " +Movie +", "+dateM+","+dayM+","+timeM+","+seats+","+exclusive+");";
+            int idEnter = movies.size()+1;
+            String str = "INSERT INTO projectData VALUES ("+ idEnter+", " +Theatre +", " +Movie +", "+dateM+","+dayM+","+timeM+","+seats+","+exclusive+")";
+            stmt.executeUpdate(str);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+     }
     ////////////////////////////////////////////////////////////////////
     /*
      * End of Methods required to access and manipulate the SQL Databse. 
@@ -289,9 +300,9 @@ regUsers.add(reg);
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        String str = "Update userData set FeePaid = 1 Where Email = '" + email + "'";
-        
+        String str = "Update userData set FeePaid = 1 Where Email = '" + email + "'";  
     }
+
     public static void main(String[] args) throws FileNotFoundException {
         GUI gui = new GUI();
         

@@ -16,6 +16,8 @@ import java.awt.EventQueue;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
+
 import java.awt.event.*;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -54,6 +56,7 @@ public class GUI extends JFrame implements ActionListener{
     private JButton register;
     private JButton login;
     private JButton guest;
+    private JButton admin;
 
     private JButton book;
 
@@ -68,7 +71,7 @@ public class GUI extends JFrame implements ActionListener{
     public GUI(){
         super("Group 4 Project");
         setupGUI();
-        setSize(400,200);
+        setSize(400,260);
 
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);        
@@ -107,6 +110,9 @@ public class GUI extends JFrame implements ActionListener{
         guest = new JButton("Continue as guest");
         guest.addActionListener(this);
 
+        admin = new JButton("Admin Portal");
+        admin.addActionListener(this);
+
     
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new FlowLayout());
@@ -135,14 +141,18 @@ public class GUI extends JFrame implements ActionListener{
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.insets= new Insets(10,0,0,0);
+        gbc.insets= new Insets(2,0,0,0);
 
         clientPanel.add(guest, gbc);
         gbc.gridy = 1;
         clientPanel.add(login, gbc);
         gbc.gridy = 2;
-        gbc.insets= new Insets(10,0,30,0);
         clientPanel.add(register, gbc);
+        gbc.gridy = 3;
+        gbc.insets= new Insets(2,0,40,0);
+        clientPanel.add(admin, gbc);
+
+        
 
         
         this.setLocationRelativeTo(null);
@@ -165,7 +175,6 @@ public class GUI extends JFrame implements ActionListener{
             user1 = new Guest(new GuestPayment());
             searchScreen();
 
-
            // searchScreen();
           //  SearchMovie.run();
            // dispose();
@@ -179,11 +188,115 @@ public class GUI extends JFrame implements ActionListener{
             validateLogin();
         }
 
+        if(event.getSource().equals(admin)){
+            adminPortal();
+        }
+
     }
 
     public void error(String message){
         JPanel myPanel = new JPanel();
         JOptionPane.showMessageDialog(myPanel, message);
+
+    }
+    
+    public void adminPortal(){
+        JDialog adminScreen = new JDialog(this, "Admin Portal - WIP");
+        adminScreen.setLayout(new BorderLayout());
+        JPanel content = new JPanel(new GridLayout(9,2));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets= new Insets(5,0,0,0);
+
+        JLabel mainTxt = new JLabel("Fill in to add a movie:)");
+        mainTxt.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14));
+        mainTxt.setForeground(Color.WHITE);
+
+        JTextField id =  new JTextField(10);
+        JTextField theatre =  new JTextField(10);
+        JTextField name =  new JTextField(10);
+        JTextField date = new JTextField(10);
+        JTextField day =  new JTextField(10);
+        JTextField time =  new JTextField(10);
+        JTextField seats =  new JTextField(10);
+        JTextField exclusive =  new JTextField(10);
+
+        JLabel i =  new JLabel("id");
+        i.setForeground(Color.WHITE);
+
+        JLabel th = new JLabel("Theatre");
+        th.setForeground(Color.WHITE);
+
+        JLabel n =  new JLabel("Movie Name");
+        n.setForeground(Color.WHITE);
+
+        JLabel d = new JLabel("Date");
+        d.setForeground(Color.WHITE);
+
+        JLabel da =  new JLabel("Day");
+        da.setForeground(Color.WHITE);
+
+        JLabel ti =  new JLabel("Time");
+        ti.setForeground(Color.WHITE);
+
+        JLabel s =  new JLabel("Seats");
+        s.setForeground(Color.WHITE);
+
+        JLabel e =  new JLabel("Exclusive? (y/n)");
+        e.setForeground(Color.WHITE);
+
+
+        JButton addMov = new JButton("Add Movie");
+        addMov.addActionListener(new ActionListener() {
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!id.getText().matches(".{1,100}") || !theatre.getText().matches(".{1,100}") || !date.getText().matches(".{1,100}") ||
+                !day.getText().matches(".{1,100}") || ! time.getText().matches(".{1,100}") || !seats.getText().matches("[0-9]+") || 
+                !exclusive.getText().matches("y|n") 
+                
+                ) {
+                    error("Invalid input, movie wasn't added:(");
+                }
+
+                else{
+                    boolean excl = false;
+                    if (exclusive.getText().equals("yes")){excl = true;}
+                    MovieAppMain.addMovie(id.getText(), theatre.getText(), theatre.getText(), date.getText(), day.getText(), time.getText(), seats.getText(), excl);
+                    JOptionPane.showMessageDialog(adminScreen,  "Successfully added movie: "+name.getText());
+                }
+            }
+        });
+        
+        content.add(mainTxt);
+        content.add(addMov);
+        content.add(i);
+        content.add(id);
+        content.add(th);
+        content.add(theatre);
+        content.add(n);
+        content.add(name);
+        content.add(d);
+        content.add(date);
+        content.add(da);
+        content.add(day);
+        content.add(ti);
+        content.add(time);
+        content.add(s);
+        content.add(seats);
+        content.add(e);
+        content.add(exclusive);
+
+        content.setBackground(new java.awt.Color(117,19,8));
+
+        adminScreen.add(content, BorderLayout.CENTER);
+        adminScreen.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        adminScreen.setSize(500,600);
+        adminScreen.setLocationRelativeTo(null);
+       
+
+        adminScreen.setVisible(true);
 
     }
 
