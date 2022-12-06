@@ -315,14 +315,15 @@ regUsers.add(reg);
         
         //Use the following account information: Username = user1, Password = ensf
         myJDBC = new MovieAppMain("jdbc:mysql://localhost:3306/data_cinema","user1","ensf");
-         myJDBC.initializeConnection();
+        myJDBC.initializeConnection();
 
         System.out.println("------------------------------");
         System.out.println();
         
-         System.out.println(myJDBC.storeData("projectData"));
-         System.out.println(myJDBC.storeData("userData"));
+       // Ticket.emailTicket("muteeba", "test", "String details");
+        System.out.println(myJDBC.storeData("projectData"));
+        System.out.println(myJDBC.storeData("userData"));
              
-        GUI.run();
+       // GUI.run();
     }
 }

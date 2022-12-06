@@ -62,6 +62,9 @@ public class RegisteredUser extends Guest{
         for (int i = 0 ; i < seatsArray.length; i++){
             details += mov.getTicketDetails(seatsArray[i]);
             details += "\n";
+
+        // UNCOMMENT ONCE YOU FIGURE OUT THE HOST
+        //    Ticket.emailTicket(email, mov.getName(), mov.getTicketDetails(seatsArray[i]));
         }
         moviesBooked.put(mov, details);
     }
