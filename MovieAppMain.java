@@ -324,6 +324,6 @@ regUsers.add(reg);
         System.out.println(myJDBC.storeData("projectData"));
         System.out.println(myJDBC.storeData("userData"));
              
-       // GUI.run();
+         GUI.run();
     }
 }
