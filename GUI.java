@@ -10,7 +10,6 @@
  * @version 1.4
  * @since 1.0
  */
-
 import java.awt.*;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -19,10 +18,13 @@ import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.concurrent.Flow;
 import java.util.*;
 import java.awt.FlowLayout;
 
-public class GUI extends JFrame implements ActionListener, MouseListener{
+
+public class GUI extends JFrame implements ActionListener{
+    
 	// variables required for implementation
     private String movieSearch;
     private Guest user1;
@@ -91,11 +93,11 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         
         instructions = new JLabel("Group 4 Project - ENSF480");
         instructions.setFont(new java.awt.Font("Segoe UI", 0, 17)); 
-        instructions.setForeground(new java.awt.Color(0,0,0));
+        instructions.setForeground(Color.WHITE);
 
         instructions1 = new JLabel("\n Movie Booking" );
         instructions1.setFont(new java.awt.Font("Segoe UI", 0, 17));
-        instructions1.setForeground(new java.awt.Color(0,0,0));    
+        instructions1.setForeground(Color.WHITE);    
         
 
         register = new JButton("Sign up here");
@@ -147,9 +149,11 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
     public void actionPerformed(ActionEvent event){
         
         if(event.getSource().equals(guest)){
-            userChecker = null;
+         //  userChecker = null;
             user1 = new Guest(new GuestPayment());
             searchScreen();
+
+
            // searchScreen();
           //  SearchMovie.run();
            // dispose();
@@ -280,15 +284,16 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 
         JLabel i = new JLabel("Your credentials do not match our records. Please try again or register as a new user");
         i.setFont(new java.awt.Font("Segoe UI", 0, 13)); 
-        i.setForeground(new java.awt.Color(0,0,0));
-
+        i.setForeground(Color.WHITE);
 
         JPanel top = new JPanel();
         top.setLayout(new FlowLayout());
         top.add(i);
+        top.setBackground(new java.awt.Color(117,19,8));
         
+        failureTab.setBackground(new java.awt.Color(117,19,8));
+       
         failureTab.add(top, BorderLayout.CENTER);
-
         failureTab.setSize(600,100);
         failureTab.setVisible(true);
 
@@ -297,26 +302,30 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
     public void userPortal(RegisteredUser user){
         
         JDialog userPortal = new JDialog(this, "User Portal");
-      //  userPortal.setLayout((new FlowLayout()));
-       
-        JPanel userData = new JPanel();
-        userData.setLayout(new BoxLayout(userData, BoxLayout.PAGE_AXIS));
+        userPortal.setLayout((new BorderLayout()));
+        
+        JPanel top = new JPanel();
+        top.setBackground(new java.awt.Color(117,19,8));
+        JLabel title = new JLabel("Welcome to your user portal!");
+        title.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 20));
+        title.setForeground(Color.WHITE);
+        top.add(title);
 
         JLabel email = new JLabel("Email Address: " + user.getEmail());
         email.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
-        email.setForeground(new java.awt.Color(0,0,0));
+        email.setForeground(Color.WHITE);
 
         JLabel card = new JLabel("Card Number: " + user.getCardNumber().substring(0,4)+"*********");
         card.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
-        card.setForeground(new java.awt.Color(0,0,0));
+        card.setForeground(Color.WHITE);
 
         JLabel feeP = new JLabel("Membership Paid: " + user.getFeePaid());
-        card.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
-        card.setForeground(new java.awt.Color(0,0,0));
+        feeP.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
+        feeP.setForeground(Color.WHITE);
 
         JLabel movies = new JLabel(user.getMovies());
         movies.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
-        movies.setForeground(new java.awt.Color(0,0,0));
+        movies.setForeground(Color.WHITE);
 
         JButton continueNoPay =  new JButton("Browse without paying");
         JButton continuePay =  new JButton("Pay and Browse");
@@ -342,17 +351,37 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
                 searchScreen();
             }
         });
-        userData.add(email);
-        userData.add(card);
-        userData.add(feeP);
-        userData.add(movies);
+
+        
+
+        JPanel userInfo = new JPanel();
+        userInfo.setLayout(new GridBagLayout());
+        userInfo.setBackground(new java.awt.Color(117,19,8));
+
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets= new Insets(10,0,0,0);
+        userInfo.add(email, gbc);
+        gbc.gridy = 1;
+        userInfo.add(card, gbc);
+        gbc.gridy = 2;
+        userInfo.add(feeP, gbc);
+        gbc.gridy = 3;
+        userInfo.add(movies, gbc);
+
+
+        JPanel bottom = new JPanel();
+        bottom.setLayout(new BoxLayout(bottom, BoxLayout.PAGE_AXIS));
+        bottom.setBackground(new java.awt.Color(117,19,8));
 
         if(!user.getFeePaid()){
-            userData.add(continueNoPay);
-            userData.add(continuePay);
+            bottom.add(continueNoPay);
+            bottom.add(continuePay);
         }
         else{
-            userData.add(cont);
+            bottom.add(cont);
         }
         
         userPortal.addWindowListener(new WindowAdapter() {
@@ -362,8 +391,9 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             }
         });
 
-
-        userPortal.add(userData, BorderLayout.CENTER);
+        userPortal.add(top, BorderLayout.NORTH);
+        userPortal.add(userInfo, BorderLayout.CENTER);
+        userPortal.add(bottom, BorderLayout.SOUTH);
         
         userPortal.setTitle("User Portal");
         userPortal.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -381,23 +411,29 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 
             i = new JLabel("Logged in a guest. Please search a movie");
             i.setFont(new java.awt.Font("Segoe UI", 0, 17)); 
-            i.setForeground(new java.awt.Color(0,0,0));
+            i.setForeground(Color.WHITE);
 
         }
         else{
            i = new JLabel("Login was successful. Please search a movie");
             i.setFont(new java.awt.Font("Segoe UI", 0, 17)); 
-            i.setForeground(new java.awt.Color(0,0,0));
+            i.setForeground(Color.WHITE);
 
         }
         JDialog searchScreen = new JDialog(this, "Search");
+        searchScreen.setLayout(new BorderLayout());
+        
 
         JLabel s = new JLabel("Search a movie:");
         s.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
-        s.setForeground(new java.awt.Color(0,0,0));
-
+     
+        JPanel topPanel = new JPanel();
+        topPanel.setLayout(new FlowLayout());
+        topPanel.add(i);
+        topPanel.add(s);
+        topPanel.setBackground(new java.awt.Color(117,19,8));
+       
         searchV = new JTextField("", 15);
-        searchV.addMouseListener(this);
 
         searchBtn = new JButton("Search");
         searchBtn.addActionListener(new ActionListener() {
@@ -408,38 +444,57 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
                 searchMovie();
             }
         });
+        JPanel searchPanel = new JPanel();
+        searchPanel.setLayout(new GridLayout(1,0));
+        searchPanel.add(searchV);
+        searchPanel.add(searchBtn);
+        searchPanel.setBackground(new java.awt.Color(117,19,8));
 
-        JPanel top = new JPanel();
-        top.setLayout(new FlowLayout());
-        top.add(i);
+        JPanel centre = new JPanel();
+  
+        centre.setBackground(new java.awt.Color(117,19,8));
+        centre.setForeground(new java.awt.Color(255,255,255));
+        centre.setLayout(new GridBagLayout());
 
-        JPanel header = new JPanel();
-        header.setLayout(new BoxLayout(header, BoxLayout.PAGE_AXIS));
-        JPanel content = new JPanel(new FlowLayout(4,4,4));
+        JLabel mov1 = new JLabel("Smile", JLabel.CENTER);
+        mov1.setForeground(Color.WHITE);
+        JLabel mov2 = new JLabel("Black Adam", JLabel.CENTER);
+        mov2.setForeground(Color.WHITE);
 
+        JLabel mov3 = new JLabel("Exclusively for members:", JLabel.CENTER);
+        mov3.setForeground(Color.WHITE);
+        JLabel mov4 = new JLabel("Wakanda Forever", JLabel.CENTER);
+        mov4.setForeground(Color.WHITE);
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets= new Insets(5,0,0,0);
+       
         if(userChecker == null){
-            header.add(new JLabel("\nSmile"));
-            header.add(new JLabel("\nBlack Adam"));
+            centre.add(mov1, gbc);
+            gbc.gridy = 1;      
+            centre.add(mov2, gbc);
+            gbc.gridy = 3;
         }
         else{
-            header.add(new JLabel("\nSmile"));
-            header.add(new JLabel("\nBlack Adam"));
-            header.add(new JLabel("Exclusively for members:"));
-            header.add(new JLabel("Wakanda Forever "));
-           
+            centre.add(mov1, gbc);
+            gbc.gridy = 1;      
+            centre.add(mov2, gbc);
+            gbc.gridy = 2;   
+
+            centre.add(mov3, gbc);
+            gbc.gridy = 3;
+            centre.add(mov4, gbc);
+            gbc.gridy = 4; 
         }
-        
-        //headerPanel.add(instructions1);
-    
-        content.add(s);
-        content.add(searchV);
-        content.add(searchBtn);
 
-        
+        gbc.insets= new Insets(10,0,0,0);
+        centre.add(searchPanel, gbc);
 
-        searchScreen.add(top, BorderLayout.NORTH);
-        searchScreen.add(header, BorderLayout.CENTER);
-        searchScreen.add(content, BorderLayout.SOUTH);
+        searchScreen.add(topPanel, BorderLayout.NORTH);
+        searchScreen.add(centre, BorderLayout.CENTER);
+      
         
         searchScreen.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         searchScreen.setSize(400,300);
@@ -555,16 +610,47 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
     }
 
     public void options(Movie selected){
-        JDialog optionsScreen = new JDialog(this, "Movie Theatre");
-        JPanel content = new JPanel(new FlowLayout(4,4,4));
+        JDialog optionsScreen = new JDialog(this, "Movie Options");
 
-        JLabel i = new JLabel("Select an option");
-        i.setFont(new java.awt.Font("Segoe UI", 0, 17)); 
-        i.setForeground(new java.awt.Color(0,0,0));
+        JPanel top = new JPanel();
+        top.setLayout(new GridBagLayout());
+        top.setBackground(new java.awt.Color(117,19,8));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets= new Insets(5,0,0,0);
+
+        JLabel movie = new JLabel(selected.getName());
+        movie.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 20)); 
+        movie.setForeground(Color.WHITE);
         
+        JLabel date = new JLabel("showing on "+selected.getDate());
+        date.setFont(new java.awt.Font("Segoe UI",  Font.BOLD, 20)); 
+        date.setForeground(Color.WHITE);
 
-        JButton search = new JButton("Make Booking");
-        search.addActionListener(new ActionListener() {
+        JLabel time = new JLabel("at " +selected.getTime());
+        time.setFont(new java.awt.Font("Segoe UI",  Font.BOLD, 20)); 
+        time.setForeground(Color.WHITE);
+
+        top.add(movie, gbc);
+        gbc.gridy = 1;
+        top.add(date, gbc);
+        gbc.gridy = 2;
+        gbc.insets= new Insets(5,0,40,0);
+        top.add(time, gbc);
+
+
+        JPanel center = new JPanel();
+        center.setLayout(new FlowLayout(FlowLayout.CENTER));
+        center.setBackground(new java.awt.Color(117,19,8));
+
+        JLabel i = new JLabel("Please select an option :)");
+        i.setFont(new java.awt.Font("Segoe UI", 0, 14)); 
+        i.setForeground(Color.WHITE);
+    
+        
+        JButton book = new JButton("Make Booking");
+        book.addActionListener(new ActionListener() {
             
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -590,6 +676,10 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             }
         });
 
+        center.add(book);
+        center.add(cancel);
+        center.add(newSearch);
+
         optionsScreen.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e)
             {
@@ -598,39 +688,74 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             }
         });
 
-        content.add(i);
-        content.add(search);
-        content.add(cancel);
-        content.add(newSearch);
+        
 
-        optionsScreen.add(content, BorderLayout.CENTER);
-        optionsScreen.setSize(400,300);
+        optionsScreen.add(top, BorderLayout.NORTH);
+        optionsScreen.add(center, BorderLayout.CENTER);
+        optionsScreen.setSize(500,250);
+        optionsScreen.setLocationRelativeTo(null);
         optionsScreen.setVisible(true);
 
     }
    
     public void cancelScreen(Movie selected){
+       
         JDialog cancelScreen = new JDialog(this, "Ticket Cancellation");
-        JPanel content = new JPanel(new FlowLayout(4,4,4));
+        JPanel content = new JPanel();
+        content.setLayout(new BoxLayout(content, BoxLayout.PAGE_AXIS));
 
-        JLabel cancelCode = new JLabel("Please enter cancellation code");
-        JTextField cancel = new JTextField("", 15);
+        JPanel top = new JPanel();
+        top.setLayout(new GridBagLayout());
+        top.setBackground(new java.awt.Color(117,19,8));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets= new Insets(5,0,0,0);
+
+        JLabel movie = new JLabel(selected.getName());
+        movie.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 20)); 
+        movie.setForeground(Color.WHITE);
+        
+        JLabel date = new JLabel("showing on "+selected.getDate());
+        date.setFont(new java.awt.Font("Segoe UI",  Font.BOLD, 20)); 
+        date.setForeground(Color.WHITE);
+
+        JLabel time = new JLabel("at " +selected.getTime());
+        time.setFont(new java.awt.Font("Segoe UI",  Font.BOLD, 20)); 
+        time.setForeground(Color.WHITE);
+
+        top.add(movie, gbc);
+        gbc.gridy = 1;
+        top.add(date, gbc);
+        gbc.gridy = 2;
+        gbc.insets= new Insets(5,0,40,0);
+        top.add(time, gbc);
+
+        JLabel cancelCode = new JLabel("Please enter the cancellation code:");
+        cancelCode.setForeground(Color.WHITE);
+        JTextField cancelField = new JTextField("", 15);
+       
 
         JButton cancelBtn = new JButton("Cancel Booking");
         cancelBtn.addActionListener(new ActionListener() {
             
             @Override
             public void actionPerformed(ActionEvent e) {
-                String seatCancelled = selected.removeTickets(cancel.getText());
-                user1.cancelPayment(cancel.getText(), selected);
+                String seatCancelled = selected.removeTickets(cancelField.getText());
+                user1.cancelPayment(cancelField.getText(), selected);
                 JOptionPane.showMessageDialog(cancelScreen,  seatCancelled);
             }
         });
 
+        content.setBackground( new java.awt.Color(117,19,8));
+
         content.add(cancelCode);
-        content.add(cancel);
+        content.add(cancelField);
         content.add(cancelBtn);
-        cancelScreen.add(content);
+        content.setAlignmentX(Component.CENTER_ALIGNMENT);
+        cancelScreen.add(top, BorderLayout.NORTH);
+        cancelScreen.add(content,  BorderLayout.CENTER);
+        cancelScreen.getContentPane().setBackground( new java.awt.Color(117,19,8));
         cancelScreen.setSize(400,300);
         cancelScreen.setVisible(true);
     }
@@ -638,24 +763,21 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
     public void seatScreen(Movie selected){
         JDialog seatScreen = new JDialog(this, "Seat Map");
         seatScreen.setLayout((new FlowLayout()));
-       
+
+        JLabel screen = new JLabel("Screen");
+        screen.setForeground(Color.WHITE); 
+        JLabel screen1 = new JLabel("___________________________________________________________________");
+
+        JPanel screenPanel = new JPanel();
+        screenPanel.setLayout(new BoxLayout(screenPanel, BoxLayout.LINE_AXIS));
+        screenPanel.setBackground(new java.awt.Color(117,19,8));
+
+        screenPanel.add(screen);
+        screenPanel.add(screen1);
+
         JPanel seatPanel = new JPanel();
         seatPanel.setLayout(new GridLayout(0,5,4,5));
-
-        JPanel header = new JPanel();
-        header.setLayout(new BoxLayout(header, BoxLayout.PAGE_AXIS));
-        JLabel screen = new JLabel("Screen");
-
-        JLabel screen1 = new JLabel("_________________________________________________________________________");
-
-        JLabel movieName = new JLabel(selected.getName());
-        movieName.setFont(new java.awt.Font("Segoe UI", 0, 17)); 
-
-
-        header.add(movieName);
-        header.add(screen);
-        header.add(screen1);
-        
+        seatPanel.setBackground(new java.awt.Color(117,19,8));
 
         Map<String, Boolean> seats = selected.getSeats().getSeats();
         JButton btn = new JButton();
@@ -663,6 +785,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
 
         for (Map.Entry<String, Boolean> s : seats.entrySet()) {
                 btn = new JButton(s.getKey());
+                btn.setOpaque(true);
+                btn.setBackground(Color.BLACK);
                 if (!s.getValue()) {btn.setEnabled(false);}
                 btn.addActionListener(new ActionListener() {
             
@@ -677,14 +801,17 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         
                         if(b != null)
                             buttonText = b.getText();
-        
-                        textArea.append(buttonText+ "\n");
+                            b.setBackground(Color.GRAY);
+                            b.setEnabled(false);
+                            textArea.append(buttonText+ "\n");
                     }
                 });
                 seatPanel.add(btn);
         }
         
         JPanel submitPanel = new JPanel();
+        submitPanel.setBackground(new java.awt.Color(117,19,8));
+
         book = new JButton("Book Seats");
         book.addActionListener(new ActionListener() {
             
@@ -695,20 +822,46 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             }
         });
 
+        textArea.setEditable(false);
+        submitPanel.add(textArea);
         submitPanel.add(book);
        
+        JPanel vert = new JPanel();
+        vert.setLayout(new GridBagLayout());
+        vert.setBackground(new java.awt.Color(117,19,8));
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets= new Insets(5,0,0,0);
         
-        textArea.setEditable(false);
-        seatPanel.add(textArea);
-        
-        seatScreen.add(header, BorderLayout.NORTH);
-        seatScreen.add(seatPanel, BorderLayout.CENTER);
-        seatScreen.add(submitPanel, BorderLayout.SOUTH);
+        JPanel bottom = new JPanel();
+        bottom.setBackground(new java.awt.Color(117,19,8));
+
+        JLabel movieName = new JLabel(selected.getName());
+        movieName.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 20));
+        movieName.setForeground(Color.WHITE); 
+        bottom.add(movieName);
+
+        vert.add(seatPanel, gbc);
+        gbc.gridy = 1;
+        vert.add(submitPanel, gbc);
+        gbc.gridy = 2;
+        vert.add(bottom, gbc);
+      
+
+        seatScreen.add(screenPanel, BorderLayout.NORTH);
+        seatScreen.add(vert, BorderLayout.CENTER);
+    //    seatScreen.add(bottom, BorderLayout.SOUTH);
+        seatScreen.getContentPane().setBackground( new java.awt.Color(117,19,8));
+   
+      //  seatScreen.add(seatPanel, BorderLayout.CENTER);
+      //  seatScreen.add(submitPanel, BorderLayout.SOUTH);
 
         seatScreen.setTitle("Seat Chart");
         seatScreen.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        seatScreen.setSize(600,600);
-        seatScreen.setMinimumSize(new Dimension(450,450));
+        seatScreen.setSize(600,300);
+        seatScreen.setMinimumSize(new Dimension(450,300));
         seatScreen.setLocationRelativeTo(null);
         seatScreen.setVisible(true);
     }
@@ -718,27 +871,28 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         
         JLabel title = new JLabel("Payment");
         title.setFont(new java.awt.Font("Segoe UI", 0, 17)); 
-        title.setForeground(new java.awt.Color(0,0,0));
+        title.setForeground(Color.WHITE);
 
         JPanel top = new JPanel();
         top.setLayout(new FlowLayout());
         top.add(title);
 
-        JPanel content = new JPanel(new FlowLayout(4,4,4));
+        JPanel content = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets= new Insets(5,0,0,0);
         
         JTextField ccInfo;
 
         JTextField email;
         
-        JLabel confirmLabel = new JLabel("Yay!");
-        confirmLabel.setFont(new java.awt.Font("Segoe UI", 0, 17)); 
-        confirmLabel.setForeground(new java.awt.Color(0,0,0));
+        JLabel mainTxt = new JLabel("Payment Information:");
+        mainTxt.setFont(new java.awt.Font("Segoe UI", 0, 17)); 
+        mainTxt.setForeground(Color.WHITE);
 
-        JPanel paid = new JPanel();
-        paid.setLayout(new FlowLayout());
-        paid.add(confirmLabel);
 
-        pay = new JButton("pay");
+        pay = new JButton("Pay");
         pay.addActionListener(new ActionListener() {
             
             @Override
@@ -749,16 +903,23 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
                JOptionPane.showMessageDialog(paymentTab,  "Successfully processed transaction for: "+seats+"\n"+tickDetails);
             }
         });
-        
+
+        JButton cancel = new JButton("Cancel");
+        cancel.addActionListener(new ActionListener() {  
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                paymentTab.dispose();
+                seatScreen(movie);
+            }
+        });
+
       //  GridBagConstraints c = new GridBagConstraints();
         if(userChecker==null){
             ccInfo  = new JTextField("ccinfo...", 15);
             ccInfo.setSize(20,100);
-            ccInfo.addMouseListener(this);
 
             email = new JTextField("email...", 15);
             email.setSize(20,100);
-            email.addMouseListener(this);
         }
         else{
             ccInfo  = new JTextField(userChecker.getCardNumber().substring(0, 4)+"*********", 15);
@@ -770,9 +931,19 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             email.setEditable(false);
         }
 
-        content.add(email);
-        content.add(ccInfo);
-        content.add(pay);
+        
+        content.add(mainTxt, gbc);
+        gbc.gridy =1;
+        gbc.insets= new Insets(20,0,0,0);
+        content.add(email, gbc);
+        gbc.insets= new Insets(5,0,0,0);
+        gbc.gridy =2;
+        content.add(ccInfo, gbc);
+        gbc.gridy = 3;
+        content.add(pay, gbc);
+        gbc.gridy = 4;
+        content.add(cancel, gbc);
+        content.setBackground( new java.awt.Color(117,19,8));
 
 
         paymentTab.add(top);
@@ -780,73 +951,15 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         //  paymentTab.add(email);
         paymentTab.setTitle("Payment");
         paymentTab.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        paymentTab.getContentPane().setBackground( new java.awt.Color(117,19,8));
         paymentTab.setSize(600,600);
-        paymentTab.setMinimumSize(new Dimension(450,450));
+        paymentTab.setMinimumSize(new Dimension(100,100));
         paymentTab.setLocationRelativeTo(null);
         paymentTab.setVisible(true);
 
     }
 
-    public void paymentConfirmation(){
-        JDialog paymentConfirmation = new JDialog(this, "Payment Confirmation");
-        
-        JLabel title = new JLabel("Payment Confirmation");
-        title.setFont(new java.awt.Font("Segoe UI", 0, 17)); 
-        title.setForeground(new java.awt.Color(0,0,0));
-
-        JPanel top = new JPanel();
-        top.setLayout(new FlowLayout());
-        top.add(title);
-
-        JPanel content = new JPanel(new FlowLayout(4,4,4));
-        content.setLayout(new FlowLayout());
-        content.add(title);
     
-        JLabel confirmLabel = new JLabel("Yay!");
-        confirmLabel.setFont(new java.awt.Font("Segoe UI", 0, 17)); 
-        confirmLabel.setForeground(new java.awt.Color(0,0,0));
-        
-        content.add(confirmLabel);
-
-        paymentConfirmation.add(top);
-        paymentConfirmation.add(content);
-        //  paymentTab.add(email);
-        paymentConfirmation.setTitle("Payment Confirmation");
-        paymentConfirmation.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        paymentConfirmation.setSize(600,600);
-        paymentConfirmation.setMinimumSize(new Dimension(450,450));
-        paymentConfirmation.setLocationRelativeTo(null);
-        paymentConfirmation.setVisible(true);
-    }
-
-   
-
-    public void windowClosed(WindowEvent e) {
-        //This will only be seen on standard output.
-        
-    }
-
-    public void mouseClicked(MouseEvent event){
-        
-        if(event.getSource().equals(searchInput))
-            searchInput.setText("");
-    }
-    
-    public void mouseEntered(MouseEvent event){
-        
-    }
-
-    public void mouseExited(MouseEvent event){
-        
-    }
-
-    public void mousePressed(MouseEvent event){
-        
-    }
-
-    public void mouseReleased(MouseEvent event){
-        
-    }
       
 	/*
 	 * run() Method
